@@ -5,6 +5,7 @@
  */
 package gatech.cs2340.team7;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -32,10 +33,27 @@ public class User {
     }
     
     public String login() {
-        if ((username.equals("user")  && password.equals("pass"))) {
+        boolean userFound = username.equals("user");
+        boolean passwordMatched = password.equals("password");
+        if (userFound && passwordMatched) {
             return "success?faces-redirect=true";
+        } else if (username.length() == 0) {
+             FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Please enter username."));
+            return null;           
+        } else if (password.length() == 0) {
+             FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Please enter password."));
+            return null;              
+        } else if (!userFound) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username not found!"));
+            return null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Incorrect password!"));
+            return null;
         }
-        else return "error?faces-redirect=true";
     }
     
     public String logout() {  
