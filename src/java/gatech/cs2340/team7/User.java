@@ -33,9 +33,9 @@ public class User {
     
     public String login() {
         if ((username.equals("user")  && password.equals("pass"))) {
-            return "success?faces-redirect=true";
+            return NavigationManager.success();
         }
-        else return "error?faces-redirect=true";
+        else return NavigationManager.error();
     }
     
     public String logout() {  
