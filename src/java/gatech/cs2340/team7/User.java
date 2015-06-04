@@ -34,7 +34,7 @@ public class User {
     
     public String login() {
         boolean userFound = username.equals("user");
-        boolean passwordMatched = password.equals("password");
+        boolean passwordMatched = password.equals("pass");
         if (userFound && passwordMatched) {
             return "success?faces-redirect=true";
         } else if (username.length() == 0) {
