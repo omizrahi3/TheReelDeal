@@ -3,27 +3,47 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
       
     <html xmlns="http://www.w3.org/1999/xhtml"  
-        xmlns:h="http://java.sun.com/jsf/html"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
         xmlns:f="http://java.sun.com/jsf/core">  
       
     <h:head>  
-        <title>Home Page</title>  
+        <title>The Reel Deal</title>  
     </h:head>  
-    <h:body>  
-        <h:panelGrid id="panel" columns="2" border="1" cellpadding="10"  
-            cellspacing="1">  
-            <f:facet name="header">  
-                <h:outputText value="The Reel Deal" />  
-            </f:facet>  
-            <h:outputLabel value="Already a user?" />  
-            <h:link outcome="login" value="Sign In" /> 
-            <h:outputLabel value="Not a member yet?" />  
-            <h:link outcome="register" value="Sign Up" /> 
-            <f:facet name="footer">  
-                <h:panelGroup style="display:block; text-align:center;">  
-                    <h:outputLabel value="Created by team 7" />  
-                </h:panelGroup>  
-            </f:facet>  
-        </h:panelGrid>  
+    <h:body>
+        <h:form>
+            <p:panel id="panel" header="Login to Application" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
+                    <p:accordionPanel>
+                        <p:tab title="Already a User?">
+                            <h:form>
+                                <p:messages id="login_msgs" showDetail="true" autoUpdate="true"/>
+                                <h:panelGrid columns="3" cellpadding="5">
+                                    <p:outputLabel for="username" value="User Name:" />
+                                    <p:inputText id="username" value="#{user.username}" 
+                                                 required="true" label="Username">
+                                        <f:validateLength minimum="3" />
+                                    </p:inputText>
+                                    <p:message for="username" display="icon" />
+
+                                    <p:outputLabel for="password" value="Password:" />
+                                    <p:password id="password" value="#{user.password}" 
+                                                label="Password" feedback="true">
+                                        <f:validateLength minimum="6" />
+                                    </p:password>
+                                    <p:message for="password" display="Text" />
+
+                                    <p:commandButton update="login_msgs" value="Submit" action="#{user.login()}" 
+                                                 icon="ui-icon-check" />
+                                </h:panelGrid>
+                            </h:form>
+                        </p:tab>
+                        <p:tab title="Not Yet a Member?">
+                            <h:form>
+                                <p:link outcome="register" value="Register Now!" />
+                            </h:form>
+                        </p:tab>
+                    </p:accordionPanel>
+            </p:panel>
+        </h:form>
     </h:body>  
     </html>  
