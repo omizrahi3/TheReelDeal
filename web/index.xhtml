@@ -8,12 +8,22 @@
         xmlns:f="http://java.sun.com/jsf/core">  
       
     <h:head>  
-        <title>The Reel Deal</title>  
+        <title>The Reel Deal</title>
+        <style>
+            center {
+                background-color: blue;
+            }
+        </style>
     </h:head>  
     <h:body>
         <h:form>
+            <center>
+                <h:graphicImage library="images" name="Logo.jpg" width="25%" />
+            </center>
+        </h:form>
+        <h:form>
             <p:panel id="panel" header="Login to Application" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
-                    <p:accordionPanel>
+                <p:accordionPanel activeIndex="null">
                         <p:tab title="Already a User?">
                             <h:form>
                                 <p:messages id="login_msgs" showDetail="true" autoUpdate="true"/>
@@ -27,8 +37,8 @@
 
                                     <p:outputLabel for="password" value="Password:" />
                                     <p:password id="password" value="#{user.password}" 
-                                                label="Password" feedback="true">
-                                        <f:validateLength minimum="6" />
+                                                label="Password" >
+                                        <f:validateLength minimum="4" />
                                     </p:password>
                                     <p:message for="password" display="Text" />
 

@@ -35,7 +35,7 @@ public class User {
     public String login() {
 
         boolean userFound = username.equals("user");
-        boolean passwordMatched = password.equals("password");
+        boolean passwordMatched = password.equals("pass");
         if (userFound && passwordMatched) {
             return NavigationManager.success();
         } else if (username.length() == 0) {
