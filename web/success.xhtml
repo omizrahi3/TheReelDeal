@@ -9,8 +9,15 @@
       
     <h:head>  
         <title>Success Page</title>  
+        <style>
+            .team7{
+                background-image:url("resources/images/Logo.jpg");
+                background-size:cover;
+                background-repeat:no-repeat
+            } 
+        </style>
     </h:head>  
-    <h:body>  
+    <h:body styleClass="team7"> 
         <f:view>  
             <p>Successfully logged in</p>  
             <p>Hi, #{user.username}</p>  
