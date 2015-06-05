@@ -10,18 +10,20 @@
     <h:head>  
         <title>The Reel Deal</title>
         <style>
-            center {
-                background-color: blue;
+            .accordion{
+                position:absolute;
+                right: 0;
+                width:50%
             }
+            .team7{
+                background-image:url("resources/images/Logo.jpg");
+                background-size:cover;
+                background-repeat:no-repeat
+            } 
         </style>
     </h:head>  
-    <h:body>
-        <h:form>
-            <center>
-                <h:graphicImage library="images" name="Logo.jpg" width="25%" />
-            </center>
-        </h:form>
-        <h:form>
+        <h:body styleClass="team7" >
+        <h:form  styleClass="accordion">
             <p:panel id="panel" header="Login to Application" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
                 <p:accordionPanel activeIndex="null">
                         <p:tab title="Already a User?">
