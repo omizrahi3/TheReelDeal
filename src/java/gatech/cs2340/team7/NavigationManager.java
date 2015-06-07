@@ -16,24 +16,13 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class NavigationManager {
     
-    public static String success() {
-        return "success?faces-redirect=true";
-    }
+    public static final String success = "success?faces-redirect=true";
     
-    public static String error() {
-        return "error?faces-redirect=true";
-    }
+    public static final String error = "error?faces-redirect=true";
     
-    public static String login() {
-        return "login?faces-redirect=true";
-    }
+    public static final String login = "login?faces-redirect=true";
     
-    public static String register() {
-        return "register?faces-redirect=true";
-    }
+    public static final String register = "register?faces-redirect=true";
     
-    public static String index() {
-        return "index?faces-redirect=true";
-    }
-    
+    public static final String index = "index?faces-redirect=true";
 }

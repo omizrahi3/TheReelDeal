@@ -1,19 +1,72 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <html xmlns="http://www.w3.org/1999/xhtml"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">  
     <h:head>
-        <title>register</title>
+        <title>The Reel Deal: Register</title>
         <style>
             .team7{
                 background-image:url("resources/images/Logo.jpg");
                 background-size:cover;
                 background-repeat:no-repeat
             } 
-        </style>
+            .ui-selectonemenu-items-wrapper {
+                height: 200px !important
+            }
+       </style>
     </h:head>
     <h:body styleClass="team7">
-        <h3>Registration functionality coming soon!</h3> 
+        <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
+        <p:accordionPanel activeIndex="1">
+            <p:tab title="Wait! Take Me Back!">
+                <p:link outcome="index" value="Return to Main Page" />
+            </p:tab>
+            <p:tab title="New Member Registration">
+                <h:form>
+                    <h3>Creating an account is free and easy!</h3>
+                    <p:messages id="register_msgs" showDetail="true"/>
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:outputLabel for="realname" value="Your Name:" />
+                        <p:inputText id="realname" value="#{userManager.registration.realName}"
+                                     required="true" label="Password" />
+                        <p:message for="realname" display="text" />
+                        <p:outputLabel for="newusername" value="User Name: " />
+                        <p:inputText id="newusername" value="#{userManager.registration.username}"
+                                     required="true" label="Username" >
+                            <f:validateLength minimum="3" />
+                        </p:inputText>
+                        <p:message for="newusername" display="text" />
+
+                        <p:outputLabel for="newpassword" value="Password:" />
+                        <p:password id="newpassword" value="#{userManager.registration.password}"
+                                    required="true" label="Password" feedback="true" >
+                            <f:validateLength minimum="6" />
+                        </p:password>
+                        <p:message for="newpassword" display="text" />
+
+                        <p:outputLabel for="newpasswordrepeat" value="Repeat Password:" />
+                        <p:password id="newpasswordrepeat" value="#{userManager.registration.passwordRepeat}"
+                                    required="true" label="Repeat_Password" >
+                        </p:password>
+                        <p:message for="newpasswordrepeat" display="text" />
+
+                        <p:outputLabel for="majorMenu" value="Your Major: " />
+                        <p:selectOneMenu id="majorMenu" value="#{userManager.registration.major}"
+                                         filter="true" style="width:250px"
+                                         filterMatchMode="startsWith">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{userManager.registration.majorChooser.schools}" />
+                        </p:selectOneMenu>
+                        <p:messages for="majorMenu"/>
+                        
+                        <p:commandButton id="registerButton" update="register_msgs" value="Register" action="#{userManager.registerNewUser()}" />
+                    </h:panelGrid>
+                </h:form>
+            </p:tab>
+        </p:accordionPanel>
+        </p:panel>
     </h:body>
 </html>
 

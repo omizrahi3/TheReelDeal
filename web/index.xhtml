@@ -27,32 +27,27 @@
             <p:panel id="panel" header="Login to Application" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
                 <p:accordionPanel activeIndex="null">
                         <p:tab title="Already a User?">
-                            <h:form>
                                 <p:messages id="login_msgs" showDetail="true" autoUpdate="true"/>
                                 <h:panelGrid columns="3" cellpadding="5">
                                     <p:outputLabel for="username" value="User Name:" />
-                                    <p:inputText id="username" value="#{user.username}" 
-                                                 required="true" label="Username">
-                                        <f:validateLength minimum="3" />
+                                    <p:inputText id="username" value="#{userManager.login.username}" 
+                                                 label="Username">
                                     </p:inputText>
                                     <p:message for="username" display="icon" />
 
                                     <p:outputLabel for="password" value="Password:" />
-                                    <p:password id="password" value="#{user.password}" 
+                                    <p:password id="password" value="#{userManager.login.password}" 
                                                 label="Password" >
-                                        <f:validateLength minimum="4" />
                                     </p:password>
                                     <p:message for="password" display="Text" />
 
-                                    <p:commandButton update="login_msgs" value="Submit" action="#{user.login()}" 
+                                    <p:commandButton id="loginButton" update="login_msgs" value="Submit" action="#{userManager.loginExistingUser()}" 
                                                  icon="ui-icon-check" />
                                 </h:panelGrid>
-                            </h:form>
                         </p:tab>
                         <p:tab title="Not Yet a Member?">
-                            <h:form>
+                                <h2>Creating an account is free and easy!</h2>
                                 <p:link outcome="register" value="Register Now!" />
-                            </h:form>
                         </p:tab>
                     </p:accordionPanel>
             </p:panel>
