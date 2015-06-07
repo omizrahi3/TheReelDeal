@@ -18,11 +18,12 @@ public class User {
     public String newString;
     @ManagedProperty(value="#{userAccount}")
     private Account account;
-    private Profile myProfile;
+    private Profile profile;
     //private List<Message> myMessages;
     
     public User() {
         account = new Account();
+        profile = new Profile();
     }
     
     public User(Account account) {
@@ -31,6 +32,10 @@ public class User {
 
     public String getRealName() {
         return this.realName;
+    }
+    
+    public Profile getProfile() {
+        return profile;
     }
     
     public Account getAccount() {
