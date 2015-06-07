@@ -20,7 +20,7 @@
     <h:body styleClass="team7"> 
         <f:view>  
             <p>Successfully logged in</p>  
-            <p>Hi, #{user.username}</p>  
+            <p>Hi, #{userManager.activeUser.account.username}. The profile feature of this application is still being created.</p>  
             <h:form>  
                 <p>  
                     <h:commandLink value="logout" action="#{user.logout}" />  
