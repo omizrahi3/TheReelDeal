@@ -17,48 +17,17 @@ import javax.faces.bean.SessionScoped;
 public class Account {
     
     private String username;
-    private String aboutMe;
     //private Image img;
     private boolean loggedIn;
     private boolean locked;
     
     public Account() {
-        aboutMe = "";
+        username = "";
         loggedIn = false;
         locked = false;
     }
     
-    public String getUsername() {
-        return this.username;
-    }
-    
-    public String getAboutMe() {
-        return this.aboutMe;
-    }
-    
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-    
-    public boolean isLocked() {
-        return locked;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    public void setAboutMe(String aboutMe) {
-        this.aboutMe = aboutMe;
-    }
-    
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-    
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
     
     public void login() {
         
@@ -68,4 +37,51 @@ public class Account {
         loggedIn = true;
     }
     
+    /**
+     * Get username for the account
+     * @return username
+     */
+    public String getUsername() {
+        return this.username;
+    }
+    
+    /**
+     * Get whether the account is logged in
+     * @return Whether the account is logged in
+     */
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+    
+    /**
+     * Get whether the account is locked
+     * @return Whether the account is locked
+     */
+    public boolean isLocked() {
+        return locked;
+    }
+    
+    /**
+     * Set the username for the account
+     * @param username New username for the account
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    /**
+     * Set the login state of the account
+     * @param loggedIn State of login to change to
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+    
+    /**
+     * Set the locked state of the account
+     * @param locked State of account lock to change to
+     */
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 }

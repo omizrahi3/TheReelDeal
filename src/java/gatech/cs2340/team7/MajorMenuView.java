@@ -26,7 +26,17 @@ public class MajorMenuView {
         initMenu();
     }
 
-    public void initMenu() {
+    /**
+     * Initialize all schools and majors of each school. This
+     * data is what will be seen by the user when choosing his/her
+     * major. The data will be categorized by each school, which is
+     * implemented as a SelectItemGroup. Within each school, each major
+     * is implemented as a SelectItem, with a text and label property.
+     * e.g. new SelectItem("Text1", "Label1") will create a SelectItem
+     *      that returns Text1 when the user chooses Label1. Label1 is what 
+     *      the user will see and Text1 is what will set internally
+     */
+    private void initMenu() {
         System.out.println("Initializing MajorMenuView data.");
         SelectItemGroup archMajors = new SelectItemGroup("Architecture");        
         SelectItemGroup csMajors = new SelectItemGroup("Computing");
@@ -89,18 +99,34 @@ public class MajorMenuView {
         schools.add(artsMajors);
     }
     
+    /**
+     * Get the chosen major
+     * @return chosen major
+     */
     public String getMajor() {
         return major;
     }
     
+    /**
+     * Get the list of schools
+     * @return list of schools
+     */
     public List<SelectItem> getSchools() {
         return schools;
     }
     
+    /**
+     * Set the chosen major
+     * @param major chosen major
+     */
     public void setMajor(String major) {
         this.major = major;
     }
     
+    /**
+     * Set the list of schools
+     * @param schools list of schools
+     */
     public void setSchools(List<SelectItem> schools) {
         this.schools = schools;
     }

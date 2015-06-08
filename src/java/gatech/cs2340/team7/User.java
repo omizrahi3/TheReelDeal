@@ -21,32 +21,59 @@ public class User {
     private Profile myProfile;
     //private List<Message> myMessages;
     
+    /**
+     * Basic constructor
+     */
     public User() {
         account = new Account();
     }
     
+    /**
+     * Constructor that sets the account on instantiation
+     * @param account account to set
+     */
     public User(Account account) {
         this.account = account;
     }
 
+    /**
+     * Get the real name of the user
+     * @return user's real name
+     */
     public String getRealName() {
         return this.realName;
     }
     
+    /**
+     * Get the account of the user
+     * @return user's account
+     */
     public Account getAccount() {
         return account;
     }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
     
-    public void setAccount(Account myAccount) {
-        this.account = myAccount;
-    }
-    
+    /**
+     * Logout of the user's account
+     * @return index.xhtml page navigation token
+     */
     public String logout() {  
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return NavigationManager.index;
     }  
+
+    /**
+     * Set the real name of the user
+     * @param realName user's real name
+     */
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+    
+    /**
+     * Set the account of the user
+     * @param myAccount user's account
+     */
+    public void setAccount(Account myAccount) {
+        this.account = myAccount;
+    }
 }
