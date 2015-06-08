@@ -45,11 +45,11 @@ public class MajorMenuView {
         SelectItemGroup busMajors = new SelectItemGroup("Business");
         SelectItemGroup artsMajors = new SelectItemGroup("Liberal Arts");
         
-        csMajors.setSelectItems(new SelectItem[] {
+        archMajors.setSelectItems(new SelectItem[] {
             new SelectItem("Architecture", "Architecture"),
             new SelectItem("Industrial Design", "Industrial Design")
         });
-        archMajors.setSelectItems(new SelectItem[] {
+        csMajors.setSelectItems(new SelectItem[] {
             new SelectItem("Computational Media", "Computational Media"),
             new SelectItem("Computer Science", "Computer Science")
         });

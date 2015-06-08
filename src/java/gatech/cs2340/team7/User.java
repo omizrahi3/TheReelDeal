@@ -53,6 +53,10 @@ public class User {
         return account;
     }
     
+    public Profile getProfile() {
+        return profile;
+    }
+    
     /**
      * Attempt to log the user into his/her account. If the login fails,
      * notify the user on the web page
