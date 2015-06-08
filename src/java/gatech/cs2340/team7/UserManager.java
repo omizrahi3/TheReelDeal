@@ -5,11 +5,16 @@
  */
 package gatech.cs2340.team7;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -30,23 +35,19 @@ public class UserManager {
     private User activeUser;
     
     public UserManager() {
-        System.out.println("Hello from UserManager constructor");
-    }
-    
-    @PostConstruct
-    public void init() {
-        System.out.println("UserManager.init()");
         userList = new ArrayList();
-        userList.add(new User());
-        userList.get(0).getAccount().setUsername("user");
-        
         passwords = new HashMap<>();
-        passwords.put("user", "password");
         login = new Login();
         registration = new Registration();
+        activeUser = null;
+        
+        // Temporary addition of user until data persistence is added
+        userList.add(new User());
+        userList.get(0).getAccount().setUsername("user");
+        passwords.put("user", "password");
     }
     
-    protected User userWithUsername(String username) throws Exception {
+    public User userWithUsername(String username) throws Exception {
         for (User user : userList) {
             if (username.equals(user.getAccount().getUsername())) {
                 return user;
@@ -56,50 +57,57 @@ public class UserManager {
     }
     
     public String loginExistingUser() throws Exception {
-        String username = login.getUsername();
-        String password = login.getPassword();
-        System.out.println("Login attempt with username <" + username + "> "
-            + " and password <" + password + ">");
-        boolean passwordMatch = password.equals(passwords.get(username));
-        
-        if (passwordMatch) {
+        if (login.checkLogin(userList, passwords)) {
             System.out.println("Login success!");
-            activeUser = userWithUsername(username);
+            activeUser = userWithUsername(login.getUsername());
+            activeUser.loginToAccount();
             return NavigationManager.success;
-        } else if (username.length() == 0) {
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Please enter username."));
-            return null;           
-        } else if (password.length() == 0) {
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Please enter password."));
-            return null;              
         } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Incorrect username or password!"));
+            System.out.println("Login failed!");
+            System.out.println("Current users:");
+            for (User u : userList) {
+                System.out.println(u.getAccount().getUsername());
+            }
             return null;
         }
     }
     
-    public void registerNewUser() {
-        // check if username already exists
-        if (usernameExists(registration.getUsername())) {
-            // tell the user that username already exists
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username already exists!"));
-        } else if (!passwordsMatch()) {
-            // tell the user that the passwords don't match
-            // OPTIONAL: check for numbers as well as letters in password
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Passwords do not match!"));
+    public String registerNewUser() {
+        if (registration.checkNewUserRegistration(userList)) {
+            // Registration success, create the user, account, and profile
+            System.out.println("Successful registration attempt!");
+            userList.add(registration.registerNewUser());
+            System.out.println("Exporting user list!");
+            exportUserList();
+            
+            // Add the user->password mapping
+            passwords.put(registration.getUsername(), registration.getPassword());
+            
+            return NavigationManager.success;
         } else {
-            System.out.println("Major chosen: <" + registration.getMajor() + ">");
-            // Successful registration. Create the user's profile
-            System.out.println("Successful user registration!");
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Preparing your profile..."));            
+            System.out.println("Failed registration attempt!");
+            return null;
         }
-        
+    }
+    
+    /**
+     * Export the user list
+     * TODO enhance the format of export
+     */
+    private void exportUserList() {
+        FileWriter userListFile = null;
+        try {
+            userListFile = new FileWriter("output.txt");
+            File f = new File("output2.txt");
+            System.out.println(f.getAbsolutePath());
+            for (String username : passwords.keySet()) {
+                userListFile.write(username + "," + passwords.get(username) + "\n");
+            }
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
     }
     
     /**
@@ -127,28 +135,6 @@ public class UserManager {
         } else if (!userList.remove(u)) {
             throw new FailedUserOperationException("Failed to add user to the user list!");
         }
-    }
-    
-    /**
-     * Returns whether the given user already exists in the user list
-     * @param username User to check for
-     * @return Indication of the user's preexistence in the user list 
-     */
-    public boolean usernameExists(String username) {
-        if (username == null) {
-            throw new IllegalArgumentException("Cannot input null data!");
-        }
-        
-        for (User u : userList) {
-            if (username.equals(u.getAccount().getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean passwordsMatch() {
-        return registration.getPassword().equals(registration.getPasswordRepeat());
     }
     
     public Login getLogin() {

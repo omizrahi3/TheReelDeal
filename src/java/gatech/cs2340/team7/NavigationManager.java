@@ -16,6 +16,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class NavigationManager {
     
+    // Static constant strings for ease of xhtml page navigation
     public static final String success = "success?faces-redirect=true";
     
     public static final String error = "error?faces-redirect=true";
