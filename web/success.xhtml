@@ -23,8 +23,11 @@
             <p>Hi, #{userManager.activeUser.account.username}. The profile feature of this application is still being created.</p>  
             <h:form>  
                 <p>  
-                    <h:commandLink value="logout" action="#{user.logout}" />  
+                    <h:commandLink value="logout" action="#{user.logout}" /> 
                 </p>  
+                <p> 
+                    <h:commandLink value="View Profile" action="profile" /> 
+                </p>
             </h:form>  
         </f:view>  
     </h:body>  

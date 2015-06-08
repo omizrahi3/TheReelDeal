@@ -11,31 +11,45 @@ import javax.faces.bean.SessionScoped;
 /**
  *
  * @author Anthony
+ * @author Jimmy
  */
 @ManagedBean(name = "profile", eager = true)
 @SessionScoped
 public class Profile {
     
     // private Image image;
+    private String name;
     private String aboutMe;
+    private String imageURL;
     
     public Profile() {
+        name = "";
         aboutMe = "";
+        imageURL = "";
+        
     }
     
-    /*public Image getImage() {
-        return image;
-    }*/
+    public String getImageURL() {
+        return imageURL;
+    }
     
     public String getAboutMe() {
         return aboutMe;
     }
     
-    /*public void setImage(Image image) {
-        this.image = image;
-    }*/
+    public String getName() {
+     return name;   
+    }
     
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
