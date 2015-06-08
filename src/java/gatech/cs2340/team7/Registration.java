@@ -23,30 +23,50 @@ public class Registration extends AccountAccessAttempt {
     private String passwordRepeat;
     private String major;
     private MajorMenuView majorChooser;
+    boolean validRegistration;
     
     public Registration() {
         majorChooser = new MajorMenuView();
     }
     
-    public boolean registerNewUser(List<User> users) {
+    /**
+     * Create a new user.
+     * NOTE: This method will only be called after registration data
+     *       has been validated
+     * @return new User with relevant data populated
+     */
+    public User registerNewUser() {
+        Account newAccount = new Account(username);
+        Profile newProfile = new Profile();
+        return new User(realName, newAccount, newProfile);
+    }
+    
+    /**
+     * Check the validity of the registration data, and return whether
+     * data is valid or not
+     * @param users List of users to check existence of desired username
+     * @return Whether registration data is valid
+     */
+    public boolean checkNewUserRegistration(List<User> users) {
         // check if username already exists
         if (usernameExists(username, users)) {
             // tell the user that username already exists
              FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username already exists!"));
-             return false;
+             validRegistration = false;
         } else if (!passwordsMatch()) {
             // tell the user that the passwords don't match
             // OPTIONAL: check for numbers as well as letters in password
              FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Passwords do not match!"));
-             return false;
+             validRegistration = false;
         } else {
             System.out.println("Major chosen: <" + major + ">");
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Preparing your profile..."));
-            return true;
+            validRegistration = true;
         }
+        return validRegistration;
     }
     
     /**
@@ -108,6 +128,14 @@ public class Registration extends AccountAccessAttempt {
     }
     
     /**
+     * Get whether registration data is valid
+     * @return whether registration data is valid
+     */
+    public boolean isValidRegistration() {
+        return validRegistration;
+    }
+    
+    /**
      * Set the real name of the prospective user
      * @param realName real name of the prospective user
      */
@@ -137,5 +165,13 @@ public class Registration extends AccountAccessAttempt {
      */
     public void setMajorChooser(MajorMenuView majorChooser) {
         this.majorChooser = majorChooser;
+    }
+    
+    /**
+     * Set the validity of the attempted registration
+     * @param validRegistration validity of the attempted registration
+     */
+    public void setValidRegistration(boolean validRegistration) {
+        this.validRegistration = validRegistration;
     }
 }

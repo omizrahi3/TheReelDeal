@@ -6,7 +6,6 @@
 package gatech.cs2340.team7;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -15,25 +14,27 @@ import javax.faces.context.FacesContext;
 public class User {
     
     private String realName;
-    public String newString;
-    @ManagedProperty(value="#{userAccount}")
     private Account account;
-    private Profile myProfile;
+    private Profile profile;
     //private List<Message> myMessages;
     
     /**
      * Basic constructor
      */
     public User() {
-        account = new Account();
+        this(null, new Account(), new Profile());
     }
     
     /**
-     * Constructor that sets the account on instantiation
-     * @param account account to set
+     * Constructor specifying all members for a new user
+     * @param realName Real name of user
+     * @param account Account for user
+     * @param profile Profile for user
      */
-    public User(Account account) {
+    public User(String realName, Account account, Profile profile) {
+        this.realName = realName;
         this.account = account;
+        this.profile = profile;
     }
 
     /**
@@ -50,6 +51,19 @@ public class User {
      */
     public Account getAccount() {
         return account;
+    }
+    
+    /**
+     * Attempt to log the user into his/her account. If the login fails,
+     * notify the user on the web page
+     */
+    public void loginToAccount() {
+        try {
+            account.login();
+        } catch (Exception e) {
+            // TODO indicate on webpage the login failure due to account lock
+            System.out.println("Login failed due to account lock!");
+        }
     }
     
     /**

@@ -5,6 +5,12 @@
  */
 package gatech.cs2340.team7;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,20 +60,53 @@ public class UserManager {
         if (login.checkLogin(userList, passwords)) {
             System.out.println("Login success!");
             activeUser = userWithUsername(login.getUsername());
+            activeUser.loginToAccount();
             return NavigationManager.success;
         } else {
             System.out.println("Login failed!");
+            System.out.println("Current users:");
+            for (User u : userList) {
+                System.out.println(u.getAccount().getUsername());
+            }
             return null;
         }
     }
     
     public String registerNewUser() {
-        if (registration.registerNewUser(userList)) {
+        if (registration.checkNewUserRegistration(userList)) {
+            // Registration success, create the user, account, and profile
             System.out.println("Successful registration attempt!");
+            userList.add(registration.registerNewUser());
+            System.out.println("Exporting user list!");
+            exportUserList();
+            
+            // Add the user->password mapping
+            passwords.put(registration.getUsername(), registration.getPassword());
+            
             return NavigationManager.success;
         } else {
             System.out.println("Failed registration attempt!");
             return null;
+        }
+    }
+    
+    /**
+     * Export the user list
+     * TODO enhance the format of export
+     */
+    private void exportUserList() {
+        FileWriter userListFile = null;
+        try {
+            userListFile = new FileWriter("output.txt");
+            File f = new File("output2.txt");
+            System.out.println(f.getAbsolutePath());
+            for (String username : passwords.keySet()) {
+                userListFile.write(username + "," + passwords.get(username) + "\n");
+            }
+        } catch (FileNotFoundException fnfe) {
+            System.out.println(fnfe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         }
     }
     

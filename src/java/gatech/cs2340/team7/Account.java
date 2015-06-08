@@ -21,18 +21,31 @@ public class Account {
     private boolean loggedIn;
     private boolean locked;
     
+    /**
+     * Empty constructor
+     */
     public Account() {
-        username = "";
-        loggedIn = false;
-        locked = false;
+        this(null);
     }
     
-
+    /**
+     * Constructor specifying all relevant members for the new account
+     * @param username Username for the new account
+     */
+    public Account(String username) {
+        this.username = username;
+        this.loggedIn = false;
+        this.locked = false;
+    }
     
-    public void login() {
-        
+    /**
+     * Login to the account
+     */
+    public void login() throws Exception {
+        // change this logic for checking account lock
         if (locked) {
-            locked = false;
+            // TODO throw more accurate exception
+            throw new Exception("Account is locked by an administrator!");
         }
         loggedIn = true;
     }
