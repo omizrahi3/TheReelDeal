@@ -6,18 +6,15 @@
 package gatech.cs2340.team7;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -76,9 +73,9 @@ public class UserManager {
         if (registration.checkNewUserRegistration(userList)) {
             // Registration success, create the user, account, and profile
             System.out.println("Successful registration attempt!");
-            userList.add(registration.registerNewUser());
-            System.out.println("Exporting user list!");
-            exportUserList();
+            User newUser = registration.registerNewUser();
+            addUser(newUser);
+            activeUser = newUser;
             
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
@@ -91,35 +88,21 @@ public class UserManager {
     }
     
     /**
-     * Export the user list
-     * TODO enhance the format of export
-     */
-    private void exportUserList() {
-        FileWriter userListFile = null;
-        try {
-            userListFile = new FileWriter("output.txt");
-            File f = new File("output2.txt");
-            System.out.println(f.getAbsolutePath());
-            for (String username : passwords.keySet()) {
-                userListFile.write(username + "," + passwords.get(username) + "\n");
-            }
-        } catch (FileNotFoundException fnfe) {
-            System.out.println(fnfe.getMessage());
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
-    }
-    
-    /**
      * Add the user to the list
      * @param u User to add
      * @throws FailedUserOperationException
      */
-    public void addUser(User u) throws FailedUserOperationException{
+    public void addUser(User u) {
         if (u == null) {
             throw new IllegalArgumentException("Cannot input null data!");
         } else if (!userList.add(u)) {
-            throw new FailedUserOperationException("Failed to add user to the user list!");
+            System.out.println("Failed to add user to the user list!");
+            // TODO actually notify the user of the failure
+        } else {
+            System.out.println("Added new user. Updated user list:");
+            for (User user : userList) {
+                System.out.println("- " + user.getAccount().getUsername());
+            }
         }
         
     }
