@@ -38,7 +38,7 @@ public class Registration extends AccountAccessAttempt {
     public User registerNewUser() {
         System.out.println("Creating account for " + name +
                 " with username " + username);
-        return new User(name, new Account(username), new Profile(name));
+        return new User(name, new Account(username), new Profile(name, major));
     }
     
     /**
