@@ -18,16 +18,38 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Profile {
     
+    public static final String DEFAULT_ABOUT_ME = "Share something about yourself.";
+    
     // private Image image;
     private String name;
     private String aboutMe;
     private String imageURL;
     
+    /**
+     * Empty constructor
+     */
     public Profile() {
-        name = "";
-        aboutMe = "";
-        imageURL = "";
-        
+        this("", Profile.DEFAULT_ABOUT_ME, "");
+    }
+    
+    /**
+     * Constructor specifying the name of the user
+     * @param name name of user
+     */
+    public Profile(String name) {
+        this(name, Profile.DEFAULT_ABOUT_ME, "");
+    }
+    
+    /**
+     * Constructor for instantiating all relevant data
+     * @param name Name of user (not username of account)
+     * @param aboutMe About me section
+     * @param imageURL URL of profile image
+     */
+    public Profile(String name, String aboutMe, String imageURL) {
+        this.name = name;
+        this.aboutMe = aboutMe;
+        this.imageURL = imageURL;
     }
     
     public String getImageURL() {
