@@ -36,6 +36,28 @@ public class User {
         this.account = account;
         this.profile = profile;
     }
+    
+    /**
+     * Attempt to log the user into his/her account. If the login fails,
+     * notify the user on the web page
+     */
+    public void loginToAccount() {
+        try {
+            account.login();
+        } catch (Exception e) {
+            // TODO indicate on webpage the login failure due to account lock
+            System.out.println("Login failed due to account lock!");
+        }
+    }
+    
+    /**
+     * Logout of the user's account
+     * @return index.xhtml page navigation token
+     */
+    public String logout() {  
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return NavigationManager.index;
+    }  
 
     /**
      * Get the name of the user
@@ -61,32 +83,6 @@ public class User {
         return profile;
     }
     
-    public Profile getProfile() {
-        return profile;
-    }
-    
-    /**
-     * Attempt to log the user into his/her account. If the login fails,
-     * notify the user on the web page
-     */
-    public void loginToAccount() {
-        try {
-            account.login();
-        } catch (Exception e) {
-            // TODO indicate on webpage the login failure due to account lock
-            System.out.println("Login failed due to account lock!");
-        }
-    }
-    
-    /**
-     * Logout of the user's account
-     * @return index.xhtml page navigation token
-     */
-    public String logout() {  
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return NavigationManager.index;
-    }  
-
     /**
      * Set the name of the user
      * @param name user's name
