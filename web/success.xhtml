@@ -33,23 +33,19 @@
                 <h:form>
                     <h3>Update your profile!</h3>
                 <h:panelGrid columns="2" cellpadding="10">
-                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" ></p:graphicImage>
+                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" alt="Upload a photo!" ></p:graphicImage>
                     <p:commandButton value="Edit Profile" action= "editProfile" styleClass="ui-priority-primary" />
-           <p> 
-            Name: #{userManager.activeUser.profile.name}
-        </p>
-        <h3>
-            About #{userManager.activeUser.profile.name}
-        </h3>
-        <p>
-                <pre>#{userManager.activeUser.profile.aboutMe}</pre>
-        </p>
+                    <p><strong>Name:</strong> #{userManager.activeUser.profile.name} </p>
+                    <p><strong>Major:</strong> #{userManager.activeUser.profile.major} </p>
+                    <hr />
+                    <h3><strong>About #{userManager.activeUser.profile.name}</strong></h3>
+                    <p> <pre>#{userManager.activeUser.profile.aboutMe}</pre> </p>
                 </h:panelGrid>
                 </h:form>
             </p:tab>
         </p:accordionPanel>
         </p:panel>
-             </h:form>
+        </h:form>
     </h:body>
 </html>
 
