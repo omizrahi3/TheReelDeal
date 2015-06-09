@@ -7,6 +7,11 @@
     <h:head>
         <title>The Reel Deal: Register</title>
         <style>
+            .accordion{
+                position:absolute;
+                right: 0;
+                width:50%
+            }
             .team7{
                 background-image:url("resources/images/Logo.jpg");
                 background-size:cover;
@@ -18,6 +23,7 @@
        </style>
     </h:head>
     <h:body styleClass="team7">
+         <h:form  styleClass="accordion">
         <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
         <p:accordionPanel activeIndex="1">
             <p:tab title="Wait! Take Me Back!">
@@ -67,6 +73,7 @@
             </p:tab>
         </p:accordionPanel>
         </p:panel>
+             </h:form>
     </h:body>
 </html>
 

@@ -1,34 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
-      
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"  
-        xmlns:ui="http://java.sun.com/jsf/facelets"  
-        xmlns:h="http://java.sun.com/jsf/html"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
         xmlns:f="http://java.sun.com/jsf/core">  
-      
-    <h:head>  
-        <title>Success Page</title>  
+    <h:head>
+        <title>Success Page</title>
         <style>
+            .accordion{
+                position:absolute;
+                right: 0;
+                width:50%
+            }
             .team7{
                 background-image:url("resources/images/Logo.jpg");
                 background-size:cover;
                 background-repeat:no-repeat
             } 
-        </style>
-    </h:head>  
-    <h:body styleClass="team7"> 
-        <f:view>  
-            <p>Successfully logged in</p>  
-            <p>Hi, #{userManager.activeUser.account.username}. The profile feature of this application is still being created.</p>  
-            <h:form>  
-                <p>  
-                    <h:commandLink value="logout" action="#{user.logout}" /> 
-                </p>  
-                <p> 
-                    <h:commandLink value="View Profile" action="profile" /> 
-                </p>
-            </h:form>  
-        </f:view>  
-    </h:body>  
-    </html>  
+            .ui-selectonemenu-items-wrapper {
+                height: 200px !important
+            }
+       </style>
+    </h:head>
+    <h:body styleClass="team7">
+         <h:form  styleClass="accordion">
+        <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
+        <p:accordionPanel activeIndex="1">
+            <p:tab title="Log Out">
+                <p:commandButton id="logoutButton" update="" value="Logout" action="#{user.logout()}" />
+            </p:tab>
+            <p:tab title="Your Profile">
+                <h:form>
+                    <h3>Update your profile!</h3>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" ></p:graphicImage>
+                    <p:commandButton value="Edit Profile" action= "editProfile" styleClass="ui-priority-primary" />
+           <p> 
+            Name: #{userManager.activeUser.profile.name}
+        </p>
+        <h3>
+            About #{userManager.activeUser.profile.name}
+        </h3>
+        <p>
+                <pre>#{userManager.activeUser.profile.aboutMe}</pre>
+        </p>
+                </h:panelGrid>
+                </h:form>
+            </p:tab>
+        </p:accordionPanel>
+        </p:panel>
+             </h:form>
+    </h:body>
+</html>
+
