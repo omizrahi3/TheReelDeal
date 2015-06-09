@@ -28,10 +28,10 @@
                     <h3>Creating an account is free and easy!</h3>
                     <p:messages id="register_msgs" showDetail="true"/>
                     <h:panelGrid columns="3" cellpadding="5">
-                        <p:outputLabel for="realname" value="Your Name:" />
-                        <p:inputText id="realname" value="#{userManager.registration.realName}"
+                        <p:outputLabel for="name" value="Your Name:" />
+                        <p:inputText id="name" value="#{userManager.registration.name}"
                                      required="true" label="Password" />
-                        <p:message for="realname" display="text" />
+                        <p:message for="name" display="text" />
                         <p:outputLabel for="newusername" value="User Name: " />
                         <p:inputText id="newusername" value="#{userManager.registration.username}"
                                      required="true" label="Username" >
