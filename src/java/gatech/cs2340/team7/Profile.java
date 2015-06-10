@@ -27,7 +27,7 @@ public class Profile {
     private String imageURL;
     
     /**
-     * Empty constructor
+     * Constructor
      */
     public Profile() {
         this("", Profile.DEFAULT_MAJOR, Profile.DEFAULT_ABOUT_ME, "");
@@ -67,14 +67,26 @@ public class Profile {
         return major;
     }
     
+    /**
+     * Return the user's about me section
+     * @return user's about me section
+     */
     public String getAboutMe() {
         return aboutMe;
     }
     
+    /**
+     * Return the user's human name
+     * @return user's human name
+     */
     public String getName() {
      return name;   
     }
     
+    /**
+     * Set the user's about me section
+     * @param aboutMe about me section to set
+     */
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
@@ -87,10 +99,18 @@ public class Profile {
         this.major = major;
     }
     
+    /**
+     * Set the user's name
+     * @param name name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
     
+    /**
+     * Set the user's imageURL
+     * @param imageURL URL to set
+     */
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }

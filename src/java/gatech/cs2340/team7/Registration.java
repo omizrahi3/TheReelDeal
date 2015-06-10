@@ -25,6 +25,9 @@ public class Registration extends AccountAccessAttempt {
     private MajorMenuView majorChooser;
     boolean validRegistration;
     
+    /**
+     * Constructor
+     */
     public Registration() {
         majorChooser = new MajorMenuView();
     }

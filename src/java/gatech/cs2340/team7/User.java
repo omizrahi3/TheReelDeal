@@ -19,7 +19,7 @@ public class User {
     //private List<Message> myMessages;
     
     /**
-     * Basic constructor
+     * Constructor
      */
     public User() {
         this(null, new Account(), new Profile());

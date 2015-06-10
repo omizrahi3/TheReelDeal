@@ -5,14 +5,9 @@
  */
 package gatech.cs2340.team7;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -120,26 +115,50 @@ public class UserManager {
         }
     }
     
+    /**
+     * Return the login handle
+     * @return login handle
+     */
     public Login getLogin() {
         return login;
     }
     
+    /**
+     * Return the registration handle
+     * @return registration handle
+     */
     public Registration getRegistration() {
         return registration;
     }
     
+    /**
+     * Return the current active user
+     * @return active user
+     */
     public User getActiveUser() {
         return activeUser;
     }
 
+    /**
+     * Set the login handle
+     * @param login new login handle
+     */
     public void setLogin(Login login) {
         this.login = login;
     }
 
+    /**
+     * Set the registration handle
+     * @param registration new registration handle
+     */
     public void setRegistration(Registration registration) {
         this.registration = registration;
     }
     
+    /**
+     * Set the active user
+     * @param activeUser active user
+     */
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
     }

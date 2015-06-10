@@ -22,6 +22,9 @@ public class MajorMenuView {
     private String major;
     private List<SelectItem> schools;
     
+    /**
+     * Constructor
+     */
     public MajorMenuView() {
         initMenu();
     }
