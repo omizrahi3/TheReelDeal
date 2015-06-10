@@ -16,7 +16,6 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class AccountAccessAttempt {
     
-    // Data Members
     protected String username;
     protected String password;
     

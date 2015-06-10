@@ -13,13 +13,13 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class User {
     
-    private String realName;
+    private String name;
     private Account account;
     private Profile profile;
     //private List<Message> myMessages;
     
     /**
-     * Basic constructor
+     * Constructor
      */
     public User() {
         this(null, new Account(), new Profile());
@@ -27,34 +27,14 @@ public class User {
     
     /**
      * Constructor specifying all members for a new user
-     * @param realName Real name of user
+     * @param name name of user
      * @param account Account for user
      * @param profile Profile for user
      */
-    public User(String realName, Account account, Profile profile) {
-        this.realName = realName;
+    public User(String name, Account account, Profile profile) {
+        this.name = name;
         this.account = account;
         this.profile = profile;
-    }
-
-    /**
-     * Get the real name of the user
-     * @return user's real name
-     */
-    public String getRealName() {
-        return this.realName;
-    }
-    
-    /**
-     * Get the account of the user
-     * @return user's account
-     */
-    public Account getAccount() {
-        return account;
-    }
-    
-    public Profile getProfile() {
-        return profile;
     }
     
     /**
@@ -80,11 +60,35 @@ public class User {
     }  
 
     /**
-     * Set the real name of the user
-     * @param realName user's real name
+     * Get the name of the user
+     * @return user's name
      */
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public String getName() {
+        return this.name;
+    }
+    
+    /**
+     * Get the account of the user
+     * @return user's account
+     */
+    public Account getAccount() {
+        return account;
+    }
+    
+    /**
+     * Return the user's profile
+     * @return user's profile
+     */
+    public Profile getProfile() {
+        return profile;
+    }
+    
+    /**
+     * Set the name of the user
+     * @param name user's name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
     
     /**
@@ -93,5 +97,13 @@ public class User {
      */
     public void setAccount(Account myAccount) {
         this.account = myAccount;
+    }
+    
+    /**
+     * Set the user's profile
+     * @param profile user's profile
+     */
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }

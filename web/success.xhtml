@@ -10,7 +10,7 @@
             .accordion{
                 position:absolute;
                 right: 0;
-                width:50%
+                width:45%
             }
             .team7{
                 background-image:url("resources/images/Logo.jpg");
@@ -31,25 +31,20 @@
             </p:tab>
             <p:tab title="Your Profile">
                 <h:form>
-                    <h3>Update your profile!</h3>
+                    <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" 
+                                                 icon="ui-icon-check" />
                 <h:panelGrid columns="2" cellpadding="10">
-                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" ></p:graphicImage>
-                    <p:commandButton value="Edit Profile" action= "editProfile" styleClass="ui-priority-primary" />
-           <p> 
-            Name: #{userManager.activeUser.profile.name}
-        </p>
-        <h3>
-            About #{userManager.activeUser.profile.name}
-        </h3>
-        <p>
-                <pre>#{userManager.activeUser.profile.aboutMe}</pre>
-        </p>
+                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" alt="Upload a photo!" ></p:graphicImage>
+                    <p><strong>Name:</strong> #{userManager.activeUser.profile.name} </p>
+                    <p><strong>Major:</strong> #{userManager.activeUser.profile.major} </p>
+                    <hr />
+                    <h3><strong>About #{userManager.activeUser.profile.name}</strong></h3>
+                    <p> <pre>#{userManager.activeUser.profile.aboutMe}</pre> </p>
                 </h:panelGrid>
                 </h:form>
             </p:tab>
         </p:accordionPanel>
         </p:panel>
-             </h:form>
+        </h:form>
     </h:body>
-</html>
-
+</html> 

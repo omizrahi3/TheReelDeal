@@ -26,4 +26,10 @@ public class NavigationManager {
     public static final String register = "register?faces-redirect=true";
     
     public static final String index = "index?faces-redirect=true";
+    
+    public static final String editProfile = "editProfile?faces-redirect=true";
+    
+    public String getSuccess() {
+        return success;
+    }
 }

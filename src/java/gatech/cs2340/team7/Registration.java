@@ -19,12 +19,15 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "registration", eager = true)
 @SessionScoped
 public class Registration extends AccountAccessAttempt {
-    private String realName;
+    private String name;
     private String passwordRepeat;
     private String major;
     private MajorMenuView majorChooser;
     boolean validRegistration;
     
+    /**
+     * Constructor
+     */
     public Registration() {
         majorChooser = new MajorMenuView();
     }
@@ -36,9 +39,9 @@ public class Registration extends AccountAccessAttempt {
      * @return new User with relevant data populated
      */
     public User registerNewUser() {
-        Account newAccount = new Account(username);
-        Profile newProfile = new Profile();
-        return new User(realName, newAccount, newProfile);
+        System.out.println("Creating account for " + name +
+                " with username " + username);
+        return new User(name, new Account(username), new Profile(name, major));
     }
     
     /**
@@ -96,11 +99,11 @@ public class Registration extends AccountAccessAttempt {
     }
     
     /**
-     * Get real name of the prospective user
-     * @return real name of the prospective user
+     * Get name of the prospective user
+     * @return name of the prospective user
      */
-    public String getRealName() {
-        return realName;
+    public String getName() {
+        return name;
     }
     
     /**
@@ -136,11 +139,11 @@ public class Registration extends AccountAccessAttempt {
     }
     
     /**
-     * Set the real name of the prospective user
-     * @param realName real name of the prospective user
+     * Set the name of the prospective user
+     * @param name name of the prospective user
      */
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setName(String name) {
+        this.name = name;
     }
     
     /**

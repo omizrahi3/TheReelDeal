@@ -21,10 +21,6 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class Login extends AccountAccessAttempt {
     
-    public Login() {
-        
-    }
-    
     /**
      * Validate the login attempt, using the provided list of users
      * and map of users to passwords

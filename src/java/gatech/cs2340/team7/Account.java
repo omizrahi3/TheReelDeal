@@ -17,7 +17,6 @@ import javax.faces.bean.SessionScoped;
 public class Account {
     
     private String username;
-    //private Image img;
     private boolean loggedIn;
     private boolean locked;
     

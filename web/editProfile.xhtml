@@ -1,22 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">  
     <h:head>
-        <title>Edit Profile Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Success Page</title>
+        <style>
+            .accordion{
+                position:absolute;
+                right: 0;
+                width:45%
+            }
+            .team7{
+                background-image:url("resources/images/Logo.jpg");
+                background-size:cover;
+                background-repeat:no-repeat
+            } 
+            .ui-selectonemenu-items-wrapper {
+                height: 200px !important
+            }
+       </style>
     </h:head>
-    <body>
-       
-        <h:form>
-            
-            <p>
+    <h:body styleClass="team7">
+         <h:form  styleClass="accordion">
+        <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
+        <p:accordionPanel activeIndex="1">
+            <p:tab title="Log Out">
+                <p:commandButton id="logoutButton" update="" value="Logout" action="#{user.logout()}" />
+            </p:tab>
+            <p:tab title="Your Profile">
+                <h:form>
+                   <p>
                 Name:
                 <br/>
                 <p:inputText id= "name" value = "#{userManager.activeUser.profile.name}"/>
@@ -30,11 +45,12 @@ and open the template in the editor.
                 <h3> About you:</h3>
             <p:inputTextarea id= "About" rows ="10" cols="60" value = "#{userManager.activeUser.profile.aboutMe}"/>
             </p>
-            <p:commandButton value="Submit Changes" action= "profile" styleClass="ui-priority-primary" />
+            <p:commandButton value="Submit Changes" action= "#{navigationManager.getSuccess}" styleClass="ui-priority-primary" />
+            <p:commandButton value="Cancel" action= "#{navigationManager.getSuccess}" styleClass="ui-priority-primary" />
+                </h:form>
+            </p:tab>
+        </p:accordionPanel>
+        </p:panel>
         </h:form>
-        <h:form>
-            <br/>
-            <p:commandButton value="Cancel" action= "profile" styleClass="ui-priority-primary" />
-        </h:form>
-    </body>
-</html>
+    </h:body>
+</html> 
