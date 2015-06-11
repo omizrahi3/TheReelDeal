@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class User {
     
-    private String name;
     private Account account;
     private Profile profile;
     //private List<Message> myMessages;
@@ -32,9 +31,9 @@ public class User {
      * @param profile Profile for user
      */
     public User(String name, Account account, Profile profile) {
-        this.name = name;
         this.account = account;
         this.profile = profile;
+        this.profile.setName(name);
     }
     
     /**
@@ -64,7 +63,7 @@ public class User {
      * @return user's name
      */
     public String getName() {
-        return this.name;
+        return this.profile.getName();
     }
     
     /**
@@ -88,7 +87,7 @@ public class User {
      * @param name user's name
      */
     public void setName(String name) {
-        this.name = name;
+        this.profile.setName(name);
     }
     
     /**
