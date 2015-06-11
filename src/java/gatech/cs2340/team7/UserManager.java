@@ -8,20 +8,19 @@ package gatech.cs2340.team7;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Anthony
  */
 @ManagedBean(name = "userManager", eager = true)
-@SessionScoped
+@ApplicationScoped
 public class UserManager {
-    
-    private List<User> userList; // change to hash table for faster lookup?
-    private HashMap<String, String> passwords;
+   
+    private final List<User> userList; // change to hash table for faster lookup?
+    private final HashMap<String, String> passwords;
     private Login login;
     private Registration registration;
     private User activeUser;

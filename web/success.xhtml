@@ -31,8 +31,6 @@
             </p:tab>
             <p:tab title="Your Profile">
                 <h:form>
-                    <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" 
-                                                 icon="ui-icon-check" />
                 <h:panelGrid columns="2" cellpadding="10">
                     <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" alt="Upload a photo!" ></p:graphicImage>
                     <p><strong>Name:</strong> #{userManager.activeUser.profile.name} </p>
@@ -41,6 +39,7 @@
                     <h3><strong>About #{userManager.activeUser.profile.name}</strong></h3>
                     <p> <pre>#{userManager.activeUser.profile.aboutMe}</pre> </p>
                 </h:panelGrid>
+                    <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" />
                 </h:form>
             </p:tab>
         </p:accordionPanel>
