@@ -98,6 +98,14 @@ public class Registration extends AccountAccessAttempt {
         return password.equals(passwordRepeat);
     }
     
+    @Override
+    public void clearData() {
+        super.clearData();
+        this.name = "";
+        this.passwordRepeat = "";
+        this.major = "";
+        this.validRegistration = false;
+    }
     /**
      * Get name of the prospective user
      * @return name of the prospective user

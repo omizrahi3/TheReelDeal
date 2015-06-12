@@ -56,6 +56,7 @@ public class UserManager {
             System.out.println("Login success!");
             activeUser = userWithUsername(login.getUsername());
             activeUser.loginToAccount();
+            login.clearData();
             return NavigationManager.success;
         } else {
             System.out.println("Login failed!");
@@ -77,7 +78,7 @@ public class UserManager {
             
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
-            
+            registration.clearData();
             return NavigationManager.success;
         } else {
             System.out.println("Failed registration attempt!");

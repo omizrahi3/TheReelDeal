@@ -20,6 +20,15 @@ public class AccountAccessAttempt {
     protected String password;
     
     /**
+     * Clear all data. This occurs after an account access
+     *     has been made.
+     */
+    public void clearData() {
+        this.username = "";
+        this.password = "";
+    }
+    
+    /**
      * Get username
      * @return username
      */
