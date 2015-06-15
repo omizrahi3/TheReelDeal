@@ -11,6 +11,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Anthony
  * @author Jimmy
+ * @author Katie
  */
 @ManagedBean(name = "profile", eager = true)
 @SessionScoped
@@ -18,6 +19,7 @@ public class Profile {
     
     public static final String DEFAULT_ABOUT_ME = "Share something about yourself.";
     public static final String DEFAULT_MAJOR = "Undecided";
+    public static final String DEFAULT_IMAGE_URL = "resources/images/AnonImage.jpg";
     
     private String name;
     private String major;
@@ -28,15 +30,16 @@ public class Profile {
      * Constructor
      */
     public Profile() {
-        this("", Profile.DEFAULT_MAJOR, Profile.DEFAULT_ABOUT_ME, "");
+        this("", Profile.DEFAULT_MAJOR, Profile.DEFAULT_ABOUT_ME, Profile.DEFAULT_IMAGE_URL);
     }
     
     /**
      * Constructor specifying the name of the user
      * @param name name of user
+     * @param major major of user
      */
     public Profile(String name, String major) {
-        this(name, major, Profile.DEFAULT_ABOUT_ME, "");
+        this(name, major, Profile.DEFAULT_ABOUT_ME, Profile.DEFAULT_IMAGE_URL);
     }
 
     /**
@@ -50,9 +53,20 @@ public class Profile {
         this.name = name;
         this.major = major;
         this.aboutMe = aboutMe;
-        this.imageURL = imageURL;
+        if (imageURL.equals("")) {
+            this.imageURL = Profile.DEFAULT_IMAGE_URL;
+        }
+        else if (imageURL == null) {
+            this.imageURL = Profile.DEFAULT_IMAGE_URL;
+        } else {
+            this.imageURL = imageURL;
+        }
     }
     
+    /**
+     * Return the profile picture's URL
+     * @return image URL
+     */
     public String getImageURL() {
         return imageURL;
     }
@@ -110,6 +124,13 @@ public class Profile {
      * @param imageURL URL to set
      */
     public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+        if (imageURL.equals("")) {
+            this.imageURL = Profile.DEFAULT_IMAGE_URL;
+        }
+        else if (imageURL == null) {
+            this.imageURL = Profile.DEFAULT_IMAGE_URL;
+        } else {
+            this.imageURL = imageURL;
+        }
     }
 }
