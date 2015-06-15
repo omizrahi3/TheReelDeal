@@ -57,17 +57,17 @@ public class MajorMenuView {
             new SelectItem("Computer Science", "Computer Science")
         });
         engMajors.setSelectItems(new SelectItem[] {
-            new SelectItem("Aerospace", "Aerospace"),
-            new SelectItem("Biomedical", "Biomedical"),
-            new SelectItem("Chemical", "Chemical"),
-            new SelectItem("Civil", "Civil"),
-            new SelectItem("Computer", "Computer"),
-            new SelectItem("Electrical", "Electrical"),
-            new SelectItem("Environmental", "Environmental"),
-            new SelectItem("v", "Industrial"),
-            new SelectItem("Material Science", "Material Science"),
-            new SelectItem("Mechanical", "Mechanical"),
-            new SelectItem("Nuclear & Radiological", "Nuclear & Radiological")
+            new SelectItem("Aerospace Engineering", "Aerospace Engineering"),
+            new SelectItem("Biomedical Engineering", "Biomedical Engineering"),
+            new SelectItem("Chemical Engineering", "Chemical Engineering"),
+            new SelectItem("Civil Engineering", "Civil Engineering"),
+            new SelectItem("Computer Engineering", "Computer Engineering"),
+            new SelectItem("Electrical Engineering", "Electrical Engineering"),
+            new SelectItem("Environmental Engineering", "Environmental Engineering"),
+            new SelectItem("Industrial Engineering", "Industrial Engineering"),
+            new SelectItem("Material Science Engineering", "Material Science Engineering"),
+            new SelectItem("Mechanical Engineering", "Mechanical Engineering"),
+            new SelectItem("Nuclear & Radiological Engineering", "Nuclear & Radiological Engineering")
         });
         scienceMajors.setSelectItems(new SelectItem[] {
             new SelectItem("Applied Math", "Applied Math"),
