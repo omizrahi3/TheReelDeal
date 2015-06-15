@@ -89,7 +89,6 @@ public class UserManager {
     /**
      * Add the user to the list
      * @param u User to add
-     * @throws FailedUserOperationException
      */
     public void addUser(User u) {
         if (u == null) {
