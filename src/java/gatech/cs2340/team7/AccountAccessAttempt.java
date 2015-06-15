@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+Abstract class to be inherited by Login and Registration classes.
  */
 package gatech.cs2340.team7;
 
@@ -14,7 +12,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "accountAccessAttempt", eager = true)
 @SessionScoped
-public class AccountAccessAttempt {
+public abstract class AccountAccessAttempt {
     
     protected String username;
     protected String password;
