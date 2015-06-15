@@ -29,6 +29,8 @@ public class NavigationManager {
     
     public static final String editProfile = "editProfile?faces-redirect=true";
     
+    public static final String movieSearch = "movieSearch?faces-redirect=true";
+    
     public String getSuccess() {
         return success;
     }
