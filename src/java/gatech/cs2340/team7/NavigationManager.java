@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+Class that currently only holds static references to xhtml page names;
  */
 package gatech.cs2340.team7;
 

@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+User class to represent the human user, and contain his/her Account and Profile.
  */
 package gatech.cs2340.team7;
 

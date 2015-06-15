@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+Registration class to handle aspect of a new user's registration. This class
+extends the abstract AccountAcessAttempt.
  */
 package gatech.cs2340.team7;
 

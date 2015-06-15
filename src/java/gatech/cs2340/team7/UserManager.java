@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+UserManager class that controls and handles all users and their actions.
  */
 package gatech.cs2340.team7;
 
