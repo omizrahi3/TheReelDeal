@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Anthony
  * @author Jimmy
+ * @author Katie
  */
 @ManagedBean(name = "profile", eager = true)
 @SessionScoped
@@ -37,6 +38,7 @@ public class Profile {
     /**
      * Constructor specifying the name of the user
      * @param name name of user
+     * @param major major of user
      */
     public Profile(String name, String major) {
         this(name, major, Profile.DEFAULT_ABOUT_ME, Profile.DEFAULT_IMAGE_URL);
@@ -63,6 +65,10 @@ public class Profile {
         }
     }
     
+    /**
+     * Return the profile picture's URL
+     * @return image URL
+     */
     public String getImageURL() {
         return imageURL;
     }
