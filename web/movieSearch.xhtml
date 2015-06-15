@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Search for a Movie</title>
+    </h:head>
+    <h:body>
+        <h1>TODO Fancy Header</h1>
+        <h:form id="movieDataDisplay">
+            <p:tabView orientation="top">
+                <p:tab title="New In-Theater Releases">
+                    <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesREST.newTheaterReleases}" >
+                        <p:column  headerText="ID">
+                            <h:outputText value="#{eachMovie.id}" />
+                        </p:column>
+
+                        <p:column headerText="Title">
+                           <h:outputText value="#{eachMovie.title}" />
+                        </p:column>
+
+                        <p:column headerText="Year">
+                           <h:outputText value="#{eachMovie.year}" />
+                        </p:column>
+
+                        <p:column headerText="Runtime">
+                            <h:outputText value="#{eachMovie.runtime}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="New DVD Releases">
+                    <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesREST.newDVDReleases}" >
+                        <p:column  headerText="ID">
+                            <h:outputText value="#{eachMovie.id}" />
+                        </p:column>
+
+                        <p:column headerText="Title">
+                           <h:outputText value="#{eachMovie.title}" />
+                        </p:column>
+
+                        <p:column headerText="Year">
+                           <h:outputText value="#{eachMovie.year}" />
+                        </p:column>
+
+                        <p:column headerText="Runtime">
+                            <h:outputText value="#{eachMovie.runtime}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Find a Movie">
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <p:outputLabel for="movieSearchInput" value="Movie to Find:" />
+                        <p:inputText id="movieSearchInput" value="#{rottenTomatoesREST.movieToSearch}" 
+                                     label="movieSearchInput">
+                        </p:inputText>
+                        <p:commandButton id="movieSearchButton" value="Go" action="#{rottenTomatoesREST.searchForMovie()}" />
+                        <p:message for="movieSearchInput" display="icon" />
+                    </h:panelGrid>
+                    <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesREST.searchResultMovies}" 
+                                 rendered="#{rottenTomatoesREST.showSearchData}" >
+                        <p:column  headerText="ID">
+                            <h:outputText value="#{eachMovie.id}" />
+                        </p:column>
+
+                        <p:column headerText="Title">
+                           <h:outputText value="#{eachMovie.title}" />
+                        </p:column>
+
+                        <p:column headerText="Year">
+                           <h:outputText value="#{eachMovie.year}" />
+                        </p:column>
+
+                        <p:column headerText="Runtime">
+                            <h:outputText value="#{eachMovie.runtime}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+    </h:body>
+</html>
