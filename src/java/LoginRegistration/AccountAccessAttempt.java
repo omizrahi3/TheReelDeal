@@ -1,7 +1,7 @@
 /*
 Abstract class to be inherited by Login and Registration classes.
  */
-package gatech.cs2340.team7.LoginRegistration;
+package LoginRegistration;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

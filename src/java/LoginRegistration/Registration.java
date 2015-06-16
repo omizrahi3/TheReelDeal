@@ -2,12 +2,12 @@
 Registration class to handle aspect of a new user's registration. This class
 extends the abstract AccountAcessAttempt.
  */
-package gatech.cs2340.team7.LoginRegistration;
+package LoginRegistration;
 
-import gatech.cs2340.team7.Account;
-import gatech.cs2340.team7.LoginRegistration.AccountAccessAttempt;
-import gatech.cs2340.team7.Profile;
-import gatech.cs2340.team7.User;
+import UserManagement.Account;
+import LoginRegistration.AccountAccessAttempt;
+import UserManagement.Profile;
+import UserManagement.User;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;

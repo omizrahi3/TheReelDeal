@@ -1,7 +1,7 @@
 /*
 Back-end pojo to handle the user setting his/her major via the UI element.
  */
-package gatech.cs2340.team7;
+package LoginRegistration;
 
 import java.util.ArrayList;
 import java.util.List;

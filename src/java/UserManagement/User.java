@@ -1,8 +1,9 @@
 /*
 User class to represent the human user, and contain his/her Account and Profile.
  */
-package gatech.cs2340.team7;
+package UserManagement;
 
+import gatech.cs2340.team7.NavigationManager;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;

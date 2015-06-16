@@ -24,22 +24,41 @@ public class RESTQuery {
     
     protected String queryURL;
     
+    /**
+     * Constructor
+     */
     public RESTQuery() {
         queryURL = "";
     }
     
+    /**
+     * Constructor
+     * @param queryURL 
+     */
     public RESTQuery(String queryURL) {
         this.queryURL = queryURL;
     }
 
+    /**
+     * Return the query URL string
+     * @return query URL
+     */
     public String getQueryURL() {
         return queryURL;
     }
 
+    /**
+     * Set the query URL string
+     * @param queryURL new query URL
+     */
     public void setQueryURL(String queryURL) {
         this.queryURL = formatQueryToken(queryURL);
     }
     
+    /**
+     * Actual send the HTTP request and get the response
+     * @return raw data received from the HTTP request
+     */
     public String processQuery() {
         System.out.println("Processing query " + queryURL);
         String rawData = "";
@@ -70,6 +89,11 @@ public class RESTQuery {
         return rawData;
     }
     
+    /**
+     * Return the validity of the potential query token
+     * @param tok Token to examine
+     * @return indication of token validity
+     */
     public static boolean validQueryToken(String tok) {
         // TODO build out validation
         if (tok instanceof String) {
@@ -78,6 +102,12 @@ public class RESTQuery {
         return false;
     }
     
+    /**
+     * Assert that the query url tok is in a format to be sent
+     * in an HTTP request
+     * @param tok Query token to format
+     * @return Formatted token
+     */
     public String formatQueryToken(String tok) {
         // TODO build out with any other special cases
         return tok.replace(" ", "%20");

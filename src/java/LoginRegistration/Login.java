@@ -1,10 +1,10 @@
 /*
 Login class to handle a user login. This class extends the abstract AccountAccessAttempt
  */
-package gatech.cs2340.team7.LoginRegistration;
+package LoginRegistration;
 
-import gatech.cs2340.team7.LoginRegistration.AccountAccessAttempt;
-import gatech.cs2340.team7.User;
+import LoginRegistration.AccountAccessAttempt;
+import UserManagement.User;
 import java.util.HashMap;
 import java.util.List;
 

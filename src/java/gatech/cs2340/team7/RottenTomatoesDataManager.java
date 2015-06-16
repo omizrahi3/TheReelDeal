@@ -4,9 +4,7 @@ Class to handle REST interfacing with the Rotten Tomatoes website
 package gatech.cs2340.team7;
 
 import com.google.gson.Gson;
-import com.rottentomatoes.*; // TODO don't import all
-
-import java.util.List;
+import com.rottentomatoes.RottenTomatoesData;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -32,17 +30,29 @@ public class RottenTomatoesDataManager {
     private MovieManager movieManager;
     private boolean showSearchData;
       
+    /**
+     * Constructor
+     */
     public RottenTomatoesDataManager() {
         query = new RESTQuery();
         movieManager = new MovieManager();
         updateNewReleasesLists();
     }
     
+    /**
+     * Convert the JSON data to a RottenTomatoesData object handle
+     * @param rawData JSON data
+     * @return RottenTomatoesData object handle
+     */
     public RottenTomatoesData JSONToPOJO(String rawData) {
         Gson gson = new Gson();
         return gson.fromJson(rawData, RottenTomatoesData.class);        
     }
     
+    /**
+     * Obtain the most recent new releases (DVD and Theater) lists
+     * and display them
+     */
     public void updateNewReleasesLists() {
         query.setQueryURL(BASE_API_URI + NEW_DVD_RELEASE_URLTOK +
                 "?limit=16&country=us&apikey=" + APIKey);
@@ -53,6 +63,10 @@ public class RottenTomatoesDataManager {
         movieManager.setNewTheaterReleases(JSONToPOJO(query.processQuery()).getMovies());
     }
     
+    /**
+     * Perform a query to Rotten Tomatoes for a specific keyword
+     * @return data received from the HTTP query
+     */
     public String queryForMovie() {
         if (RESTQuery.validQueryToken(queryToken)) {
             query.setQueryURL(BASE_API_URI + MOVIE_SEARCH_URLTOK +
@@ -68,41 +82,66 @@ public class RottenTomatoesDataManager {
         return null;
     }
     
+    /**
+     * Get the query token
+     * @return query token 
+     */
     public String getQueryToken() {
         return queryToken;
     }
 
+    /**
+     * Set the query token
+     * @param queryToken new query token
+     */
     public void setQueryToken(String queryToken) {
         this.queryToken = queryToken;
     }
 
+    /**
+     * Get the query handle
+     * @return query handle
+     */
     public RESTQuery getQuery() {
         return query;
     }
 
+    /**
+     * Set the query handle
+     * @param query query handle 
+     */
     public void setQuery(RESTQuery query) {
         this.query = query;
     }
 
+    /**
+     * Get the movie manager handle
+     * @return movie manager handle
+     */
     public MovieManager getMovieManager() {
         return movieManager;
     }
 
+    /**
+     * Set the movie manager handle
+     * @param movieManager movie manager handle
+     */
     public void setMovieManager(MovieManager movieManager) {
         this.movieManager = movieManager;
     }
     
     /**
-     * Return whether to dispalay search results
-     * @return 
+     * Return whether to display search results
+     * @return display or not
      */
     public boolean isShowSearchData() {
         return showSearchData;
     }
-
+    
     /**
-     * Set whether to display search results
-    */
+     * Set whether to display search data
+     * @param showData search data display indication
+     */
     public void setShowSearchData(boolean showData) {
         this.showSearchData = showData;
     }

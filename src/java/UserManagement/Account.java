@@ -1,7 +1,7 @@
 /*
 Account class to represents a user's account-specific data.
  */
-package gatech.cs2340.team7;
+package UserManagement;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

@@ -2,7 +2,7 @@
 Profile class to handle all data and actions on a user's profile.
  */
 
-package gatech.cs2340.team7;
+package UserManagement;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
