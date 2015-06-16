@@ -37,11 +37,6 @@ public class Posters {
         this.thumbnail = thumbnail;
     }
 
-    public Posters withThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -58,11 +53,6 @@ public class Posters {
      */
     public void setProfile(String profile) {
         this.profile = profile;
-    }
-
-    public Posters withProfile(String profile) {
-        this.profile = profile;
-        return this;
     }
 
     /**
@@ -83,11 +73,6 @@ public class Posters {
         this.detailed = detailed;
     }
 
-    public Posters withDetailed(String detailed) {
-        this.detailed = detailed;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -104,11 +89,6 @@ public class Posters {
      */
     public void setOriginal(String original) {
         this.original = original;
-    }
-
-    public Posters withOriginal(String original) {
-        this.original = original;
-        return this;
     }
 
     @Override

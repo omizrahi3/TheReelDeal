@@ -16,13 +16,13 @@ public class Ratings {
     private String criticsRating;
     @SerializedName("critics_score")
     @Expose
-    private int criticsScore;
+    private Integer criticsScore;
     @SerializedName("audience_rating")
     @Expose
     private String audienceRating;
     @SerializedName("audience_score")
     @Expose
-    private int audienceScore;
+    private Integer audienceScore;
 
     /**
      * 
@@ -42,17 +42,12 @@ public class Ratings {
         this.criticsRating = criticsRating;
     }
 
-    public Ratings withCriticsRating(String criticsRating) {
-        this.criticsRating = criticsRating;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The criticsScore
      */
-    public int getCriticsScore() {
+    public Integer getCriticsScore() {
         return criticsScore;
     }
 
@@ -61,13 +56,8 @@ public class Ratings {
      * @param criticsScore
      *     The critics_score
      */
-    public void setCriticsScore(int criticsScore) {
+    public void setCriticsScore(Integer criticsScore) {
         this.criticsScore = criticsScore;
-    }
-
-    public Ratings withCriticsScore(int criticsScore) {
-        this.criticsScore = criticsScore;
-        return this;
     }
 
     /**
@@ -88,17 +78,12 @@ public class Ratings {
         this.audienceRating = audienceRating;
     }
 
-    public Ratings withAudienceRating(String audienceRating) {
-        this.audienceRating = audienceRating;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The audienceScore
      */
-    public int getAudienceScore() {
+    public Integer getAudienceScore() {
         return audienceScore;
     }
 
@@ -107,13 +92,8 @@ public class Ratings {
      * @param audienceScore
      *     The audience_score
      */
-    public void setAudienceScore(int audienceScore) {
+    public void setAudienceScore(Integer audienceScore) {
         this.audienceScore = audienceScore;
-    }
-
-    public Ratings withAudienceScore(int audienceScore) {
-        this.audienceScore = audienceScore;
-        return this;
     }
 
     @Override

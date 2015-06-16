@@ -33,11 +33,6 @@ public class AbridgedCast {
         this.name = name;
     }
 
-    public AbridgedCast withName(String name) {
-        this.name = name;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -54,11 +49,6 @@ public class AbridgedCast {
      */
     public void setId(String id) {
         this.id = id;
-    }
-
-    public AbridgedCast withId(String id) {
-        this.id = id;
-        return this;
     }
 
     @Override

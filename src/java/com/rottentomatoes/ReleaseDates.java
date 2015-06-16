@@ -33,11 +33,6 @@ public class ReleaseDates {
         this.theater = theater;
     }
 
-    public ReleaseDates withTheater(String theater) {
-        this.theater = theater;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -54,11 +49,6 @@ public class ReleaseDates {
      */
     public void setDvd(String dvd) {
         this.dvd = dvd;
-    }
-
-    public ReleaseDates withDvd(String dvd) {
-        this.dvd = dvd;
-        return this;
     }
 
     @Override

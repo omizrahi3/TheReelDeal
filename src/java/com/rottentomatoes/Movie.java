@@ -18,12 +18,13 @@ public class Movie {
     @Expose
     private String title;
     @Expose
-    private int year;
+    private Integer year;
     @SerializedName("mpaa_rating")
     @Expose
     private String mpaaRating;
     @Expose
-    private int runtime;
+    private String runtime;
+    private int movieRuntime;
     @SerializedName("critics_consensus")
     @Expose
     private String criticsConsensus;
@@ -63,11 +64,6 @@ public class Movie {
         this.id = id;
     }
 
-    public Movie withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -86,17 +82,12 @@ public class Movie {
         this.title = title;
     }
 
-    public Movie withTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The year
      */
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
@@ -105,13 +96,8 @@ public class Movie {
      * @param year
      *     The year
      */
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public Movie withYear(int year) {
-        this.year = year;
-        return this;
     }
 
     /**
@@ -132,17 +118,12 @@ public class Movie {
         this.mpaaRating = mpaaRating;
     }
 
-    public Movie withMpaaRating(String mpaaRating) {
-        this.mpaaRating = mpaaRating;
-        return this;
-    }
-
     /**
      * 
      * @return
      *     The runtime
      */
-    public int getRuntime() {
+    public String getRuntime() {
         return runtime;
     }
 
@@ -151,13 +132,36 @@ public class Movie {
      * @param runtime
      *     The runtime
      */
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
+    public void setRuntime(String runtime) {
+        if (runtime.length() == 0) {
+            this.runtime = "n/a";
+        } else {
+            this.runtime = runtime;
+        }
+        setMovieruntime(this.runtime);
     }
-
-    public Movie withRuntime(int runtime) {
-        this.runtime = runtime;
-        return this;
+    
+    /**
+     * Set the Integer representation of the runtime. Due to GSON's lack of
+     * graceful empty string parsing for number variables, the runtime is 
+     * initially set to a String, and this method is then used to translate
+     * its value into the appropriate string.
+     * @param runtime 
+     */
+    public void setMovieruntime(String runtime) {
+        try {
+            this.movieRuntime = Integer.parseInt(this.runtime);
+        } catch(java.lang.NumberFormatException nfe) {
+            System.out.println(nfe.getMessage());
+        }
+    }
+    
+    public void setMovieRuntime(Integer movieRuntime) {
+        this.movieRuntime = movieRuntime;
+    }
+    
+    public Integer getMovieRuntime() {
+        return movieRuntime;
     }
 
     /**
@@ -178,11 +182,6 @@ public class Movie {
         this.criticsConsensus = criticsConsensus;
     }
 
-    public Movie withCriticsConsensus(String criticsConsensus) {
-        this.criticsConsensus = criticsConsensus;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -199,11 +198,6 @@ public class Movie {
      */
     public void setReleaseDates(ReleaseDates releaseDates) {
         this.releaseDates = releaseDates;
-    }
-
-    public Movie withReleaseDates(ReleaseDates releaseDates) {
-        this.releaseDates = releaseDates;
-        return this;
     }
 
     /**
@@ -224,11 +218,6 @@ public class Movie {
         this.ratings = ratings;
     }
 
-    public Movie withRatings(Ratings ratings) {
-        this.ratings = ratings;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -245,11 +234,6 @@ public class Movie {
      */
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
-    }
-
-    public Movie withSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-        return this;
     }
 
     /**
@@ -270,11 +254,6 @@ public class Movie {
         this.posters = posters;
     }
 
-    public Movie withPosters(Posters posters) {
-        this.posters = posters;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -291,11 +270,6 @@ public class Movie {
      */
     public void setAbridgedCast(List<AbridgedCast> abridgedCast) {
         this.abridgedCast = abridgedCast;
-    }
-
-    public Movie withAbridgedCast(List<AbridgedCast> abridgedCast) {
-        this.abridgedCast = abridgedCast;
-        return this;
     }
 
     /**
@@ -316,11 +290,6 @@ public class Movie {
         this.alternateIds = alternateIds;
     }
 
-    public Movie withAlternateIds(AlternateIds alternateIds) {
-        this.alternateIds = alternateIds;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -337,11 +306,6 @@ public class Movie {
      */
     public void setLinks(Links links) {
         this.links = links;
-    }
-
-    public Movie withLinks(Links links) {
-        this.links = links;
-        return this;
     }
 
     @Override

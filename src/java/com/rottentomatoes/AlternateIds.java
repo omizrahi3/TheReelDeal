@@ -31,11 +31,6 @@ public class AlternateIds {
         this.imdb = imdb;
     }
 
-    public AlternateIds withImdb(String imdb) {
-        this.imdb = imdb;
-        return this;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

@@ -39,11 +39,6 @@ public class Links {
         this.self = self;
     }
 
-    public Links withSelf(String self) {
-        this.self = self;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -60,11 +55,6 @@ public class Links {
      */
     public void setAlternate(String alternate) {
         this.alternate = alternate;
-    }
-
-    public Links withAlternate(String alternate) {
-        this.alternate = alternate;
-        return this;
     }
 
     /**
@@ -85,11 +75,6 @@ public class Links {
         this.cast = cast;
     }
 
-    public Links withCast(String cast) {
-        this.cast = cast;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -108,11 +93,6 @@ public class Links {
         this.reviews = reviews;
     }
 
-    public Links withReviews(String reviews) {
-        this.reviews = reviews;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -129,11 +109,6 @@ public class Links {
      */
     public void setSimilar(String similar) {
         this.similar = similar;
-    }
-
-    public Links withSimilar(String similar) {
-        this.similar = similar;
-        return this;
     }
 
     @Override

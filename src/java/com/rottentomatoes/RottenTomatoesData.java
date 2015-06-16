@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class RottenTomatoesData {
 
     @Expose
-    private int total;
+    private Integer total;
     @Expose
     private List<Movie> movies = new ArrayList<Movie>();
     @Expose
@@ -28,7 +28,7 @@ public class RottenTomatoesData {
      * @return
      *     The total
      */
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
@@ -37,13 +37,8 @@ public class RottenTomatoesData {
      * @param total
      *     The total
      */
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
-    }
-
-    public RottenTomatoesData withTotal(int total) {
-        this.total = total;
-        return this;
     }
 
     /**
@@ -64,11 +59,6 @@ public class RottenTomatoesData {
         this.movies = movies;
     }
 
-    public RottenTomatoesData withMovies(List<Movie> movies) {
-        this.movies = movies;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -87,11 +77,6 @@ public class RottenTomatoesData {
         this.links = links;
     }
 
-    public RottenTomatoesData withLinks(Links_ links) {
-        this.links = links;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -108,11 +93,6 @@ public class RottenTomatoesData {
      */
     public void setLinkTemplate(String linkTemplate) {
         this.linkTemplate = linkTemplate;
-    }
-
-    public RottenTomatoesData withLinkTemplate(String linkTemplate) {
-        this.linkTemplate = linkTemplate;
-        return this;
     }
 
     @Override

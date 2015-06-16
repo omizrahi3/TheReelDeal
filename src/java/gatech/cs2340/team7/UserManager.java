@@ -3,6 +3,8 @@ UserManager class that controls and handles all users and their actions.
  */
 package gatech.cs2340.team7;
 
+import gatech.cs2340.team7.LoginRegistration.Registration;
+import gatech.cs2340.team7.LoginRegistration.Login;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

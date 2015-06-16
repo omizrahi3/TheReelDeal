@@ -6,78 +6,98 @@
         xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Search for a Movie</title>
+        <style>
+            body {
+                background-color: rgb(250, 249, 245);
+            }
+            h1 {
+                text-align: center;
+            }
+        </style>
     </h:head>
     <h:body>
         <h1>TODO Fancy Header</h1>
         <h:form id="movieDataDisplay">
-            <p:tabView orientation="top">
-                <p:tab title="New In-Theater Releases">
-                    <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesREST.newTheaterReleases}" >
-                        <p:column  headerText="ID">
-                            <h:outputText value="#{eachMovie.id}" />
-                        </p:column>
-
-                        <p:column headerText="Title">
+            <p:tabView orientation="top" activeIndex="2">
+                <p:tab title="New In-Theater">
+                    <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newTheaterReleases}" >
+                        <p:column headerText="Title" width="10%">
                            <h:outputText value="#{eachMovie.title}" />
                         </p:column>
 
-                        <p:column headerText="Year">
-                           <h:outputText value="#{eachMovie.year}" />
+                        <p:column headerText="Cover" width="10%" style="text-align: center;">
+                            <img src="#{eachMovie.posters.thumbnail}" />
                         </p:column>
 
-                        <p:column headerText="Runtime">
-                            <h:outputText value="#{eachMovie.runtime}" />
+                        <p:column headerText="Synopsis">
+                            <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
+                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
+                        </p:column>
+                        
+                        <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
+                            <h:outputText value="#{eachMovie.mpaaRating}" />
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
-                <p:tab title="New DVD Releases">
-                    <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesREST.newDVDReleases}" >
-                        <p:column  headerText="ID">
-                            <h:outputText value="#{eachMovie.id}" />
-                        </p:column>
-
-                        <p:column headerText="Title">
+                <p:tab title="New DVDs">
+                    <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newDVDReleases}" >
+                        <p:column headerText="Title" width="10%">
                            <h:outputText value="#{eachMovie.title}" />
                         </p:column>
 
-                        <p:column headerText="Year">
-                           <h:outputText value="#{eachMovie.year}" />
+                        <p:column headerText="Cover" width="10%" style="text-align: center;">
+                            <img src="#{eachMovie.posters.thumbnail}" />
                         </p:column>
 
-                        <p:column headerText="Runtime">
-                            <h:outputText value="#{eachMovie.runtime}" />
+                        <p:column headerText="Synopsis">
+                            <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
+                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
+                        </p:column>
+                        
+                        <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
+                            <h:outputText value="#{eachMovie.mpaaRating}" />
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="Find a Movie">
                     <h:panelGrid columns="4" cellpadding="5">
                         <p:outputLabel for="movieSearchInput" value="Movie to Find:" />
-                        <p:inputText id="movieSearchInput" value="#{rottenTomatoesREST.movieToSearch}" 
+                        <p:inputText id="movieSearchInput" value="#{rottenTomatoesDataManager.queryToken}" 
                                      label="movieSearchInput">
                         </p:inputText>
-                        <p:commandButton id="movieSearchButton" value="Go" action="#{rottenTomatoesREST.searchForMovie()}" />
+                        <p:commandButton id="movieSearchButton" value="Go" action="#{rottenTomatoesDataManager.queryForMovie()}" />
                         <p:message for="movieSearchInput" display="icon" />
                     </h:panelGrid>
-                    <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesREST.searchResultMovies}" 
-                                 rendered="#{rottenTomatoesREST.showSearchData}" >
-                        <p:column  headerText="ID">
-                            <h:outputText value="#{eachMovie.id}" />
-                        </p:column>
-
-                        <p:column headerText="Title">
+                    <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.searchResultMovies}" 
+                                 rendered="#{rottenTomatoesDataManager.showSearchData}" >
+                        <p:column headerText="Title" width="10%">
                            <h:outputText value="#{eachMovie.title}" />
                         </p:column>
 
-                        <p:column headerText="Year">
-                           <h:outputText value="#{eachMovie.year}" />
+                        <p:column headerText="Cover" width="10%" style="text-align: center;">
+                            <img src="#{eachMovie.posters.thumbnail}" />
                         </p:column>
 
-                        <p:column headerText="Runtime">
-                            <h:outputText value="#{eachMovie.runtime}" />
+                        <p:column headerText="Synopsis">
+                            <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
+                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
+                        </p:column>
+                        
+                        <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
+                            <h:outputText value="#{eachMovie.mpaaRating}" />
+                        </p:column>
                     </p:dataTable>
                 </p:tab>
             </p:tabView>
