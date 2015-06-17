@@ -27,6 +27,9 @@ public class UserManager {
     private Registration registration;
     private User activeUser;
     
+    /**
+     * Constructor
+     */
     public UserManager() {
         userList = new ArrayList();
         passwords = new HashMap<>();
@@ -40,7 +43,13 @@ public class UserManager {
         passwords.put("user", "password");
     }
     
-    public User userWithUsername(String username) throws Exception {
+    /**
+     * 
+     * @param username
+     * @return
+     * @throws Exception 
+     */
+    public User get(String username) throws Exception {
         for (User user : userList) {
             if (username.equals(user.getAccount().getUsername())) {
                 return user;
@@ -49,14 +58,23 @@ public class UserManager {
         throw new Exception("Logged in a non-existent User!\nUsername: " + username);
     }
     
+    /**
+     * Navigate to the edit profile page
+     * @return page name for XHTML navigation
+     */
     public String editProfile() {
         return NavigationManager.editProfile;
     }
     
+    /**
+     * Attempt to log in an existing user
+     * @return page name for XHTML navigation (if applicable)
+     * @throws Exception if user is locked
+     */
     public String loginExistingUser() throws Exception {
         if (login.checkLogin(userList, passwords)) {
             System.out.println("Login success!");
-            activeUser = userWithUsername(login.getUsername());
+            activeUser = get(login.getUsername());
             activeUser.loginToAccount();
             login.clearData();
             return NavigationManager.success;
@@ -70,6 +88,10 @@ public class UserManager {
         }
     }
     
+    /**
+     * Register a new user
+     * @return new page to navigation to (if registration is successful)
+     */
     public String registerNewUser() {
         if (registration.checkNewUserRegistration(userList)) {
             // Registration success, create the user, account, and profile

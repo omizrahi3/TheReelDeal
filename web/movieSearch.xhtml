@@ -10,13 +10,14 @@
             body {
                 background-color: rgb(250, 249, 245);
             }
-            h1 {
+            body .banner {
                 text-align: center;
             }
         </style>
     </h:head>
     <h:body>
-        <h1>TODO Fancy Header</h1>
+        <!-- maintain a ~4.04 width-to-height ratio for image below -->
+        <div class="banner"><img src="resources/images/Banner.jpg" width="1000px" height="248px" align="middle"/></div>
         <h:form id="movieDataDisplay">
             <p:tabView orientation="top" activeIndex="2">
                 <p:tab title="New In-Theater">
@@ -93,6 +94,10 @@
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
                             <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
+                        </p:column>
+                        
+                        <p:column headerText="Runtime" width="10%" style="text-align: center">
+                            <h:outputText value="#{eachMovie.runtime}" /><br />
                         </p:column>
                         
                         <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
