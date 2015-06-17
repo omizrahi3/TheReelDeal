@@ -60,6 +60,8 @@ public class RESTQuery {
      * @return raw data received from the HTTP request
      */
     public String processQuery() {
+        // TODO throw exception if not valid token, have caller catch exceptio
+        // and display to user
         System.out.println("Processing query " + queryURL);
         String rawData = "";
         try {
@@ -96,6 +98,7 @@ public class RESTQuery {
      */
     public static boolean validQueryToken(String tok) {
         // TODO build out validation
+        // apache has a url validator
         if (tok instanceof String) {
             return true;
         }
