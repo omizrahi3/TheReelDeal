@@ -24,7 +24,6 @@ public class Movie {
     private String mpaaRating;
     @Expose
     private String runtime;
-    private int movieRuntime;
     @SerializedName("critics_consensus")
     @Expose
     private String criticsConsensus;
@@ -138,30 +137,6 @@ public class Movie {
         } else {
             this.runtime = runtime;
         }
-        setMovieruntime(this.runtime);
-    }
-    
-    /**
-     * Set the Integer representation of the runtime. Due to GSON's lack of
-     * graceful empty string parsing for number variables, the runtime is 
-     * initially set to a String, and this method is then used to translate
-     * its value into the appropriate string.
-     * @param runtime 
-     */
-    public void setMovieruntime(String runtime) {
-        try {
-            this.movieRuntime = Integer.parseInt(this.runtime);
-        } catch(java.lang.NumberFormatException nfe) {
-            System.out.println(nfe.getMessage());
-        }
-    }
-    
-    public void setMovieRuntime(Integer movieRuntime) {
-        this.movieRuntime = movieRuntime;
-    }
-    
-    public Integer getMovieRuntime() {
-        return movieRuntime;
     }
 
     /**
