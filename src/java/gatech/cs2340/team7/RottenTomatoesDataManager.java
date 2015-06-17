@@ -4,11 +4,12 @@ Class to handle REST interfacing with the Rotten Tomatoes website
 package gatech.cs2340.team7;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rottentomatoes.RottenTomatoesData;
+import com.rottentomatoes.IntegerAdapter;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 
 /**
  *
@@ -34,6 +35,7 @@ public class RottenTomatoesDataManager {
      * Constructor
      */
     public RottenTomatoesDataManager() {
+        System.out.println("New RottenTomatoesDataManager created");
         query = new RESTQuery();
         movieManager = new MovieManager();
         updateNewReleasesLists();
@@ -45,7 +47,9 @@ public class RottenTomatoesDataManager {
      * @return RottenTomatoesData object handle
      */
     public RottenTomatoesData JSONToPOJO(String rawData) {
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Integer.class, new IntegerAdapter());
+        Gson gson = builder.create();
         return gson.fromJson(rawData, RottenTomatoesData.class);        
     }
     
@@ -53,7 +57,7 @@ public class RottenTomatoesDataManager {
      * Obtain the most recent new releases (DVD and Theater) lists
      * and display them
      */
-    public void updateNewReleasesLists() {
+    public final void updateNewReleasesLists() {
         query.setQueryURL(BASE_API_URI + NEW_DVD_RELEASE_URLTOK +
                 "?limit=16&country=us&apikey=" + APIKey);
         movieManager.setNewDVDReleases(JSONToPOJO(query.processQuery()).getMovies());
@@ -72,7 +76,6 @@ public class RottenTomatoesDataManager {
             query.setQueryURL(BASE_API_URI + MOVIE_SEARCH_URLTOK +
                     "?q=" + queryToken +
                     "&page_limit=10&page=1&apikey=" + APIKey);
-            RottenTomatoesData data = JSONToPOJO(query.processQuery());
             movieManager.setSearchResultMovies(JSONToPOJO(query.processQuery()).getMovies());
             showSearchData = true;
             queryToken = "";
