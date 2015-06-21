@@ -81,9 +81,9 @@ public class UserManager {
         } else {
             System.out.println("Login failed!");
             System.out.println("Current users:");
-            for (User u : userList) {
+            userList.stream().forEach((u) -> {
                 System.out.println(u.getAccount().getUsername());
-            }
+            });
             return null;
         }
     }

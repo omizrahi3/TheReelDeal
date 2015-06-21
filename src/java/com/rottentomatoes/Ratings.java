@@ -16,14 +16,27 @@ public class Ratings {
     private String criticsRating;
     @SerializedName("critics_score")
     @Expose
-    private Integer criticsScore;
+    private String criticsScore;
     @SerializedName("audience_rating")
     @Expose
     private String audienceRating;
     @SerializedName("audience_score")
     @Expose
-    private Integer audienceScore;
-
+    private String audienceScore;
+    
+    /**
+     * Assert that the data to be displayed is readable tot he common user
+     * (a.k.a. don't show default values returned by Rotten Tomatoes
+     */
+    public void assertDataFidelity() {
+        if (criticsRating == null) {
+            criticsScore = "n/a";
+        }
+        if (audienceRating == null) {
+            audienceScore = "n/a";
+        }
+    }
+    
     /**
      * 
      * @return
@@ -47,7 +60,7 @@ public class Ratings {
      * @return
      *     The criticsScore
      */
-    public Integer getCriticsScore() {
+    public String getCriticsScore() {
         return criticsScore;
     }
 
@@ -56,7 +69,7 @@ public class Ratings {
      * @param criticsScore
      *     The critics_score
      */
-    public void setCriticsScore(Integer criticsScore) {
+    public void setCriticsScore(String criticsScore) {
         this.criticsScore = criticsScore;
     }
 
@@ -83,7 +96,7 @@ public class Ratings {
      * @return
      *     The audienceScore
      */
-    public Integer getAudienceScore() {
+    public String getAudienceScore() {
         return audienceScore;
     }
 
@@ -92,7 +105,7 @@ public class Ratings {
      * @param audienceScore
      *     The audience_score
      */
-    public void setAudienceScore(Integer audienceScore) {
+    public void setAudienceScore(String audienceScore) {
         this.audienceScore = audienceScore;
     }
 

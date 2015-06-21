@@ -44,7 +44,30 @@ public class Movie {
     private AlternateIds alternateIds;
     @Expose
     private Links links;
-
+    @Expose
+    private List<ReelDeelReview> reelDeelReviews;
+    
+    public Movie() {
+        reelDeelReviews = new ArrayList<>();
+    }
+    
+    /**
+     * Assert that the data to be displayed is readable to the common user
+     * (a.k.a. don't show default values returned by Rotten Tomatoes
+     */
+    public void assertDataFidelity() {
+        ratings.assertDataFidelity();
+        if (runtime == null || runtime.length() == 0) {
+            runtime = "n/a";
+        }
+        if (synopsis == null || synopsis.length() == 0) {
+            synopsis = "No synopsis currently provided by Rotten Tomatoes";
+        }
+        if (criticsConsensus == null || criticsConsensus.length() == 0) {
+            criticsConsensus = "n/a";
+        }
+    }
+    
     /**
      * 
      * @return
@@ -132,6 +155,7 @@ public class Movie {
      *     The runtime
      */
     public void setRuntime(String runtime) {
+        System.out.println("Hello from setRuntime");
         if (runtime.length() == 0) {
             this.runtime = "n/a";
         } else {
@@ -305,4 +329,25 @@ public class Movie {
         return new EqualsBuilder().append(id, rhs.id).append(title, rhs.title).append(year, rhs.year).append(mpaaRating, rhs.mpaaRating).append(runtime, rhs.runtime).append(criticsConsensus, rhs.criticsConsensus).append(releaseDates, rhs.releaseDates).append(ratings, rhs.ratings).append(synopsis, rhs.synopsis).append(posters, rhs.posters).append(abridgedCast, rhs.abridgedCast).append(alternateIds, rhs.alternateIds).append(links, rhs.links).isEquals();
     }
 
+    /**
+     * Return the movie's ReelDeel reviews
+     * @return reviews from the ReelDeel web app
+     */
+    public List<ReelDeelReview> getReelDeelReviews() {
+        return reelDeelReviews;
+    }
+
+    /**
+     * Set the movie's ReelDeel reviews
+     * @param reelDeelReviews 
+     */
+    public void setReelDeelReview(List<ReelDeelReview> reelDeelReviews) {
+        this.reelDeelReviews = reelDeelReviews;
+    }
+
+    public void addReelDeelReview(ReelDeelReview newReview) {
+        System.out.println("Adding review of " + this.title + " with " + newReview.getScore() +
+                " reels and feedback: " + newReview.getFeedback());
+        reelDeelReviews.add(newReview);
+    }
 }

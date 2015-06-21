@@ -7,9 +7,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rottentomatoes.RottenTomatoesData;
 import com.rottentomatoes.IntegerAdapter;
+import com.rottentomatoes.ReelDeelReview;
+
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -30,6 +34,8 @@ public class RottenTomatoesDataManager {
     private RESTQuery query;
     private MovieManager movieManager;
     private boolean showSearchData;
+    private String selectedMovieTok;
+    private ReelDeelReview newReview;
       
     /**
      * Constructor
@@ -38,7 +44,18 @@ public class RottenTomatoesDataManager {
         System.out.println("New RottenTomatoesDataManager created");
         query = new RESTQuery();
         movieManager = new MovieManager();
+        showSearchData = false;
+        selectedMovieTok = "";
+        newReview = new ReelDeelReview();
         updateNewReleasesLists();
+    }
+    
+    public String movieSelected() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        System.out.println("Movie selected: " + params.get("selectedMovie"));
+        selectedMovieTok = params.get("selectedMovie");
+        movieManager.movieSelected(selectedMovieTok);
+        return NavigationManager.movieDetailedView;
     }
     
     /**
@@ -65,6 +82,7 @@ public class RottenTomatoesDataManager {
         query.setQueryURL(BASE_API_URI + NEW_THEATER_RELEASE_URLTOK +
                 "?limit=16&country=us&apikey=" + APIKey);
         movieManager.setNewTheaterReleases(JSONToPOJO(query.processQuery()).getMovies());
+        movieManager.assertDataFidelity();
     }
     
     /**
@@ -79,10 +97,20 @@ public class RottenTomatoesDataManager {
             movieManager.setSearchResultMovies(JSONToPOJO(query.processQuery()).getMovies());
             showSearchData = true;
             queryToken = "";
-            return NavigationManager.movieSearch;
+            return NavigationManager.movieHub;
         }
         queryToken = "";
         return null;
+    }
+    
+    /**
+     * Add the new review to the associate movie handle
+     */
+    public String addReview() {
+        movieManager.addReview(newReview);
+        newReview.setFeedback("");
+        newReview.setScore(ReelDeelReview.MIN_SCORE);
+        return NavigationManager.postReview;
     }
     
     /**
@@ -148,4 +176,38 @@ public class RottenTomatoesDataManager {
     public void setShowSearchData(boolean showData) {
         this.showSearchData = showData;
     }
+
+    /**
+     * Return the name of the selected movie for more info to be displayed
+     * @return name of selected movie
+     */
+    public String getSelectedMovieTok() {
+        return selectedMovieTok;
+    }
+
+    /**
+     * Set the name of the selected movie for more info to be displayed
+     * @param selectedMovieTok name of selected movie
+     */
+    public void setSelectedMovieTok(String selectedMovieTok) {
+        this.selectedMovieTok = selectedMovieTok;
+    }
+
+    /**
+     * Return the new review
+     * @return new review
+     */
+    public ReelDeelReview getNewReview() {
+        return newReview;
+    }
+
+    /**
+     * Set the new review
+     * @param newReview 
+     */
+    public void setNewReview(ReelDeelReview newReview) {
+        this.newReview = newReview;
+    }
+    
+    
 }

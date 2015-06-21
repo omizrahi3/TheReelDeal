@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Movie Details</title>
+        <style>
+            body {
+                background-color: rgb(250, 249, 245);
+            }
+            body .banner {
+                text-align: center;
+            }
+            body .general {
+                background-color: rgb(250, 249, 245);
+            }
+            body .label {
+                font-weight: bold;
+            }
+            body .feedbackLabel {
+                font-weight: bold;
+                text-align: text-top;
+            }
+        </style>
+    </h:head>
+    <body>
+        <h:form>
+            <!-- maintain a ~4:1 width-to-height ratio for banner image -->
+            <div class="banner"><img src="resources/images/Banner.jpg" width="1000px" height="248px" align="middle"/></div>
+            <h1><strong>#{rottenTomatoesDataManager.movieManager.selectedMovie.title}</strong></h1>
+            <p:tabView id="tabView" class="general">
+                <p:tab title="Details">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <img src="#{rottenTomatoesDataManager.movieManager.selectedMovie.posters.thumbnail}" />
+                        <h:outputText value="" />
+                        <h:outputLabel class="label" value="Title: " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.title}" />
+                        <h:outputLabel class="label" value="Length (minutes): " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.runtime}" />
+                        <h:outputLabel class="label" value="Rating:  " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.mpaaRating}" />
+                        <h:outputLabel class="label" value="Year: " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.year}" />
+                        <h:outputLabel class="label" value="Critics Say: " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.criticsConsensus}" />
+                        <h:outputLabel class="label" value="Synopsis: " />
+                        <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.synopsis}" />
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Leave a Review">
+                    <h:panelGrid columns="6" cellpadding="5">
+                        <h:outputLabel value="Your rating: " style="font-weight: bold"/>
+                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel1" value="#{rottenTomatoesDataManager.newReview.reels[0]}"  width="50px" height="50px" />
+                            <f:param name="rating" value="1" />
+                        </h:commandLink>
+                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel2" value="#{rottenTomatoesDataManager.newReview.reels[1]}"  width="50px" height="50px" />
+                            <f:param name="rating" value="2" />
+                        </h:commandLink>
+                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel3" value="#{rottenTomatoesDataManager.newReview.reels[2]}"  width="50px" height="50px" />
+                            <f:param name="rating" value="3" />
+                        </h:commandLink>
+                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel4" value="#{rottenTomatoesDataManager.newReview.reels[3]}"  width="50px" height="50px" />
+                            <f:param name="rating" value="4" />
+                        </h:commandLink>
+                        <h:outputLabel id="reelsLabel" value="#{rottenTomatoesDataManager.newReview.score} Reels!" style="vertical-align: middle"/>
+                    </h:panelGrid>
+                    <br /><br />
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="Leave Some Feedback" class="feedbackLabel" />
+                        <p:inputTextarea value="#{rottenTomatoesDataManager.newReview.feedback}" rows="10" cols="50" counter="charsRemainingDisplay" 
+                                         maxlength="500" counterTemplate="{0} characters remaining" autoResize="false" />
+                        <h:outputText value="" />
+                        <h:outputText id="charsRemainingDisplay" />
+                        <h:outputText value="" />
+                        <h:commandButton value="Submit" action="#{rottenTomatoesDataManager.addReview()}" />
+                    </h:panelGrid>
+                </p:tab>
+            </p:tabView>
+        </h:form>
+    </body>
+</html>
