@@ -4,7 +4,7 @@ MovieManager class to handle all movie data processing and maintenance
 package gatech.cs2340.team7;
 
 import com.rottentomatoes.Movie;
-import com.rottentomatoes.ReelDeelReview;
+import com.rottentomatoes.ReelDealRating;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -67,22 +67,35 @@ public class MovieManager {
     }
     
     public void movieSelected(String name) {
-        // TODO fix this horrendous algorithm (make lists into maps keyed by movie name
-        this.searchResultMovies.stream().filter((m) -> (m.getTitle().equals(name))).forEach((m) -> {
-            System.out.println("Selected movie: " + m.getTitle());
-            this.selectedMovie = m;
-        });
-        this.newDVDReleases.stream().filter((m) -> (m.getTitle().equals(name))).forEach((m) -> {
-            System.out.println("Selected movie: " + m.getTitle());
-            this.selectedMovie = m;
-        });
-        this.newTheaterReleases.stream().filter((m) -> (m.getTitle().equals(name))).forEach((m) -> {
-            System.out.println("Selected movie: " + m.getTitle());
-            this.selectedMovie = m;
-        }); // TODO handle case of not finding movie
+        // TODO fix this horrendous algorithm (make lists into maps keyed by movie name)
+        for (Movie m : newDVDReleases) {
+            if (m.getTitle().equals(name)) {
+                System.out.println("Selected movie: " + m.getTitle());
+                selectedMovie = m;
+                return;
+            }
+        }
+        for (Movie m : newTheaterReleases) {
+            if (m == null) {System.out.println("null movie");}
+            else if (m.getTitle().equals(name)) {
+                System.out.println("Selected movie: " + m.getTitle());
+                selectedMovie = m;
+                return;
+            }
+        }
+        if (searchResultMovies != null) {
+            for (Movie m : searchResultMovies) {
+                if (m.getTitle().equals(name)) {
+                    System.out.println("Selected movie: " + m.getTitle());
+                    selectedMovie = m;
+                    return;
+                }
+            }
+        }
+        // TODO handle case of not finding movie
     }
     
-    public void addReview(ReelDeelReview newReview) {
+    public void addReview(ReelDealRating newReview) {
         if (selectedMovie == null) {
             throw new java.util.NoSuchElementException("No Selected Movie!");
         }

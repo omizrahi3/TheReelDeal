@@ -45,7 +45,7 @@ public class Movie {
     @Expose
     private Links links;
     @Expose
-    private List<ReelDeelReview> reelDeelReviews;
+    private List<ReelDealRating> reelDeelReviews;
     
     public Movie() {
         reelDeelReviews = new ArrayList<>();
@@ -306,6 +306,26 @@ public class Movie {
     public void setLinks(Links links) {
         this.links = links;
     }
+    
+    /**
+     * Gets the average rating over all Reel Deal users who have rated the movie.
+     * Returns -1 if the movie does not have ratings.
+     * 
+     * @return average rating or -1
+     */
+    public float getAverageRating() {
+        return ratings.getAverageRating();
+    }
+    
+    /**
+     * Gets the average rating over all Reel Deel users of a specific major
+     * who have rated the movie. Returns -1 if no major specific ratings found.
+     * 
+     * @return average rating of specific major
+     */
+    public float getMajorSpecificRating(String major) {
+        return ratings.getMajorSpecificRating(major);
+    }
 
     @Override
     public String toString() {
@@ -333,7 +353,7 @@ public class Movie {
      * Return the movie's ReelDeel reviews
      * @return reviews from the ReelDeel web app
      */
-    public List<ReelDeelReview> getReelDeelReviews() {
+    public List<ReelDealRating> getReelDeelReviews() {
         return reelDeelReviews;
     }
 
@@ -341,13 +361,11 @@ public class Movie {
      * Set the movie's ReelDeel reviews
      * @param reelDeelReviews 
      */
-    public void setReelDeelReview(List<ReelDeelReview> reelDeelReviews) {
+    public void setReelDeelReview(List<ReelDealRating> reelDeelReviews) {
         this.reelDeelReviews = reelDeelReviews;
     }
 
-    public void addReelDeelReview(ReelDeelReview newReview) {
-        System.out.println("Adding review of " + this.title + " with " + newReview.getScore() +
-                " reels and feedback: " + newReview.getFeedback());
+    public void addReelDeelReview(ReelDealRating newReview) {
         reelDeelReviews.add(newReview);
     }
 }
