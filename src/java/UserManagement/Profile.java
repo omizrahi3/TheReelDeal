@@ -4,6 +4,7 @@ Profile class to handle all data and actions on a user's profile.
 
 package UserManagement;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -15,7 +16,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "profile", eager = true)
 @SessionScoped
-public class Profile {
+public class Profile implements Serializable {
     
     public static final String DEFAULT_ABOUT_ME = "Share something about yourself.";
     public static final String DEFAULT_MAJOR = "Undecided";

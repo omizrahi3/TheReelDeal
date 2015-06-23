@@ -113,4 +113,12 @@ public class User implements Serializable {
     public String getMajor() {
         return profile.getMajor();
     }
+    
+    public String getUsername() {
+        return account.getUsername();
+    }
+    
+    public void setUsername(String username) {
+        this.account.setUsername(username);
+    }
 }
