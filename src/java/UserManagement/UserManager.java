@@ -4,7 +4,9 @@ UserManager class that controls and handles all users and their actions.
 package UserManagement;
 
 import IO.PasswordReader;
+import IO.UserList;
 import IO.UserReader;
+import IO.UserWriter;
 import IO.Writer;
 import gatech.cs2340.team7.FailedUserOperationException;
 import LoginRegistration.Registration;
@@ -25,12 +27,11 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name = "userManager", eager = true)
 @ApplicationScoped
 public class UserManager implements Serializable {
-   
     private final List<User> userList; // change to hash table for faster lookup?
     private final HashMap<String, String> passwords;
     private final PasswordReader passread;
     private final UserReader userread;
-    private Writer userWriter;
+    private UserWriter userWriter;
     private Login login;
     private Registration registration;
     private User activeUser;
@@ -47,7 +48,7 @@ public class UserManager implements Serializable {
         login = new Login();
         registration = new Registration();
         activeUser = null;
-        userWriter = new Writer();
+        userWriter = new UserWriter();
         
         // Temporary addition of user until data persistence is added
         userList.add(new User());
