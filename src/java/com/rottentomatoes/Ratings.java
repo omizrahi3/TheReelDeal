@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import gatech.cs2340.team7.ReelDealRating;
+import java.util.List;
+
 @Generated("org.jsonschema2pojo")
 public class Ratings {
 
@@ -23,6 +26,64 @@ public class Ratings {
     @SerializedName("audience_score")
     @Expose
     private Integer audienceScore;
+    
+    private List<ReelDealRating> reelDealRatings;
+    
+    public Ratings(){};
+    
+    public Ratings(String criticsRating, Integer criticsScore, String audienceRating,
+            Integer audienceScore, List<ReelDealRating> reelDealRatings) {
+        this.criticsRating = criticsRating;
+        this.criticsScore = criticsScore;
+        this.audienceRating = audienceRating;
+        this.audienceScore = audienceScore;
+        this.reelDealRatings = reelDealRatings;
+        
+    }
+    
+    /**
+     * Gets the average rating over all Reel Deel users who have rated the movie.
+     * Returns -1 if no ratings found.
+     * 
+     * @return average rating
+     */
+    public float getAverageRating() {
+        float sum = 0;
+        int numberOfRatings = 0;
+        for (ReelDealRating r : reelDealRatings) {
+            sum += r.getValue();
+            numberOfRatings++;
+        }
+        
+        if (numberOfRatings <= 0) {
+            return -1f;
+        } else {
+            return sum / numberOfRatings;
+        }
+    }
+    
+    /**
+     * Gets the average rating over all Reel Deel users of a specific major
+     * who have rated the movie. Returns -1 if no major specific ratings found.
+     * 
+     * @return average rating of specific major
+     */
+    public float getMajorSpecificRating(String major) {
+        float sum = 0;
+        int numberOfRatings = 0;
+        for (ReelDealRating r : reelDealRatings) {
+            if (major.equals(r.getMajor())) {
+                sum += r.getValue();
+                numberOfRatings++;
+            }
+        }
+        
+        if (numberOfRatings <= 0) {
+            return -1f;
+        } else {
+            return sum / numberOfRatings;
+        }
+    }
 
     /**
      * 

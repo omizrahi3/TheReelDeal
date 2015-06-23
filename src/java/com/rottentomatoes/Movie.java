@@ -44,7 +44,7 @@ public class Movie {
     private AlternateIds alternateIds;
     @Expose
     private Links links;
-
+    
     /**
      * 
      * @return
@@ -282,6 +282,26 @@ public class Movie {
     public void setLinks(Links links) {
         this.links = links;
     }
+    
+    /**
+     * Gets the average rating over all Reel Deel users who have rated the movie.
+     * Returns -1 if no ratings found.
+     * 
+     * @return average rating
+     */
+    public float getAverageRating() {
+        return ratings.getAverageRating();
+    }
+    
+    /**
+     * Gets the average rating over all Reel Deel users of a specific major
+     * who have rated the movie. Returns -1 if no major specific ratings found.
+     * 
+     * @return average rating of specific major
+     */
+    public float getMajorSpecificRating(String major) {
+        return ratings.getMajorSpecificRating(major);
+    }
 
     @Override
     public String toString() {
@@ -304,5 +324,5 @@ public class Movie {
         Movie rhs = ((Movie) other);
         return new EqualsBuilder().append(id, rhs.id).append(title, rhs.title).append(year, rhs.year).append(mpaaRating, rhs.mpaaRating).append(runtime, rhs.runtime).append(criticsConsensus, rhs.criticsConsensus).append(releaseDates, rhs.releaseDates).append(ratings, rhs.ratings).append(synopsis, rhs.synopsis).append(posters, rhs.posters).append(abridgedCast, rhs.abridgedCast).append(alternateIds, rhs.alternateIds).append(links, rhs.links).isEquals();
     }
-
+    
 }

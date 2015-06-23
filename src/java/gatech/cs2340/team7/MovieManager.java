@@ -98,4 +98,6 @@ public class MovieManager {
     public void setNewTheaterReleases(List<Movie> newTheaterReleases) {
         this.newTheaterReleases = newTheaterReleases;
     }
+    
+    
 }
