@@ -105,4 +105,12 @@ public class User implements Serializable {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+    
+    /**
+     * Return the user's major
+     * @return major
+     */
+    public String getMajor() {
+        return profile.getMajor();
+    }
 }

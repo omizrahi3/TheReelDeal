@@ -7,6 +7,7 @@ import IO.PasswordReader;
 import gatech.cs2340.team7.FailedUserOperationException;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
+import gatech.cs2340.team7.ControlHub;
 import gatech.cs2340.team7.NavigationManager;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,16 +50,15 @@ public class UserManager {
     /**
      * 
      * @param username
-     * @return
-     * @throws Exception 
+     * @return User with name username
      */
-    public User get(String username) throws Exception {
+    public User get(String username) {
         for (User user : userList) {
             if (username.equals(user.getAccount().getUsername())) {
                 return user;
             }
         }
-        throw new Exception("Logged in a non-existent User!\nUsername: " + username);
+        throw new java.util.NoSuchElementException("Logged in a non-existent User!\nUsername: " + username);
     }
     
     /**
@@ -76,10 +76,7 @@ public class UserManager {
      */
     public String loginExistingUser() throws Exception {
         if (login.checkLogin(userList, passwords)) {
-            System.out.println("Login success!");
-            activeUser = get(login.getUsername());
-            activeUser.loginToAccount();
-            login.clearData();
+            processLogin(get(login.getUsername()));
             return NavigationManager.success;
         } else {
             System.out.println("Login failed!");
@@ -89,6 +86,14 @@ public class UserManager {
             });
             return null;
         }
+    }
+    
+    private void processLogin(User user) {
+        System.out.println("Processing login for " + user.getName());
+        activeUser = user;
+        activeUser.loginToAccount();
+        login.clearData();
+        ControlHub.getInstance().setUserManager(this);
     }
     
     /**
@@ -101,7 +106,7 @@ public class UserManager {
             System.out.println("Successful registration attempt!");
             User newUser = registration.registerNewUser();
             addUser(newUser);
-            activeUser = newUser;
+            processLogin(newUser);
             
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());

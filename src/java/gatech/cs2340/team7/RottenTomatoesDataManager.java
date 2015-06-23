@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rottentomatoes.RottenTomatoesData;
 import com.rottentomatoes.IntegerAdapter;
-import com.rottentomatoes.ReelDeelReview;
+import com.rottentomatoes.ReelDealRating;
 
 import java.util.Map;
 
@@ -35,7 +35,8 @@ public class RottenTomatoesDataManager {
     private MovieManager movieManager;
     private boolean showSearchData;
     private String selectedMovieTok;
-    private ReelDeelReview newReview;
+    private ReelDealRating newReview;
+    private ControlHub controlHub;
       
     /**
      * Constructor
@@ -46,8 +47,10 @@ public class RottenTomatoesDataManager {
         movieManager = new MovieManager();
         showSearchData = false;
         selectedMovieTok = "";
-        newReview = new ReelDeelReview();
+        newReview = new ReelDealRating();
         updateNewReleasesLists();
+        controlHub = ControlHub.getInstance();
+        controlHub.setDataManager(this);
     }
     
     public String movieSelected() {
@@ -105,11 +108,14 @@ public class RottenTomatoesDataManager {
     
     /**
      * Add the new review to the associate movie handle
+     * @return page navigation token
      */
     public String addReview() {
+        newReview.setAuthor(controlHub.getActiveUser());
         movieManager.addReview(newReview);
-        newReview.setFeedback("");
-        newReview.setScore(ReelDeelReview.MIN_SCORE);
+        System.out.println("Added review from " + newReview.getAuthor().getName() + " with " + newReview.getValue() +
+                " reels and feedback: " + newReview.getComment());
+        newReview.clearData();
         return NavigationManager.postReview;
     }
     
@@ -197,7 +203,7 @@ public class RottenTomatoesDataManager {
      * Return the new review
      * @return new review
      */
-    public ReelDeelReview getNewReview() {
+    public ReelDealRating getNewReview() {
         return newReview;
     }
 
@@ -205,7 +211,7 @@ public class RottenTomatoesDataManager {
      * Set the new review
      * @param newReview 
      */
-    public void setNewReview(ReelDeelReview newReview) {
+    public void setNewReview(ReelDealRating newReview) {
         this.newReview = newReview;
     }
     
