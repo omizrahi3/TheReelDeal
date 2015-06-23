@@ -15,9 +15,9 @@ import java.util.Comparator;
  */
 public class MovieRatingComparator implements Comparator<Movie> {
     public int compare(Movie a, Movie b) {
-        if (a.getAverageRating() - b.getAverageRating() > 0) {
+        if (a.getAverageRating() - b.getAverageRating() < 0) {
             return 1;
-        } else if (a.getAverageRating() - b.getAverageRating() < 0) {
+        } else if (a.getAverageRating() - b.getAverageRating() > 0) {
             return -1;
         } else {
             return a.getTitle().compareTo(b.getTitle());

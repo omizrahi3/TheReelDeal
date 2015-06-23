@@ -23,7 +23,9 @@
                 <p:tab title="New In-Theater">
                     <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newTheaterReleases}" >
                         <p:column headerText="Title" width="10%">
-                           <h:outputText value="#{eachMovie.title}" />
+                            <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
+                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                            </h:commandLink>
                         </p:column>
 
                         <p:column headerText="Cover" width="10%" style="text-align: center;">
@@ -35,7 +37,7 @@
                         </p:column>
 
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
-                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
                         
@@ -47,7 +49,9 @@
                 <p:tab title="New DVDs">
                     <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newDVDReleases}" >
                         <p:column headerText="Title" width="10%">
-                           <h:outputText value="#{eachMovie.title}" />
+                            <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
+                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                            </h:commandLink>
                         </p:column>
 
                         <p:column headerText="Cover" width="10%" style="text-align: center;">
@@ -59,7 +63,7 @@
                         </p:column>
 
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
-                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
                         
@@ -79,12 +83,14 @@
                     </h:panelGrid>
                     <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.searchResultMovies}" 
                                  rendered="#{rottenTomatoesDataManager.showSearchData}" >
-                        <p:column headerText="Title" width="10%">
-                           <h:outputText value="#{eachMovie.title}" />
+                        <p:column headerText="Title" width="20%" >
+                            <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
+                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                            </h:commandLink>
                         </p:column>
 
                         <p:column headerText="Cover" width="10%" style="text-align: center;">
-                            <img src="#{eachMovie.posters.thumbnail}" />
+                            <h:graphicImage id="#{eachMovie.title}_thumbnail" value="#{eachMovie.posters.thumbnail}" />
                         </p:column>
 
                         <p:column headerText="Synopsis">
@@ -92,7 +98,7 @@
                         </p:column>
 
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
-                            <h:outputText value="Users: #{eachMovie.ratings.audienceScore}" /><br />
+                            <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
                         

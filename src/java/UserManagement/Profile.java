@@ -53,10 +53,7 @@ public class Profile {
         this.name = name;
         this.major = major;
         this.aboutMe = aboutMe;
-        if (imageURL.equals("")) {
-            this.imageURL = Profile.DEFAULT_IMAGE_URL;
-        }
-        else if (imageURL == null) {
+        if (imageURL == null || imageURL.equals("")) {
             this.imageURL = Profile.DEFAULT_IMAGE_URL;
         } else {
             this.imageURL = imageURL;

@@ -105,6 +105,10 @@ public class User {
         this.profile = profile;
     }
     
+    /**
+     * Return the user's major
+     * @return major
+     */
     public String getMajor() {
         return profile.getMajor();
     }

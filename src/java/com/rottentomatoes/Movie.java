@@ -1,4 +1,3 @@
-
 package com.rottentomatoes;
 
 import java.util.ArrayList;
@@ -44,6 +43,29 @@ public class Movie {
     private AlternateIds alternateIds;
     @Expose
     private Links links;
+
+
+    
+    public Movie() {
+        ratings = new Ratings();
+    }
+    
+    /**
+     * Assert that the data to be displayed is readable to the common user
+     * (a.k.a. don't show default values returned by Rotten Tomatoes
+     */
+    public void assertDataFidelity() {
+        ratings.assertDataFidelity();
+        if (runtime == null || runtime.length() == 0) {
+            runtime = "n/a";
+        }
+        if (synopsis == null || synopsis.length() == 0) {
+            synopsis = "No synopsis currently provided by Rotten Tomatoes";
+        }
+        if (criticsConsensus == null || criticsConsensus.length() == 0) {
+            criticsConsensus = "n/a";
+        }
+    }
     
     /**
      * 
@@ -132,6 +154,7 @@ public class Movie {
      *     The runtime
      */
     public void setRuntime(String runtime) {
+        System.out.println("Hello from setRuntime");
         if (runtime.length() == 0) {
             this.runtime = "n/a";
         } else {
@@ -284,17 +307,17 @@ public class Movie {
     }
     
     /**
-     * Gets the average rating over all Reel Deel users who have rated the movie.
-     * Returns -1 if no ratings found.
+     * Gets the average rating over all Reel Deal users who have rated the movie.
+     * Returns -1 if the movie does not have ratings.
      * 
-     * @return average rating
+     * @return average rating or -1
      */
     public float getAverageRating() {
         return ratings.getAverageRating();
     }
     
     /**
-     * Gets the average rating over all Reel Deel users of a specific major
+     * Gets the average rating over all Reel Deal users of a specific major
      * who have rated the movie. Returns -1 if no major specific ratings found.
      * 
      * @return average rating of specific major
@@ -324,5 +347,24 @@ public class Movie {
         Movie rhs = ((Movie) other);
         return new EqualsBuilder().append(id, rhs.id).append(title, rhs.title).append(year, rhs.year).append(mpaaRating, rhs.mpaaRating).append(runtime, rhs.runtime).append(criticsConsensus, rhs.criticsConsensus).append(releaseDates, rhs.releaseDates).append(ratings, rhs.ratings).append(synopsis, rhs.synopsis).append(posters, rhs.posters).append(abridgedCast, rhs.abridgedCast).append(alternateIds, rhs.alternateIds).append(links, rhs.links).isEquals();
     }
-    
+
+    /**
+     * Return the movie's ReelDeal ratings
+     * @return ratings from the ReelDeal web app
+     */
+    public List<ReelDealRating> getReelDealRatings() {
+        return ratings.getReelDealRatings();
+    }
+
+    /**
+     * Set the movie's ReelDeal Rating
+     * @param reelDealRatings 
+     */
+    public void setReelDealRatings(List<ReelDealRating> reelDealRatings) {
+        ratings.setReelDealRatings(reelDealRatings);
+    }
+
+    public void addReelDealRating(ReelDealRating newRating) {
+        ratings.addReelDealRating(newRating);
+    }
 }
