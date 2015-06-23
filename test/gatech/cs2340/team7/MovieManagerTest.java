@@ -149,7 +149,7 @@ public class MovieManagerTest {
         MovieManager instance = new MovieManager();
         instance.setNewDVDReleases(listOfMovies);
         
-        Movie result = instance.getReccomendation();
+        Movie result = instance.getRecomendation();
         System.out.println(result.getTitle() + " " + result.getAverageRating());
     }
 

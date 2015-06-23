@@ -176,22 +176,22 @@ public class MovieManager {
         return movieList;
     }
     
-    public Movie getReccomendation() {
+    public Movie getRecomendation() {
         List<Movie> sortedMovieList = sortMoviesByRating(newDVDReleases); //TODO: change to all rated movies instead of DVD releases
         return sortedMovieList.get(0);
     }
     
-    public Movie getReccomendation(String major) {
+    public Movie getRecomendation(String major) {
        List<Movie> movieList = new ArrayList();
        float max = 0;
-       Movie reccommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
+       Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
         for (Movie m : newDVDReleases) { //TODO: change to all rated movies instead of DVD releases
             if (m.getMajorSpecificRating(major) > max) {
                 max = m.getMajorSpecificRating(major);
-                reccommendedMovie = m;
+                recommendedMovie = m;
             }
         }
-        return reccommendedMovie;
+        return recommendedMovie;
     }
     
     
