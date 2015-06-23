@@ -4,13 +4,14 @@ User class to represent the human user, and contain his/her Account and Profile.
 package UserManagement;
 
 import gatech.cs2340.team7.NavigationManager;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "user", eager = true)
 @SessionScoped
-public class User {
+public class User implements Serializable {
     
     private Account account;
     private Profile profile;

@@ -3,6 +3,7 @@ UserManager class that controls and handles all users and their actions.
  */
 package UserManagement;
 
+import IO.PasswordReader;
 import gatech.cs2340.team7.FailedUserOperationException;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
@@ -23,6 +24,7 @@ public class UserManager {
    
     private final List<User> userList; // change to hash table for faster lookup?
     private final HashMap<String, String> passwords;
+    private final PasswordReader passread;
     private Login login;
     private Registration registration;
     private User activeUser;
@@ -31,8 +33,10 @@ public class UserManager {
      * Constructor
      */
     public UserManager() {
+        passread = new PasswordReader();
+        passread.OpenFile();
         userList = new ArrayList();
-        passwords = new HashMap<>();
+        passwords = passread.readFile();
         login = new Login();
         registration = new Registration();
         activeUser = null;
@@ -40,7 +44,6 @@ public class UserManager {
         // Temporary addition of user until data persistence is added
         userList.add(new User());
         userList.get(0).getAccount().setUsername("user");
-        passwords.put("user", "password");
     }
     
     /**
