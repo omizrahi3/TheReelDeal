@@ -3,11 +3,17 @@ UserManager class that controls and handles all users and their actions.
  */
 package UserManagement;
 
+import IO.PasswordReader;
+import IO.UserList;
+import IO.UserReader;
+import IO.UserWriter;
+import IO.Writer;
 import gatech.cs2340.team7.FailedUserOperationException;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
 import gatech.cs2340.team7.ControlHub;
 import gatech.cs2340.team7.NavigationManager;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +26,12 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean(name = "userManager", eager = true)
 @ApplicationScoped
-public class UserManager {
-   
+public class UserManager implements Serializable {
     private final List<User> userList; // change to hash table for faster lookup?
     private final HashMap<String, String> passwords;
+    private final PasswordReader passread;
+    private final UserReader userread;
+    private UserWriter userWriter;
     private Login login;
     private Registration registration;
     private User activeUser;
@@ -32,16 +40,19 @@ public class UserManager {
      * Constructor
      */
     public UserManager() {
-        userList = new ArrayList();
-        passwords = new HashMap<>();
+        userread = new UserReader();
+        passread = new PasswordReader();
+        passread.OpenFile();
+        userList = new ArrayList<>();
+        passwords = passread.readFile();
         login = new Login();
         registration = new Registration();
         activeUser = null;
+        userWriter = new UserWriter();
         
         // Temporary addition of user until data persistence is added
         userList.add(new User());
-        userList.get(0).getAccount().setUsername("user");
-        passwords.put("user", "password");
+        userList.get(0).setUsername("user");
     }
     
     /**
@@ -104,6 +115,7 @@ public class UserManager {
             User newUser = registration.registerNewUser();
             addUser(newUser);
             processLogin(newUser);
+            userWriter.WriteToFile(newUser);
             
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());

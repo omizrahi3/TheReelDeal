@@ -8,6 +8,7 @@ import UserManagement.Account;
 import LoginRegistration.AccountAccessAttempt;
 import UserManagement.Profile;
 import UserManagement.User;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -21,7 +22,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "registration", eager = true)
 @SessionScoped
-public class Registration extends AccountAccessAttempt {
+public class Registration extends AccountAccessAttempt implements Serializable {
     private String name;
     private String passwordRepeat;
     private String major;

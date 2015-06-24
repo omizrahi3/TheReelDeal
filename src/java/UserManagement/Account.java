@@ -3,6 +3,7 @@ Account class to represents a user's account-specific data.
  */
 package UserManagement;
 
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -12,7 +13,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "account", eager = true)
 @SessionScoped
-public class Account {
+public class Account implements Serializable {
     
     private String username;
     private boolean loggedIn;
