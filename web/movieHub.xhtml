@@ -37,6 +37,7 @@
                         </p:column>
 
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
+                            <h:outputText value="ReelDeal: #{eachMovie.ratings.averageRating}" /><br />
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
@@ -63,9 +64,9 @@
                         </p:column>
 
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
+                            <h:outputText value="ReelDeal: #{eachMovie.ratings.averageRating}" /><br />
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
-                            <h:outputText value="ReelDealRating  #{eachMovie.ratings.averageRating}" />
                         </p:column>
                         
                         <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
