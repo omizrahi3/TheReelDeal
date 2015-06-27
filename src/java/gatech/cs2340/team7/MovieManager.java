@@ -29,6 +29,7 @@ public class MovieManager {
     private List<Movie> newDVDReleases;
     private List<Movie> newTheaterReleases;
     private Movie selectedMovie;
+    private ReelDealRating newRating;
     private List<Movie> ratedMovies;
     
     /**
@@ -61,6 +62,7 @@ public class MovieManager {
         this.newTheaterReleases = newTheaterReleases;
         this.searchResultMovies = searchResultMovies;
         this.selectedMovie = selectedMovie;
+        this.newRating = new ReelDealRating();
         ratedMovies = new ArrayList();
     }
     
@@ -266,12 +268,12 @@ public class MovieManager {
     public String viewRecommendation() {
         buildRatings();
         selectedMovie = getRecommendation();
-        return NavigationManager.movieDetailedView;
+        return "movieDetailedView?faces-redirect=true";
     }
     
     public String viewRecommendation(String major) {
         buildRatings();
         selectedMovie = getRecommendation(major);
-        return NavigationManager.movieDetailedView;
+        return "movieDetailedView?faces-redirect=true";
     }
 }
