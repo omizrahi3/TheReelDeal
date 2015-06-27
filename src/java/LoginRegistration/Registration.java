@@ -5,7 +5,6 @@ extends the abstract AccountAcessAttempt.
 package LoginRegistration;
 
 import UserManagement.Account;
-import LoginRegistration.AccountAccessAttempt;
 import UserManagement.Profile;
 import UserManagement.User;
 import java.io.Serializable;
@@ -26,14 +25,14 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     private String name;
     private String passwordRepeat;
     private String major;
-    private MajorMenuView majorChooser;
+    private MajorChooserMenu majorChooser;
     boolean validRegistration;
     
     /**
      * Constructor
      */
     public Registration() {
-        majorChooser = new MajorMenuView();
+        majorChooser = new MajorChooserMenu();
     }
     
     /**
@@ -135,10 +134,10 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     }
     
     /**
-     * Get the major chooser MajorMenuView of the prospective user
-     * @return major chooser MajorMenuView of the prospective user
+     * Get the major chooser MajorChooserMenu of the prospective user
+     * @return major chooser MajorChooserMenu of the prospective user
      */
-    public MajorMenuView getMajorChooser() {
+    public MajorChooserMenu getMajorChooser() {
         return majorChooser;
     }
     
@@ -178,7 +177,7 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * Set the major chooser for the prospective user
      * @param majorChooser major choose for the prospective user
      */
-    public void setMajorChooser(MajorMenuView majorChooser) {
+    public void setMajorChooser(MajorChooserMenu majorChooser) {
         this.majorChooser = majorChooser;
     }
     

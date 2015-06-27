@@ -22,7 +22,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class RESTQuery {
     
-    protected String queryURL;
+    private String queryURL;
     
     /**
      * Constructor

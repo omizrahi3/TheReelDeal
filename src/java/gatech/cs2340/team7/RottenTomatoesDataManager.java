@@ -5,9 +5,8 @@ package gatech.cs2340.team7;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rottentomatoes.RottenTomatoesData;
+import com.rottentomatoes.RottenTomatoesDTO;
 import com.rottentomatoes.IntegerAdapter;
-import com.rottentomatoes.ReelDealRating;
 
 import java.util.Map;
 
@@ -35,8 +34,7 @@ public class RottenTomatoesDataManager {
     private MovieManager movieManager;
     private boolean showSearchData;
     private String selectedMovieTok;
-    private ReelDealRating newReview;
-    private ControlHub controlHub;
+    private final ControlHub controlHub;
       
     /**
      * Constructor
@@ -47,7 +45,6 @@ public class RottenTomatoesDataManager {
         movieManager = new MovieManager();
         showSearchData = false;
         selectedMovieTok = "";
-        newReview = new ReelDealRating();
         updateNewReleasesLists();
         controlHub = ControlHub.getInstance();
         controlHub.setDataManager(this);
@@ -58,19 +55,19 @@ public class RottenTomatoesDataManager {
         System.out.println("Movie selected: " + params.get("selectedMovie"));
         selectedMovieTok = params.get("selectedMovie");
         movieManager.movieSelected(selectedMovieTok);
-        return NavigationManager.movieDetailedView;
+        return ControlHub.movieDetailedViewPageURL;
     }
     
     /**
-     * Convert the JSON data to a RottenTomatoesData object handle
+     * Convert the JSON data to a RottenTomatoesDTO object handle
      * @param rawData JSON data
-     * @return RottenTomatoesData object handle
+     * @return RottenTomatoesDTO object handle
      */
-    public RottenTomatoesData JSONToPOJO(String rawData) {
+    public RottenTomatoesDTO JSONToPOJO(String rawData) {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Integer.class, new IntegerAdapter());
         Gson gson = builder.create();
-        return gson.fromJson(rawData, RottenTomatoesData.class);        
+        return gson.fromJson(rawData, RottenTomatoesDTO.class);        
     }
     
     /**
@@ -85,7 +82,7 @@ public class RottenTomatoesDataManager {
         query.setQueryURL(BASE_API_URI + NEW_THEATER_RELEASE_URLTOK +
                 "?limit=16&country=us&apikey=" + APIKey);
         movieManager.setNewTheaterReleases(JSONToPOJO(query.processQuery()).getMovies());
-        movieManager.assertDataFidelity();
+        movieManager.assertDefaultValuesOfUndefData();
     }
     
     /**
@@ -100,23 +97,10 @@ public class RottenTomatoesDataManager {
             movieManager.setSearchResultMovies(JSONToPOJO(query.processQuery()).getMovies());
             showSearchData = true;
             queryToken = "";
-            return NavigationManager.movieHub;
+            return ControlHub.movieHubPageURL;
         }
         queryToken = "";
         return null;
-    }
-    
-    /**
-     * Add the new review to the associate movie handle
-     * @return page navigation token
-     */
-    public String addReview() {
-        newReview.setAuthor(controlHub.getActiveUser());
-        movieManager.addRating(newReview);
-        System.out.println("Added review from " + newReview.getAuthor().getName() + " with " + newReview.getValue() +
-                " reels and feedback: " + newReview.getComment());
-        newReview.clearData();
-        return NavigationManager.postReview;
     }
     
     /**
@@ -198,22 +182,4 @@ public class RottenTomatoesDataManager {
     public void setSelectedMovieTok(String selectedMovieTok) {
         this.selectedMovieTok = selectedMovieTok;
     }
-
-    /**
-     * Return the new review
-     * @return new review
-     */
-    public ReelDealRating getNewReview() {
-        return newReview;
-    }
-
-    /**
-     * Set the new review
-     * @param newReview 
-     */
-    public void setNewReview(ReelDealRating newReview) {
-        this.newReview = newReview;
-    }
-    
-    
 }

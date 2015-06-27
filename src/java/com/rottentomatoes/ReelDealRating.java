@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
  * @author Anthony
  * @author Jimmy
  */
-@ManagedBean(name = "reelDeelRating", eager = true)
+@ManagedBean(name = "reelDealRating", eager = true)
 @SessionScoped
 public class ReelDealRating {
    

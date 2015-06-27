@@ -68,11 +68,11 @@ public class Ratings {
     public boolean hasRatings() {
         return reelDealRatings.size() > 0;
     }
-    
+
     /**
-     * Gets the average rating over all Reel Deel users of a specific major
+     * Gets the average rating over all Reel Deal users of a specific major
      * who have rated the movie. Returns -1 if no major specific ratings found.
-     * 
+     * @param major major
      * @return average rating of specific major
      */
     public float getMajorSpecificRating(String major) {
@@ -98,7 +98,7 @@ public class Ratings {
      * Assert that the data to be displayed is readable tot he common user
      * (a.k.a. don't show default values returned by Rotten Tomatoes
      */
-    public void assertDataFidelity() {
+    public void assertDefaultValuesOfUndefData() {
         if (criticsRating == null) {
             criticsScore = "n/a";
         }

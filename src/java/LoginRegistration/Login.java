@@ -3,7 +3,6 @@ Login class to handle a user login. This class extends the abstract AccountAcces
  */
 package LoginRegistration;
 
-import LoginRegistration.AccountAccessAttempt;
 import UserManagement.User;
 import java.util.HashMap;
 import java.util.List;

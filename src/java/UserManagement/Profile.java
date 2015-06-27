@@ -122,10 +122,7 @@ public class Profile implements Serializable {
      * @param imageURL URL to set
      */
     public void setImageURL(String imageURL) {
-        if (imageURL.equals("")) {
-            this.imageURL = Profile.DEFAULT_IMAGE_URL;
-        }
-        else if (imageURL == null) {
+        if (imageURL == null || imageURL.equals("")) {
             this.imageURL = Profile.DEFAULT_IMAGE_URL;
         } else {
             this.imageURL = imageURL;
