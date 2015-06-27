@@ -3,7 +3,7 @@ User class to represent the human user, and contain his/her Account and Profile.
  */
 package UserManagement;
 
-import gatech.cs2340.team7.NavigationManager;
+import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,25 +37,25 @@ public class User implements Serializable {
     }
     
     /**
-     * Attempt to log the user into his/her account. If the login fails,
-     * notify the user on the web page
+     * Attempt to log the user into his/her account. If the loginPageURL fails,
+ notify the user on the web page
      */
     public void loginToAccount() {
         try {
             account.login();
         } catch (Exception e) {
-            // TODO indicate on webpage the login failure due to account lock
+            // TODO indicate on webpage the loginPageURL failure due to account lock
             System.out.println("Login failed due to account lock!");
         }
     }
     
     /**
      * Logout of the user's account
-     * @return index.xhtml page navigation token
+     * @return indexPageURL.xhtml page navigation token
      */
     public String logout() {  
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return NavigationManager.index;
+        return ControlHub.indexPageURL;
     }  
 
     /**

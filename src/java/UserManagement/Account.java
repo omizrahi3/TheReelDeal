@@ -38,6 +38,7 @@ public class Account implements Serializable {
     
     /**
      * Login to the account
+     * @throws Exception if the account is locked by an admin
      */
     public void login() throws Exception {
         // change this logic for checking account lock

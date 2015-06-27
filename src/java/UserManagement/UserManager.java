@@ -4,15 +4,11 @@ UserManager class that controls and handles all users and their actions.
 package UserManagement;
 
 import IO.PasswordReader;
-import IO.UserList;
 import IO.UserReader;
 import IO.UserWriter;
-import IO.Writer;
-import gatech.cs2340.team7.FailedUserOperationException;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
 import gatech.cs2340.team7.ControlHub;
-import gatech.cs2340.team7.NavigationManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,11 +23,11 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name = "userManager", eager = true)
 @ApplicationScoped
 public class UserManager implements Serializable {
-    private final List<User> userList; // change to hash table for faster lookup?
+    private List<User> allUsers; // change to hash table for faster lookup?
     private final HashMap<String, String> passwords;
     private final PasswordReader passread;
-    private final UserReader userread;
-    private UserWriter userWriter;
+    private final UserReader userRead;
+    private final UserWriter userWriter;
     private Login login;
     private Registration registration;
     private User activeUser;
@@ -40,10 +36,10 @@ public class UserManager implements Serializable {
      * Constructor
      */
     public UserManager() {
-        userread = new UserReader();
+        userRead = new UserReader();
         passread = new PasswordReader();
         passread.OpenFile();
-        userList = new ArrayList<>();
+        allUsers = new ArrayList<>();
         passwords = passread.readFile();
         login = new Login();
         registration = new Registration();
@@ -51,8 +47,8 @@ public class UserManager implements Serializable {
         userWriter = new UserWriter();
         
         // Temporary addition of user until data persistence is added
-        userList.add(new User());
-        userList.get(0).setUsername("user");
+        allUsers.add(new User());
+        allUsers.get(0).setUsername("user");
     }
     
     /**
@@ -61,7 +57,7 @@ public class UserManager implements Serializable {
      * @return User with name username
      */
     public User get(String username) {
-        for (User user : userList) {
+        for (User user : allUsers) {
             if (username.equals(user.getAccount().getUsername())) {
                 return user;
             }
@@ -74,7 +70,7 @@ public class UserManager implements Serializable {
      * @return page name for XHTML navigation
      */
     public String editProfile() {
-        return NavigationManager.editProfile;
+        return ControlHub.editProfilePageURL;
     }
     
     /**
@@ -83,13 +79,13 @@ public class UserManager implements Serializable {
      * @throws Exception if user is locked
      */
     public String loginExistingUser() throws Exception {
-        if (login.checkLogin(userList, passwords)) {
+        if (login.checkLogin(allUsers, passwords)) {
             processLogin(get(login.getUsername()));
-            return NavigationManager.success;
+            return ControlHub.successPageURL;
         } else {
             System.out.println("Login failed!");
             System.out.println("Current users:");
-            userList.stream().forEach((u) -> {
+            allUsers.stream().forEach((u) -> {
                 System.out.println(u.getAccount().getUsername());
             });
             return null;
@@ -109,8 +105,8 @@ public class UserManager implements Serializable {
      * @return new page to navigation to (if registration is successful)
      */
     public String registerNewUser() {
-        if (registration.checkNewUserRegistration(userList)) {
-            // Registration success, create the user, account, and profile
+        if (registration.checkNewUserRegistration(allUsers)) {
+            // Registration successPageURL, create the user, account, and profile
             System.out.println("Successful registration attempt!");
             User newUser = registration.registerNewUser();
             addUser(newUser);
@@ -120,7 +116,7 @@ public class UserManager implements Serializable {
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
             registration.clearData();
-            return NavigationManager.success;
+            return ControlHub.successPageURL;
         } else {
             System.out.println("Failed registration attempt!");
             return null;
@@ -134,12 +130,12 @@ public class UserManager implements Serializable {
     public void addUser(User u) {
         if (u == null) {
             throw new IllegalArgumentException("Cannot input null data!");
-        } else if (!userList.add(u)) {
+        } else if (!allUsers.add(u)) {
             System.out.println("Failed to add user to the user list!");
             // TODO actually notify the user of the failure
         } else {
             System.out.println("Added new user. Updated user list:");
-            for (User user : userList) {
+            for (User user : allUsers) {
                 System.out.println("- " + user.getAccount().getUsername());
             }
         }
@@ -149,19 +145,18 @@ public class UserManager implements Serializable {
     /**
      * Removes the user from the user list (and therefore the entire system)
      * @param u User to remove
-     * @throws FailedUserOperationException 
      */
-    public void removeUser(User u) throws FailedUserOperationException {
+    public void removeUser(User u) {
         if (u == null) {
             throw new IllegalArgumentException("Cannot input null data!");
-        } else if (!userList.remove(u)) {
-            throw new FailedUserOperationException("Failed to add user to the user list!");
+        } else {
+            allUsers.remove(u);
         }
     }
     
     /**
-     * Return the login handle
-     * @return login handle
+     * Return the loginPageURL handle
+     * @return loginPageURL handle
      */
     public Login getLogin() {
         return login;
@@ -184,8 +179,8 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Set the login handle
-     * @param login new login handle
+     * Set the loginPageURL handle
+     * @param login new loginPageURL handle
      */
     public void setLogin(Login login) {
         this.login = login;

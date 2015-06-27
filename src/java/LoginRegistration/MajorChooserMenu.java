@@ -16,14 +16,14 @@ import javax.faces.model.SelectItemGroup;
  */
 @ManagedBean(name = "majorMenuView", eager = true)
 @SessionScoped
-public class MajorMenuView {
+public class MajorChooserMenu {
     private String major;
     private List<SelectItem> schools;
     
     /**
      * Constructor
      */
-    public MajorMenuView() {
+    public MajorChooserMenu() {
         initMenu();
     }
 

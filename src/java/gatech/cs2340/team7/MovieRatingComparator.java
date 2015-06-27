@@ -14,6 +14,7 @@ import java.util.Comparator;
  * @author Jimmy
  */
 public class MovieRatingComparator implements Comparator<Movie> {
+    @Override
     public int compare(Movie a, Movie b) {
         if (a.getAverageRating() - b.getAverageRating() < 0) {
             return 1;

@@ -11,12 +11,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class RottenTomatoesData {
+public class RottenTomatoesDTO {
 
     @Expose
     private Integer total;
     @Expose
-    private List<Movie> movies = new ArrayList<Movie>();
+    private List<Movie> movies = new ArrayList<>();
     @Expose
     private Links_ links;
     @SerializedName("link_template")
@@ -110,10 +110,10 @@ public class RottenTomatoesData {
         if (other == this) {
             return true;
         }
-        if ((other instanceof RottenTomatoesData) == false) {
+        if ((other instanceof RottenTomatoesDTO) == false) {
             return false;
         }
-        RottenTomatoesData rhs = ((RottenTomatoesData) other);
+        RottenTomatoesDTO rhs = ((RottenTomatoesDTO) other);
         return new EqualsBuilder().append(total, rhs.total).append(movies, rhs.movies).append(links, rhs.links).append(linkTemplate, rhs.linkTemplate).isEquals();
     }
 

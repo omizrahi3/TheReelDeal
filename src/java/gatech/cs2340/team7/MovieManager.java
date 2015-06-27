@@ -24,6 +24,7 @@ public class MovieManager {
     private List<Movie> newDVDReleases;
     private List<Movie> newTheaterReleases;
     private Movie selectedMovie;
+    private ReelDealRating newRating;
     
     /**
      * Empty Constructor
@@ -46,6 +47,7 @@ public class MovieManager {
      * @param newTheaterReleases
      * @param newDVDReleases
      * @param searchResultMovies
+     * @param selectedMovie
      */
     public MovieManager(List<Movie> newDVDReleases,
             List<Movie> newTheaterReleases, List<Movie> searchResultMovies,
@@ -54,16 +56,17 @@ public class MovieManager {
         this.newTheaterReleases = newTheaterReleases;
         this.searchResultMovies = searchResultMovies;
         this.selectedMovie = selectedMovie;
+        this.newRating = new ReelDealRating();
     }
     
     /**
      * Assert that all movie data is correctly set for user readability
      */
-    public void assertDataFidelity() {
-        this.newDVDReleases.stream().forEach((movie) -> {movie.assertDataFidelity();});
-        this.newTheaterReleases.stream().forEach((movie) -> {movie.assertDataFidelity();});
+    public void assertDefaultValuesOfUndefData() {
+        this.newDVDReleases.stream().forEach((movie) -> {movie.assertDefaultValuesOfUndefData();});
+        this.newTheaterReleases.stream().forEach((movie) -> {movie.assertDefaultValuesOfUndefData();});
         if (searchResultMovies != null) {
-            this.searchResultMovies.stream().forEach((movie) -> {movie.assertDataFidelity();});
+            this.searchResultMovies.stream().forEach((movie) -> {movie.assertDefaultValuesOfUndefData();});
         }
         
     }
@@ -97,11 +100,21 @@ public class MovieManager {
         // TODO handle case of not finding movie
     }
     
-    public void addRating(ReelDealRating newRating) {
+    /**
+     * Add the new Reel Deal rating to the selected movie
+     * @return 
+     */
+    public String addRating() {
+        newRating.setAuthor(ControlHub.getInstance().getActiveUser());
+        System.out.println("Added review from " + newRating.getAuthor().getName() + " with " + newRating.getValue() +
+                " reels and feedback: " + newRating.getComment());
+        newRating.clearData();
+        
         if (selectedMovie == null) {
             throw new java.util.NoSuchElementException("No Selected Movie!");
         }
-        selectedMovie.addReelDealRating(newRating);        
+        selectedMovie.addReelDealRating(newRating);
+        return ControlHub.postReviewPageURL;
     }
     
     /**
@@ -119,7 +132,7 @@ public class MovieManager {
     public void setSearchResultMovies(List<Movie> searchResultMovies) {
         this.searchResultMovies = searchResultMovies;
         System.out.println("Search Results");
-        searchResultMovies.stream().forEach((m) -> {m.assertDataFidelity();});
+        searchResultMovies.stream().forEach((m) -> {m.assertDefaultValuesOfUndefData();});
     }
 
     /**
@@ -169,6 +182,23 @@ public class MovieManager {
     public void setSelectedMovie(Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
     }
+
+    /**
+     * Get the new Reel Deal rating
+     * @return new Reel Deal rating
+     */
+    public ReelDealRating getNewRating() {
+        return newRating;
+    }
+
+    /**
+     * Set the new Reel Deal rating
+     * @param newRating new Reel Deal rating
+     */
+    public void setNewRating(ReelDealRating newRating) {
+        this.newRating = newRating;
+    }
+    
     
     public List<Movie> sortMoviesByRating(List<Movie> movies) {
         List<Movie> movieList = new ArrayList(movies);
@@ -182,7 +212,6 @@ public class MovieManager {
     }
     
     public Movie getRecomendation(String major) {
-       List<Movie> movieList = new ArrayList();
        float max = 0;
        Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
         for (Movie m : newDVDReleases) { //TODO: change to all rated movies instead of DVD releases

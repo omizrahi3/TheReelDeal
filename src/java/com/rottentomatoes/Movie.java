@@ -37,7 +37,7 @@ public class Movie {
     private Posters posters;
     @SerializedName("abridged_cast")
     @Expose
-    private List<AbridgedCast> abridgedCast = new ArrayList<AbridgedCast>();
+    private List<AbridgedCast> abridgedCast = new ArrayList<>();
     @SerializedName("alternate_ids")
     @Expose
     private AlternateIds alternateIds;
@@ -54,8 +54,8 @@ public class Movie {
      * Assert that the data to be displayed is readable to the common user
      * (a.k.a. don't show default values returned by Rotten Tomatoes
      */
-    public void assertDataFidelity() {
-        ratings.assertDataFidelity();
+    public void assertDefaultValuesOfUndefData() {
+        ratings.assertDefaultValuesOfUndefData();
         if (runtime == null || runtime.length() == 0) {
             runtime = "n/a";
         }
@@ -319,7 +319,7 @@ public class Movie {
     /**
      * Gets the average rating over all Reel Deal users of a specific major
      * who have rated the movie. Returns -1 if no major specific ratings found.
-     * 
+     * @param major
      * @return average rating of specific major
      */
     public float getMajorSpecificRating(String major) {

@@ -52,33 +52,33 @@
                 <p:tab title="Leave a Review">
                     <h:panelGrid columns="6" cellpadding="5">
                         <h:outputLabel value="Your rating: " style="font-weight: bold"/>
-                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
-                            <p:graphicImage cache="false" id="Reel1" value="#{rottenTomatoesDataManager.newReview.reels[0]}"  width="50px" height="50px" />
+                        <h:commandLink action="#{rottenTomatoesDataManager.movieManager.newRating.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel1" value="#{rottenTomatoesDataManager.movieManager.newRating.reels[0]}"  width="50px" height="50px" />
                             <f:param name="rating" value="1" />
                         </h:commandLink>
-                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
-                            <p:graphicImage cache="false" id="Reel2" value="#{rottenTomatoesDataManager.newReview.reels[1]}"  width="50px" height="50px" />
+                        <h:commandLink action="#{rottenTomatoesDataManager.movieManager.newRating.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel2" value="#{rottenTomatoesDataManager.movieManager.newRating.reels[1]}"  width="50px" height="50px" />
                             <f:param name="rating" value="2" />
                         </h:commandLink>
-                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
-                            <p:graphicImage cache="false" id="Reel3" value="#{rottenTomatoesDataManager.newReview.reels[2]}"  width="50px" height="50px" />
+                        <h:commandLink action="#{rottenTomatoesDataManager.movieManager.newRating.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel3" value="#{rottenTomatoesDataManager.movieManager.newRating.reels[2]}"  width="50px" height="50px" />
                             <f:param name="rating" value="3" />
                         </h:commandLink>
-                        <h:commandLink action="#{rottenTomatoesDataManager.newReview.reelsRatingChange()}">
-                            <p:graphicImage cache="false" id="Reel4" value="#{rottenTomatoesDataManager.newReview.reels[3]}"  width="50px" height="50px" />
+                        <h:commandLink action="#{rottenTomatoesDataManager.movieManager.newRating.reelsRatingChange()}">
+                            <p:graphicImage cache="false" id="Reel4" value="#{rottenTomatoesDataManager.movieManager.newRating.reels[3]}"  width="50px" height="50px" />
                             <f:param name="rating" value="4" />
                         </h:commandLink>
-                        <h:outputLabel id="reelsLabel" value="#{rottenTomatoesDataManager.newReview.value} Reels!" style="vertical-align: middle"/>
+                        <h:outputLabel id="reelsLabel" value="#{rottenTomatoesDataManager.movieManager.newRating.value} Reels!" style="vertical-align: middle"/>
                     </h:panelGrid>
                     <br /><br />
                     <h:panelGrid columns="2" cellpadding="5">
                         <h:outputLabel value="Leave Some Feedback" class="feedbackLabel" />
-                        <p:inputTextarea value="#{rottenTomatoesDataManager.newReview.comment}" rows="10" cols="50" counter="charsRemainingDisplay" 
+                        <p:inputTextarea value="#{rottenTomatoesDataManager.movieManager.newRating.comment}" rows="10" cols="50" counter="charsRemainingDisplay" 
                                          maxlength="500" counterTemplate="{0} characters remaining" autoResize="false" />
                         <h:outputText value="" />
                         <h:outputText id="charsRemainingDisplay" />
                         <h:outputText value="" />
-                        <h:commandButton value="Submit" action="#{rottenTomatoesDataManager.addReview()}" />
+                        <h:commandButton value="Submit" action="#{rottenTomatoesDataManager.movieManager.addRating()}" />
                     </h:panelGrid>
                 </p:tab>
             </p:tabView>
