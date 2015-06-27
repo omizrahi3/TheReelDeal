@@ -147,14 +147,19 @@ public class MovieManager {
      */
     public String addRating() {
         newRating.setAuthor(ControlHub.getInstance().getActiveUser());
+        ReelDealRating ratingToBeSet = new ReelDealRating(newRating.getAuthor(), newRating.getReels(),
+            newRating.getValue(), newRating.getComment());
+        
+        
         System.out.println("Added review from " + newRating.getAuthor().getName() + " with " + newRating.getValue() +
                 " reels and feedback: " + newRating.getComment());
-        newRating.clearData();
+        
         
         if (selectedMovie == null) {
             throw new java.util.NoSuchElementException("No Selected Movie!");
         }
-        selectedMovie.addReelDealRating(newRating);
+        selectedMovie.addReelDealRating(ratingToBeSet);
+        newRating.clearData();
         return ControlHub.postReviewPageURL;
     }
     
