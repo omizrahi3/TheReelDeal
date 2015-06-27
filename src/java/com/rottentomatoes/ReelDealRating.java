@@ -144,7 +144,12 @@ public class ReelDealRating {
      * @return major
      */
     public String getMajor() {
-        return author.getMajor();
+        if (author != null && author.getMajor() != null) {
+            return author.getMajor();
+        } else {
+            return "None";
+        }
+        
     }
 
     /**

@@ -78,12 +78,15 @@ public class Ratings {
     public float getMajorSpecificRating(String major) {
         if (hasRatings()) {
             float sum = 0f;
+            int numOfRatings = 0;
             for (ReelDealRating r : reelDealRatings) {
                 if (major.equals(r.getMajor())) {
-                sum += r.getValue();
+                    sum += r.getValue();
+                    numOfRatings++;
+                    
                 }
             }
-            float avg = sum / reelDealRatings.size();
+            float avg = sum / numOfRatings;
             avg -= (avg % 0.1);             //rounding down to nearest 0.1
             return avg;
             

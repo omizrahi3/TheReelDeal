@@ -5,6 +5,7 @@
  */
 package gatech.cs2340.team7;
 
+import UserManagement.User;
 import com.rottentomatoes.Movie;
 import com.rottentomatoes.ReelDealRating;
 import com.rottentomatoes.Ratings;
@@ -109,6 +110,14 @@ public class MovieManagerTest {
         
         movie10.addReelDealRating(awfulRating);
         
+        ReelDealRating csRating = new ReelDealRating();
+        csRating.setValue(3);
+        User csMajor = new User();
+        csMajor.setMajor("Computer Science");
+        csRating.setAuthor(csMajor);
+        
+        movie9.addReelDealRating(csRating);
+        
         listOfMovies.add(movie1);
         listOfMovies.add(movie2);
         listOfMovies.add(movie3);
@@ -149,7 +158,29 @@ public class MovieManagerTest {
         MovieManager instance = new MovieManager();
         instance.setNewDVDReleases(listOfMovies);
         
-        Movie result = instance.getRecomendation();
+        Movie result = instance.getRecommendation();
+        System.out.println(result.getTitle() + " " + result.getAverageRating());
+    }
+    
+    @Test
+     public void testViewReccomendation() {
+        System.out.println("viewReccomendation");
+        String major = "";
+        MovieManager instance = new MovieManager();
+        instance.setNewDVDReleases(listOfMovies);
+        
+        String result = instance.viewRecommendation();
+        System.out.println(result + " " + instance.getSelectedMovie().getTitle());
+    }
+     
+     @Test
+    public void testGetReccomendation2() {
+        System.out.println("getReccomendation(major)");
+        String major = "Computer Science";
+        MovieManager instance = new MovieManager();
+        instance.setNewDVDReleases(listOfMovies);
+        
+        Movie result = instance.getRecommendation(major);
         System.out.println(result.getTitle() + " " + result.getAverageRating());
     }
 

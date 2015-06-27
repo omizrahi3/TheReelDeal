@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.HashMap;
+import UserManagement.User;
+import UserManagement.Profile;
+import UserManagement.Account;
+import java.util.HashSet;
 
 
 /**
@@ -24,6 +29,7 @@ public class MovieManager {
     private List<Movie> newDVDReleases;
     private List<Movie> newTheaterReleases;
     private Movie selectedMovie;
+    private List<Movie> ratedMovies;
     
     /**
      * Empty Constructor
@@ -54,6 +60,41 @@ public class MovieManager {
         this.newTheaterReleases = newTheaterReleases;
         this.searchResultMovies = searchResultMovies;
         this.selectedMovie = selectedMovie;
+        ratedMovies = new ArrayList();
+    }
+    
+    private void buildRatings() {
+       ReelDealRating greatRating = new ReelDealRating();
+        greatRating.setValue(4);
+        ReelDealRating goodRating = new ReelDealRating();
+        goodRating.setValue(3);
+        ReelDealRating okayRating = new ReelDealRating();
+        okayRating.setValue(2);
+        ReelDealRating mehRating = new ReelDealRating();
+        mehRating.setValue(1);
+        ReelDealRating awfulRating = new ReelDealRating();
+        awfulRating.setValue(0);
+        
+        ReelDealRating[] ratingTypes = new ReelDealRating[5];
+        ratingTypes[0] = awfulRating;
+        ratingTypes[1] = mehRating;
+        ratingTypes[2] = okayRating;
+        ratingTypes[3] = goodRating;
+        ratingTypes[4] = greatRating;
+        
+        ReelDealRating csRating = new ReelDealRating();
+        csRating.setValue(3);
+        Profile csProfile = new Profile("csGuy", "Computer Science");
+        Account csAccount = new Account();
+        User csMajor = new User("", csAccount, csProfile);
+        csRating.setAuthor(csMajor);
+        
+        for (int i = 0; i < newDVDReleases.size(); i++) {
+            ratedMovies.add(newDVDReleases.get(i));
+            ratedMovies.get(i).addReelDealRating(ratingTypes[i % 5]);
+        }
+        
+        ratedMovies.get(2).addReelDealRating(csRating);
     }
     
     /**
@@ -176,13 +217,13 @@ public class MovieManager {
         return movieList;
     }
     
-    public Movie getRecomendation() {
+    public Movie getRecommendation() {
         List<Movie> sortedMovieList = sortMoviesByRating(newDVDReleases); //TODO: change to all rated movies instead of DVD releases
         return sortedMovieList.get(0);
     }
     
-    public Movie getRecomendation(String major) {
-       List<Movie> movieList = new ArrayList();
+    public Movie getRecommendation(String major) {
+        System.out.println(major);
        float max = 0;
        Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
         for (Movie m : newDVDReleases) { //TODO: change to all rated movies instead of DVD releases
@@ -194,5 +235,15 @@ public class MovieManager {
         return recommendedMovie;
     }
     
+    public String viewRecommendation() {
+        buildRatings();
+        selectedMovie = getRecommendation();
+        return NavigationManager.movieDetailedView;
+    }
     
+    public String viewRecommendation(String major) {
+        buildRatings();
+        selectedMovie = getRecommendation(major);
+        return NavigationManager.movieDetailedView;
+    }
 }

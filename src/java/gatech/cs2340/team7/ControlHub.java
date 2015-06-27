@@ -12,6 +12,7 @@ import UserManagement.UserManager;
  */
 public class ControlHub {
     private UserManager userManager;
+    private MovieManager movieManager;
     private RottenTomatoesDataManager dataManager; // TODO should be a more generic DataManager type
     private static ControlHub instance = null;
     
@@ -30,8 +31,9 @@ public class ControlHub {
      * Constructor
      * @param userManager UserManager
      */
-    public ControlHub(UserManager userManager) {
+    public ControlHub(UserManager userManager, MovieManager movieManager) {
         this.userManager = userManager;
+        this.movieManager = movieManager;
     }
     
     /**
@@ -58,6 +60,27 @@ public class ControlHub {
         System.out.println("Setting user mgt to " + userManager);
         this.userManager = userManager;
     }
+    
+    
+    /**
+     * Set the movie manager
+     * @param movieManager movie manager
+     */
+    public void setMovieManager(MovieManager movieManager) {
+        System.out.println("Setting movie mgt to " + movieManager);
+        this.movieManager = movieManager;
+    }
+    
+    /**
+     * Get the movie manager
+     * @return movie manager
+     */
+    public MovieManager getMovieManager() {
+        if (movieManager == null) {
+            movieManager = new MovieManager();
+        }
+        return movieManager;
+    }
 
     /**
      * Get the data manager
@@ -74,8 +97,4 @@ public class ControlHub {
     public void setDataManager(RottenTomatoesDataManager dataManager) {
         this.dataManager = dataManager;
     }
-    
-    
-    
-    
 }

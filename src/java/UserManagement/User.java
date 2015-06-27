@@ -114,6 +114,15 @@ public class User implements Serializable {
         return profile.getMajor();
     }
     
+    /**
+     * set the user's major
+     * @return major
+     */
+    public void setMajor(String major) {
+        profile.setMajor(major);
+        System.out.println(major + "akjaisdj");
+    }
+    
     public String getUsername() {
         return account.getUsername();
     }

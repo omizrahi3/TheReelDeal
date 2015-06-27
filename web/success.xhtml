@@ -45,6 +45,11 @@
             <p:tab title="Movie Search">
                 <p:link outcome="movieHub" value="Search Now"/>
             </p:tab>
+            <p:tab title="Recommendation">
+                 <p:commandButton id="overallRecButton" value="Overall" action="#{rottenTomatoesDataManager.movieManager.viewRecommendation()}" />
+                <br />
+                <p:commandButton id="majorRecButton" value="By My Major" action="#{rottenTomatoesDataManager.movieManager.viewRecommendation(userManager.activeUser.profile.major)}" />
+            </p:tab>
         </p:accordionPanel>
         </p:panel>
         </h:form>

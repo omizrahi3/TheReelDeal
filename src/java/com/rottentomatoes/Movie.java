@@ -8,8 +8,10 @@ import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import javax.faces.bean.SessionScoped;
 
 @Generated("org.jsonschema2pojo")
+@SessionScoped
 public class Movie {
 
     @Expose
@@ -48,6 +50,9 @@ public class Movie {
     
     public Movie() {
         ratings = new Ratings();
+        posters = new Posters();
+        synopsis = "No movie found.";
+        posters.setThumbnail("resources/images/BlackReel.png");
     }
     
     /**
