@@ -67,6 +67,10 @@ public class UserManager implements Serializable {
         return ControlHub.successPageURL;
     }
     
+    public String backHome() {
+        return ControlHub.successPageURL;
+    }
+    
     /**
      * Attempt to log in an existing user
      * @return page name for XHTML navigation (if applicable)

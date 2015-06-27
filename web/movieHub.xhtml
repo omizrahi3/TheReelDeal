@@ -65,6 +65,7 @@
                         <p:column headerText="Ratings" width="10%" style="text-align: center">
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
+                            <h:outputText value="ReelDealRating  #{eachMovie.ratings.averageRating}" />
                         </p:column>
                         
                         <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
@@ -111,6 +112,9 @@
                         </p:column>
                     </p:dataTable>
                 </p:tab>
+                <p:tab title="Back Home">
+                    <p:commandButton id="Back" value="Back Button" action="#{userManager.backHome()}" />
+                  </p:tab>  
             </p:tabView>
         </h:form>
     </h:body>
