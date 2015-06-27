@@ -3,9 +3,8 @@ UserManager class that controls and handles all users and their actions.
  */
 package UserManagement;
 
-import IO.PasswordReader;
-import IO.UserReader;
-import IO.UserWriter;
+import IO.PasswordIO;
+import IO.UserIO;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
 import gatech.cs2340.team7.ControlHub;
@@ -25,9 +24,6 @@ import javax.faces.bean.ManagedBean;
 public class UserManager implements Serializable {
     private List<User> allUsers; // change to hash table for faster lookup?
     private final HashMap<String, String> passwords;
-    private final PasswordReader passread;
-    private final UserReader userRead;
-    private final UserWriter userWriter;
     private Login login;
     private Registration registration;
     private User activeUser;
@@ -36,19 +32,12 @@ public class UserManager implements Serializable {
      * Constructor
      */
     public UserManager() {
-        userRead = new UserReader();
-        passread = new PasswordReader();
-        passread.OpenFile();
         allUsers = new ArrayList<>();
-        passwords = passread.readFile();
+        passwords = PasswordIO.readFile();
         login = new Login();
         registration = new Registration();
         activeUser = null;
-        userWriter = new UserWriter();
-        
-        // Temporary addition of user until data persistence is added
-        allUsers.add(new User());
-        allUsers.get(0).setUsername("user");
+        allUsers = UserIO.readFile();
     }
     
     /**
@@ -111,10 +100,10 @@ public class UserManager implements Serializable {
             User newUser = registration.registerNewUser();
             addUser(newUser);
             processLogin(newUser);
-            userWriter.WriteToFile(newUser);
-            
+            UserIO.WriteToFile(allUsers);
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
+            PasswordIO.WriteToFile(passwords);
             registration.clearData();
             return ControlHub.successPageURL;
         } else {
