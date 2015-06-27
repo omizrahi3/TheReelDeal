@@ -61,6 +61,11 @@ public class UserManager implements Serializable {
     public String editProfile() {
         return ControlHub.editProfilePageURL;
     }
+
+    public String editProfileSuccess() {
+        UserIO.WriteToFile(allUsers);
+        return ControlHub.successPageURL;
+    }
     
     /**
      * Attempt to log in an existing user

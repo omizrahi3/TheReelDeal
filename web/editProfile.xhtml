@@ -45,8 +45,8 @@
                 <h3> About you:</h3>
             <p:inputTextarea id= "About" rows ="10" cols="60" value = "#{userManager.activeUser.profile.aboutMe}"/>
             </p>
-            <p:commandButton value="Submit Changes" action= "#{navigationManager.getSuccess}" styleClass="ui-priority-primary" />
-            <p:commandButton value="Cancel" action= "#{navigationManager.getSuccess}" styleClass="ui-priority-primary" />
+                    <p:commandButton value="Submit Changes" action= "#{userManager.editProfileSuccess()}" styleClass="ui-priority-primary" />
+            <p:commandButton value="Cancel" action= "#{controlhub.getSuccessPageURL}" styleClass="ui-priority-primary" />
                 </h:form>
             </p:tab>
         </p:accordionPanel>
