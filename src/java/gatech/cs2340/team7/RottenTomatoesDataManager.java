@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rottentomatoes.RottenTomatoesDTO;
 import com.rottentomatoes.IntegerAdapter;
+import java.io.Serializable;
 
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
@@ -21,7 +22,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "rottenTomatoesDataManager", eager = true)
 @ApplicationScoped
-public class RottenTomatoesDataManager {
+public class RottenTomatoesDataManager implements Serializable {
     
     public static final String BASE_API_URI = "http://api.rottentomatoes.com/api/public/v1.0";
     public static final String APIKey = "yedukp76ffytfuy24zsqk7f5";
