@@ -6,6 +6,7 @@ package com.rottentomatoes;
 import java.util.Map;
 
 import UserManagement.User;
+import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,7 +19,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "reelDealRating", eager = true)
 @SessionScoped
-public class ReelDealRating {
+public class ReelDealRating implements Serializable {
    
     public static final int MAX_VALUE = 4;
     public static final int MIN_VALUE = 0;

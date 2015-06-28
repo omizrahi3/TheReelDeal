@@ -5,12 +5,13 @@ package gatech.cs2340.team7;
 
 import UserManagement.User;
 import UserManagement.UserManager;
+import java.io.Serializable;
 
 /**
  *
  * @author Anthony
  */
-public class ControlHub {
+public class ControlHub implements Serializable {
     
     // Static constant strings for ease of xhtml page navigation
     public static final String registerPageURL          = "register?faces-redirect=true";

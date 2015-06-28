@@ -9,6 +9,7 @@ import com.rottentomatoes.RottenTomatoesDTO;
 import com.rottentomatoes.IntegerAdapter;
 
 import java.util.Map;
+import javax.faces.bean.ApplicationScoped;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,7 +20,7 @@ import javax.faces.context.FacesContext;
  * @author Anthony
  */
 @ManagedBean(name = "rottenTomatoesDataManager", eager = true)
-@SessionScoped
+@ApplicationScoped
 public class RottenTomatoesDataManager {
     
     public static final String BASE_API_URI = "http://api.rottentomatoes.com/api/public/v1.0";
