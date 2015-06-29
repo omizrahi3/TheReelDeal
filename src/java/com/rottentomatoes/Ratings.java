@@ -54,7 +54,8 @@ public class Ratings {
                 sum += r.getValue();
             }
             float avg = sum / reelDealRatings.size();
-            avg -= (avg % 0.1);             //rounding down to nearest 0.1
+                avg -= (avg % 0.1);             //rounding down to nearest 0.1
+
             return avg;
             
         }
