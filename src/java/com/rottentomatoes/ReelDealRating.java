@@ -38,6 +38,17 @@ public class ReelDealRating implements Serializable {
         this(null, new String[MAX_VALUE], MIN_VALUE, "");
     }
     
+    public ReelDealRating(ReelDealRating newRating) {
+        this.reels = newRating.getReels();
+        this.author = newRating.getAuthor();
+        this.value = newRating.getValue();
+        this.comment = new Comment(newRating.getComment());
+    }
+    
+    public ReelDealRating(User author, int value, String comment) {
+        this(author, new String[MAX_VALUE], value, comment);
+    }
+    
     /**
      * Chained constructor
      * @param author author

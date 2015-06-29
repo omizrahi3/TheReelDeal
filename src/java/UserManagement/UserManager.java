@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -22,22 +24,27 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name = "userManager", eager = true)
 @ApplicationScoped
 public class UserManager implements Serializable {
-    private List<User> allUsers; // change to hash table for faster lookup?
+    private HashMap<String, User> allUsers;
     private final HashMap<String, String> passwords;
     private Login login;
     private Registration registration;
     private User activeUser;
     
+    
     /**
      * Constructor
      */
     public UserManager() {
-        allUsers = new ArrayList<>();
+        allUsers = new HashMap<>();
         passwords = PasswordIO.readFile();
         login = new Login();
         registration = new Registration();
         activeUser = null;
         allUsers = UserIO.readFile();
+        
+        // Create hard-coded administrator to demonstrate privileges
+        allUsers.put("boss", new Administrator("Da Boss", "boss", "bossPassword"));
+        passwords.put("boss", "bossPassword");
     }
     
     /**
@@ -46,10 +53,8 @@ public class UserManager implements Serializable {
      * @return User with name username
      */
     public User get(String username) {
-        for (User user : allUsers) {
-            if (username.equals(user.getAccount().getUsername())) {
-                return user;
-            }
+        if (allUsers.get(username) != null) {
+            return allUsers.get(username);
         }
         throw new java.util.NoSuchElementException("Logged in a non-existent User!\nUsername: " + username);
     }
@@ -63,12 +68,12 @@ public class UserManager implements Serializable {
     }
 
     public String editProfileSuccess() {
-        UserIO.WriteToFile(allUsers);
-        return ControlHub.successPageURL;
+        saveUserInfo();
+        return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
     public String backHome() {
-        return ControlHub.successPageURL;
+        return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
     /**
@@ -78,13 +83,15 @@ public class UserManager implements Serializable {
      */
     public String loginExistingUser() throws Exception {
         if (login.checkLogin(allUsers, passwords)) {
-            processLogin(get(login.getUsername()));
-            return ControlHub.successPageURL;
+            User userToLogin = get(login.getUsername());
+            processLogin(userToLogin);
+            return ControlHub.dashboardPageURL(userToLogin.isAdmin());
         } else {
             System.out.println("Login failed!");
             System.out.println("Current users:");
-            allUsers.stream().forEach((u) -> {
-                System.out.println(u.getAccount().getUsername());
+            allUsers.values().stream().forEach((u) -> {
+                System.out.println(u.getAccount().getUsername() + ": " + 
+                        passwords.get(u.getAccount().getUsername()));
             });
             return null;
         }
@@ -104,17 +111,17 @@ public class UserManager implements Serializable {
      */
     public String registerNewUser() {
         if (registration.checkNewUserRegistration(allUsers)) {
-            // Registration successPageURL, create the user, account, and profile
+            // Registration userDashboardPageURL, create the user, account, and profile
             System.out.println("Successful registration attempt!");
             User newUser = registration.registerNewUser();
             addUser(newUser);
             processLogin(newUser);
-            UserIO.WriteToFile(allUsers);
+            saveUserInfo();
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
             PasswordIO.WriteToFile(passwords);
             registration.clearData();
-            return ControlHub.successPageURL;
+            return ControlHub.userDashboardPageURL;
         } else {
             System.out.println("Failed registration attempt!");
             return null;
@@ -128,14 +135,12 @@ public class UserManager implements Serializable {
     public void addUser(User u) {
         if (u == null) {
             throw new IllegalArgumentException("Cannot input null data!");
-        } else if (!allUsers.add(u)) {
-            System.out.println("Failed to add user to the user list!");
-            // TODO actually notify the user of the failure
         } else {
+            allUsers.put(u.getUsername(), u);
             System.out.println("Added new user. Updated user list:");
-            for (User user : allUsers) {
+            allUsers.values().stream().forEach((user) -> {
                 System.out.println("- " + user.getAccount().getUsername());
-            }
+            });
         }
         
     }
@@ -150,6 +155,11 @@ public class UserManager implements Serializable {
         } else {
             allUsers.remove(u);
         }
+    }
+    
+    public void saveUserInfo() {
+        System.out.println("Saving state of users");
+        UserIO.WriteToFile(allUsers);
     }
     
     /**
@@ -198,5 +208,17 @@ public class UserManager implements Serializable {
      */
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
+    }
+
+    public HashMap<String, User> getAllUsers() {
+        return allUsers;
+    }
+    
+    public List<User> getAllUsersAsList() {
+        return (List<User>)allUsers.values();
+    }
+
+    public void setAllUsers(HashMap<String, User> allUsers) {
+        this.allUsers = allUsers;
     }
 }

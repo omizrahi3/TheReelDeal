@@ -71,6 +71,7 @@ public class Movie implements Serializable {
         if (criticsConsensus == null || criticsConsensus.length() == 0) {
             criticsConsensus = "n/a";
         }
+        ratings.assertDefaultValuesOfUndefData();
     }
     
     /**

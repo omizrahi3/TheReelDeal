@@ -7,15 +7,15 @@ package IO;
 
 import UserManagement.User;
 import com.rottentomatoes.Movie;
-import gatech.cs2340.team7.MovieManager;
+import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -23,12 +23,12 @@ import java.util.List;
  */
 public class MovieIO implements Serializable {
     
-    public static List<Movie> readFile() {
-       List<Movie> movies = new ArrayList<>();
+    public static HashMap<String, Movie> readFile() {
+       HashMap<String, Movie> movies = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream("/Users/ODell/movies.bin"));
-            movies = (List<Movie>) is.readObject();
+                    new FileInputStream(ControlHub.pathToDataPersistence + "movies.bin"));
+            movies = (HashMap<String, Movie>) is.readObject();
             is.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,10 +38,10 @@ public class MovieIO implements Serializable {
         return movies;
     }
     
-    public static void WriteToFile(List<Movie> m) {
+    public static void WriteToFile(Map<String, Movie> m) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream("/Users/ODell/movies.bin"));
+                    new FileOutputStream(ControlHub.pathToDataPersistence + "movies.bin"));
             os.writeObject(m);
             os.close();
         } catch (IOException e) {

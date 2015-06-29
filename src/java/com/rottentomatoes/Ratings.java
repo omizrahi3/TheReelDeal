@@ -64,6 +64,11 @@ public class Ratings implements Serializable {
         return -1;
     }
     
+    public String getDisplayableAverageRating() {
+        Float avg = getAverageRating();
+        return (avg == -1 ? "n/a" : avg.toString());
+    }
+    
     /**
      * Returns whether there are reel deal ratings to view
      * @return boolean of whether there are reel deal ratings
@@ -108,6 +113,7 @@ public class Ratings implements Serializable {
         if (audienceRating == null) {
             audienceScore = "n/a";
         }
+        
     }
     
     /**

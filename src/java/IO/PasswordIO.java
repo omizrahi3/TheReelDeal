@@ -5,6 +5,7 @@
  */
 package IO;
 
+import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class PasswordIO implements Serializable {
         HashMap<String, String> passwords = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream("/ABSOLUTE_PATH/passwords.bin"));
+                    new FileInputStream(ControlHub.pathToDataPersistence + "passwords.bin"));
             passwords = (HashMap<String, String>) is.readObject();
             is.close();
         } catch (IOException e) {
@@ -40,7 +41,7 @@ public class PasswordIO implements Serializable {
     public static void WriteToFile(Map<String, String> passwords) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream("/ABSOLUTE_PATH/passwords.bin"));
+                    new FileOutputStream(ControlHub.pathToDataPersistence + "passwords.bin"));
             os.writeObject(passwords);
             os.close();
         } catch (IOException e) {
