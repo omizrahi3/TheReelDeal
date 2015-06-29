@@ -3,6 +3,8 @@ User class to represent the human user, and contain his/her Account and Profile.
  */
 package UserManagement;
 
+import LoginRegistration.BannedAccountException;
+import LoginRegistration.LockedAccountException;
 import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +26,14 @@ public class User implements Serializable {
         this(null, new Account(), new Profile());
     }
     
+    public User(String name, String username, String password, boolean admin) {
+        this(name, new Account(username, admin), new Profile());
+    }
+    
+    public boolean isAdmin() {
+        return account.isAdmin();
+    }
+    
     /**
      * Constructor specifying all members for a new user
      * @param name name of user
@@ -39,14 +49,44 @@ public class User implements Serializable {
     /**
      * Attempt to log the user into his/her account. If the loginPageURL fails,
  notify the user on the web page
+     * @throws LockedAccountException
+     * @throws BannedAccountException
      */
-    public void loginToAccount() {
+    public void loginToAccount() throws LockedAccountException,
+            BannedAccountException {
         try {
             account.login();
-        } catch (Exception e) {
-            // TODO indicate on webpage the loginPageURL failure due to account lock
-            System.out.println("Login failed due to account lock!");
+        } catch (LockedAccountException | BannedAccountException accountException) {
+            throw accountException;
         }
+    }
+    
+    public String lock() {
+        System.out.println("Locking user " + this.getUsername());
+        account.lock();
+        ControlHub.getInstance().userUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
+    }
+    
+    public String unlock() {
+        System.out.println("Unlocking user " + this.getUsername());
+        account.unlock();
+        ControlHub.getInstance().userUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
+    }
+    
+    public String ban() {
+        System.out.println("Banning user " + this.getUsername());
+        account.ban();
+        ControlHub.getInstance().userUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
+    }
+    
+    public String unban() {
+        System.out.println("Unbanning user " + this.getUsername());
+        account.unban();
+        ControlHub.getInstance().userUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
     }
     
     /**
@@ -56,7 +96,11 @@ public class User implements Serializable {
     public String logout() {  
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return ControlHub.indexPageURL;
-    }  
+    }
+    
+    public String getAccountStatus() {
+        return account.getStatus();
+    }
 
     /**
      * Get the name of the user
@@ -130,4 +174,21 @@ public class User implements Serializable {
     public void setUsername(String username) {
         this.account.setUsername(username);
     }
+    
+    public boolean isBanned() {
+        return account.isBanned();
+    }
+    
+    public void setBanned(boolean banned) {
+        account.setBanned(banned);
+    }
+    
+    public boolean isLocked() {
+        return account.isLocked();
+    }
+    
+    public void setLocked(boolean locked) {
+        account.setLocked(locked);
+    }
+    
 }

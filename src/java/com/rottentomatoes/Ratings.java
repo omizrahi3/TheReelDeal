@@ -4,15 +4,18 @@ package com.rottentomatoes;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 import java.util.ArrayList;
+import javax.faces.bean.SessionScoped;
 
 @Generated("org.jsonschema2pojo")
-public class Ratings {
+@SessionScoped
+public class Ratings implements Serializable {
 
     @SerializedName("critics_rating")
     @Expose
@@ -54,12 +57,16 @@ public class Ratings {
                 sum += r.getValue();
             }
             float avg = sum / reelDealRatings.size();
-                avg -= (avg % 0.1);             //rounding down to nearest 0.1
-
+            avg -= (avg % 0.1);             //rounding down to nearest 0.1
             return avg;
             
         }
         return -1;
+    }
+    
+    public String getDisplayableAverageRating() {
+        Float avg = getAverageRating();
+        return (avg == -1 ? "n/a" : avg.toString());
     }
     
     /**
@@ -106,6 +113,7 @@ public class Ratings {
         if (audienceRating == null) {
             audienceScore = "n/a";
         }
+        
     }
     
     /**

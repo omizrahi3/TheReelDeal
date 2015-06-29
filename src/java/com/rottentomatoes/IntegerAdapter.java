@@ -10,12 +10,13 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.TypeAdapter;
+import java.io.Serializable;
 
 /**
  *
  * @author Anthony
  */
-public class IntegerAdapter extends TypeAdapter<Integer> {
+public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable {
     
     @Override
     public Integer read(JsonReader reader) throws IOException {

@@ -3,12 +3,13 @@ package com.rottentomatoes;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class AlternateIds {
+public class AlternateIds implements Serializable {
 
     @Expose
     private String imdb;

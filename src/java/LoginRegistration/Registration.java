@@ -8,7 +8,7 @@ import UserManagement.Account;
 import UserManagement.Profile;
 import UserManagement.User;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -44,7 +44,7 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     public User registerNewUser() {
         System.out.println("Creating account for " + name +
                 " with username " + username);
-        return new User(name, new Account(username), new Profile(name, major));
+        return new User(name, new Account(username, false), new Profile(name, major));
     }
     
     /**
@@ -53,7 +53,7 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * @param users List of users to check existence of desired username
      * @return Whether registration data is valid
      */
-    public boolean checkNewUserRegistration(List<User> users) {
+    public boolean checkNewUserRegistration(HashMap<String, User> users) {
         // check if username already exists
         if (usernameExists(username, users)) {
             // tell the user that username already exists
@@ -80,17 +80,11 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * @param username User to check for
      * @return Indication of the user's preexistence in the user list 
      */
-    public boolean usernameExists(String username, List<User> userList) {
+    public boolean usernameExists(String username, HashMap<String, User> users) {
         if (username == null) {
             throw new IllegalArgumentException("Cannot input null data!");
         }
-        
-        for (User u : userList) {
-            if (username.equals(u.getAccount().getUsername())) {
-                return true;
-            }
-        }
-        return false;
+        return users.containsKey(username);
     }
     
     /**

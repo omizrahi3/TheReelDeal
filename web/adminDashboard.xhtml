@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"  
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://java.sun.com/jsf/core">  
+    <h:head>
+        <title>Administrator Dashboard</title>
+        <style>
+            .accordion{
+                position:absolute;
+                right: 0;
+                width:45%
+            }
+            .team7{
+                background-image:url("resources/images/Logo.jpg");
+                background-size:cover;
+                background-repeat:no-repeat
+            } 
+            .ui-selectonemenu-items-wrapper {
+                height: 200px !important
+            }
+       </style>
+    </h:head>
+    <h:body styleClass="team7">
+         <h:form  styleClass="accordion">
+        <p:panel id="panel" header="Welcome, to The Reel Deal, Administrator!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
+        <p:accordionPanel activeIndex="2">
+            <p:tab title="Log Out">
+                <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
+            </p:tab>
+            <p:tab title="Your Profile">
+                <h:form>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" alt="Upload a photo!" ></p:graphicImage>
+                    <p><strong>Name:</strong> #{userManager.activeUser.profile.name} </p>
+                    <p><strong>Major:</strong> #{userManager.activeUser.profile.major} </p>
+                    <hr />
+                    <h3><strong>About #{userManager.activeUser.profile.name}</strong></h3>
+                    <p> <pre>#{userManager.activeUser.profile.aboutMe}</pre> </p>
+                </h:panelGrid>
+                    <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" />
+                </h:form>
+            </p:tab>
+            <p:tab title="View/Change Status of All Users">
+                <p:dataTable var="eachUser" value="#{userManager.allUsersAsList}">
+                        <p:column headerText="User">
+                            <h:outputText value="#{eachUser.username}" />
+                        </p:column>
+                        <p:column headerText="Status" >
+                            <h:outputText value="#{eachUser.accountStatus}" />
+                        </p:column>
+                        <p:column headerText="Lock User">
+                            <p:commandButton  rendered="#{!eachUser.admin and !eachUser.locked}" value="Lock" action="#{eachUser.lock()}" />
+                            <p:commandButton  rendered="#{!eachUser.admin and eachUser.locked and !eachUser.banned}" value="Unlock" action="#{eachUser.unlock()}" />
+                        </p:column>
+                        <p:column headerText="Ban User">
+                            <p:commandButton rendered="#{!eachUser.admin and !eachUser.banned}" value="Ban" action="#{eachUser.ban()}" />
+                            <p:commandButton  rendered="#{!eachUser.admin and eachUser.banned}" value="Unban" action="#{eachUser.unban()}" />
+                        </p:column>
+                    </p:dataTable>
+            </p:tab>
+            <p:tab title="View All Reviews">
+            </p:tab>
+        </p:accordionPanel>
+        </p:panel>
+        </h:form>
+    </h:body>
+</html> 

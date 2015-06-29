@@ -5,7 +5,6 @@ package LoginRegistration;
 
 import UserManagement.User;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,7 +26,7 @@ public class Login extends AccountAccessAttempt {
      * @param passwords Map of passwords to verify the user's provided password
      * @return Indication of login success
      */
-    public boolean checkLogin(List<User> users, HashMap<String, String> passwords) {
+    public boolean checkLogin(HashMap<String, User> users, HashMap<String, String> passwords) {
         System.out.println("Login attempt with username <" + username + "> "
             + " and password <" + password + ">");
         boolean passwordMatch = password.equals(passwords.get(username));

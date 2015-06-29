@@ -5,23 +5,27 @@ package gatech.cs2340.team7;
 
 import UserManagement.User;
 import UserManagement.UserManager;
+import java.io.Serializable;
 
 /**
  *
  * @author Anthony
  */
-public class ControlHub {
+public class ControlHub implements Serializable {
     
     // Static constant strings for ease of xhtml page navigation
     public static final String registerPageURL          = "register?faces-redirect=true";
     public static final String editProfilePageURL       = "editProfile?faces-redirect=true";
-    public static final String successPageURL           = "success?faces-redirect=true";
+    public static final String userDashboardPageURL     = "userDashboard?faces-redirect=true";
     public static final String loginPageURL             = "login?faces-redirect=true";
     public static final String indexPageURL             = "index?faces-redirect=true";
     public static final String movieHubPageURL          = "movieHub?faces-redirect=true";
     public static final String postReviewPageURL        = "postReview?faces-redirect=true";
     public static final String errorPageURL             = "error?faces-redirect=true";
     public static final String movieDetailedViewPageURL = "movieDetailedView?faces-redirect=true";
+    public static final String adminDashboardPageURL    = "adminDashboard?faces-redirect=true";
+    
+    public static final String pathToDataPersistence    = "C:\\Users\\Anthony\\Desktop\\Temp\\";
     
     // Instance data members
     private UserManager userManager;
@@ -40,9 +44,23 @@ public class ControlHub {
         return instance;
     }
     
+    public static String dashboardPageURL(boolean isAdmin) {
+        return (isAdmin ? adminDashboardPageURL : userDashboardPageURL);
+    }
+    
+    public String activeUserDashboardPageURL() {
+        return (userManager.getActiveUser().isAdmin() ? adminDashboardPageURL :
+                userDashboardPageURL);
+    }
+    
+    public void userUpdate() {
+        userManager.saveUserInfo();
+    }
+    
     /**
      * Constructor
      * @param userManager UserManager
+     * @param movieManager movieManager
      */
     public ControlHub(UserManager userManager, MovieManager movieManager) {
         this.userManager = userManager;
@@ -144,11 +162,11 @@ public class ControlHub {
     }
 
     /**
-     * Get the successPageURL page string
+     * Get the userDashboardPageURL page string
      * @return page string
      */
-    public String getSuccessPageURL() {
-        return successPageURL;
+    public String getUserDashboardPageURL() {
+        return userDashboardPageURL;
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,7 +13,7 @@ import javax.faces.bean.SessionScoped;
 
 @Generated("org.jsonschema2pojo")
 @SessionScoped
-public class Movie {
+public class Movie implements Serializable {
 
     @Expose
     private String id;
@@ -70,6 +71,7 @@ public class Movie {
         if (criticsConsensus == null || criticsConsensus.length() == 0) {
             criticsConsensus = "n/a";
         }
+        ratings.assertDefaultValuesOfUndefData();
     }
     
     /**
@@ -370,6 +372,10 @@ public class Movie {
     }
 
     public void addReelDealRating(ReelDealRating newRating) {
+        System.out.println("Added review from " +
+                newRating.getAuthor().getName() + " with " +
+                newRating.getValue() + " reels and feedback: " +
+                newRating.getComment());
         ratings.addReelDealRating(newRating);
     }
 }

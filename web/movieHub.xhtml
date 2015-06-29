@@ -21,10 +21,10 @@
         <h:form id="movieDataDisplay">
             <p:tabView orientation="top" activeIndex="2">
                 <p:tab title="New In-Theater">
-                    <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newTheaterReleases}" >
+                    <p:dataTable id="newTheaterReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newTheaterReleasesList}" >
                         <p:column headerText="Title" width="10%">
                             <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
-                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                                <f:param name="selectedMovie" value="#{eachMovie.id}" />
                             </h:commandLink>
                         </p:column>
 
@@ -36,7 +36,8 @@
                             <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
-                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                        <p:column headerText="Ratings" width="15%" style="text-align: center">
+                            <h:outputText value="ReelDeal: #{eachMovie.ratings.displayableAverageRating}" /><br />
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
@@ -47,10 +48,10 @@
                     </p:dataTable>
                 </p:tab>
                 <p:tab title="New DVDs">
-                    <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newDVDReleases}" >
+                    <p:dataTable id="newDVDReleasesTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.newDVDReleasesList}" >
                         <p:column headerText="Title" width="10%">
                             <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
-                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                                <f:param name="selectedMovie" value="#{eachMovie.id}" />
                             </h:commandLink>
                         </p:column>
 
@@ -62,10 +63,10 @@
                             <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
-                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                        <p:column headerText="Ratings" width="15%" style="text-align: center">
+                            <h:outputText value="ReelDeal: #{eachMovie.ratings.displayableAverageRating}" /><br />
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
-                            <h:outputText value="ReelDealRating  #{eachMovie.ratings.averageRating}" />
                         </p:column>
                         
                         <p:column headerText="MPAA Rating" width="10%" style="text-align: center;">
@@ -82,11 +83,11 @@
                         <p:commandButton id="movieSearchButton" value="Go" action="#{rottenTomatoesDataManager.queryForMovie()}" />
                         <p:message for="movieSearchInput" display="icon" />
                     </h:panelGrid>
-                    <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.searchResultMovies}" 
+                    <p:dataTable id="movieTable" var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.searchResultMoviesList}" 
                                  rendered="#{rottenTomatoesDataManager.showSearchData}" >
                         <p:column headerText="Title" width="20%" >
                             <h:commandLink id="#{eachMovie.title}_title" action="#{rottenTomatoesDataManager.movieSelected()}" value="#{eachMovie.title}" style="font-weight: bold">
-                                <f:param name="selectedMovie" value="#{eachMovie.title}" />
+                                <f:param name="selectedMovie" value="#{eachMovie.id}" />
                             </h:commandLink>
                         </p:column>
 
@@ -98,7 +99,8 @@
                             <h:outputText value="#{eachMovie.synopsis}" />
                         </p:column>
 
-                        <p:column headerText="Ratings" width="10%" style="text-align: center">
+                        <p:column headerText="Ratings" width="15%" style="text-align: center">
+                            <h:outputText value="ReelDeal: #{eachMovie.ratings.displayableAverageRating}" /><br />
                             <h:outputText value="Audience: #{eachMovie.ratings.audienceScore}" /><br />
                             <h:outputText value="Critics:  #{eachMovie.ratings.criticsScore}" />
                         </p:column>
@@ -112,8 +114,8 @@
                         </p:column>
                     </p:dataTable>
                 </p:tab>
-                <p:tab title="Back Home">
-                    <p:commandButton id="Back" value="Back Button" action="#{userManager.backHome()}" />
+                <p:tab title="Back to Dashboard">
+                    <p:commandButton id="Back" value="Dashboard" action="#{userManager.backHome()}" />
                   </p:tab>  
             </p:tabView>
         </h:form>
