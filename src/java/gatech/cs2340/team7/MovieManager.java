@@ -338,25 +338,29 @@ public class MovieManager {
     }
     
     
-    public LinkedHashMap<String, Movie> sortMoviesByRating(HashMap<String, Movie> movies) {
-        List movieList = new LinkedList(movies.entrySet());
-        Collections.sort(movieList, new MovieRatingComparator());
-        LinkedHashMap<String, Movie> sortedMovies = new LinkedHashMap<>();
-        for (Iterator it = movieList.iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            sortedMovies.put((String) entry.getKey(), (Movie) entry.getValue());
-        }
-        return sortedMovies;
-    }
+    //    public LinkedHashMap<String, Movie> sortMoviesByRating(HashMap<String, Movie> movies) {
+//        List movieList = new LinkedList(movies.entrySet());
+//        Collections.sort(movieList, new MovieRatingComparator());
+//        LinkedHashMap<String, Movie> sortedMovies = new LinkedHashMap<>();
+//        for (Iterator it = movieList.iterator(); it.hasNext();) {
+//            Map.Entry entry = (Map.Entry) it.next();
+//            sortedMovies.put((String) entry.getKey(), (Movie) entry.getValue());
+//        }
+//        return sortedMovies;
+//    }
     
     public Movie getRecommendation() {
-        LinkedHashMap<String, Movie> sortedMovieList = sortMoviesByRating(newDVDReleases); //TODO: change to all rated movies instead of DVD releases
-        Set movies = sortedMovieList.entrySet();
-        Iterator moviesIterator = movies.iterator();
-        if (!moviesIterator.hasNext()) {
-            throw new java.util.NoSuchElementException("Empty map returned from sort!");
+        System.out.println("Getting recommendation based on overall rating");
+        float highestRating = 0;
+        Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
+        for (Movie m : newDVDReleases.values()) { //TODO: change to all rated movies instead of DVD releases
+            float curRating = m.getAverageRating();
+            if (curRating > highestRating) {
+                highestRating = curRating;
+                recommendedMovie = m;
+            }
         }
-        return (Movie)((HashMap.Entry)moviesIterator.next()).getValue();
+        return recommendedMovie;
     }
     
     public Movie getRecommendation(String major) {
@@ -397,5 +401,8 @@ public class MovieManager {
         this.ratedMovies = ratedMovies;
     }
     
-    
+    public void saveMovieInfo() {
+        System.out.println("Saving state of users");
+        MovieIO.WriteToFile(ratedMovies);
+    }
 }

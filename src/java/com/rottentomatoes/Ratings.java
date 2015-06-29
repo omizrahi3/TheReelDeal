@@ -1,4 +1,3 @@
-
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
