@@ -363,5 +363,9 @@ public class MovieManager {
         this.ratedMovies = ratedMovies;
     }
     
+    public void saveMovieInfo() {
+        System.out.println("Saving state of users");
+        MovieIO.WriteToFile(ratedMovies);
+    }
     
 }

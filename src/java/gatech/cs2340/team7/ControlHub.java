@@ -201,7 +201,7 @@ public class ControlHub implements Serializable {
         return errorPageURL;
     }
     
-    
-    
-    
+    public void movieUpdate() {
+        movieManager.saveMovieInfo();
+    }
 }

@@ -6,6 +6,7 @@ package com.rottentomatoes;
 import java.util.Map;
 
 import UserManagement.User;
+import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
@@ -30,6 +31,8 @@ public class ReelDealRating implements Serializable {
     private User author;
     private int value;
     private Comment comment;
+    private boolean flagged;
+
     
     /**
      * Empty constructor
@@ -43,6 +46,7 @@ public class ReelDealRating implements Serializable {
         this.author = newRating.getAuthor();
         this.value = newRating.getValue();
         this.comment = new Comment(newRating.getComment());
+        this.flagged = false;
     }
     
     public ReelDealRating(User author, int value, String comment) {
@@ -200,4 +204,23 @@ public class ReelDealRating implements Serializable {
             reels[i] = BLACK_REEL_IMG;
         }
     }
+    
+    public String flag() {
+        System.out.println("Flagging comment " + this.getComment());
+        flagged = true;
+        ControlHub.getInstance().movieUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
+    }
+    
+    public String deFlag() {
+        System.out.println("Flagging comment " + this.getComment());
+        flagged = false;
+        ControlHub.getInstance().movieUpdate();
+        return ControlHub.getInstance().activeUserDashboardPageURL();
+    }
+    
+    public boolean isFlagged() {
+        return flagged;
+    }
+
 }

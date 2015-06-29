@@ -81,6 +81,25 @@
                         <h:commandButton value="Submit" action="#{rottenTomatoesDataManager.movieManager.addRating()}" />
                     </h:panelGrid>
                 </p:tab>
+                <p:tab title="View ReelDeal Reviews"><br></br>
+                    <h:outputLabel class="label" value="Average ReelDeal Rating: " />
+                    <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.averageRating}" /><br></br>
+                    <p:dataTable id="ReelDealReviewsTable" var="eachReview" value="#{rottenTomatoesDataManager.movieManager.selectedMovie.reelDealRatings}" >
+                        <p:column headerText="User" width="10%" style="text-align: center;">
+                            <h:outputText value="#{eachReview.author.username}" />
+                        </p:column>
+                        <p:column headerText="Reels" width="10%" style="text-align: center;">
+                            <h:outputText value="" />
+                            <p:rating value="#{eachReview.value}" readonly="true" />
+                        </p:column>
+                        <p:column headerText="Comments">
+                            <h:outputText value="#{eachReview.comment}" />
+                        </p:column>
+                            <p:column headerText="Flag Comment">
+                                <p:commandButton value="Flag comment" action="#{eachReview.flag()}" />   
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
             </p:tabView>
         </h:form>
     </body>
