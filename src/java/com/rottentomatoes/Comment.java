@@ -5,11 +5,13 @@
  */
 package com.rottentomatoes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Anthony
  */
-public class Comment {
+public class Comment implements Serializable {
     private String content;
     /**
      * Constructor
