@@ -42,7 +42,7 @@
                     <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" />
                 </h:form>
             </p:tab>
-            <p:tab title="View Status of All Users">
+            <p:tab title="View/Change Status of All Users">
                 <p:dataTable var="eachUser" value="#{userManager.allUsersAsList}">
                         <p:column headerText="User">
                             <h:outputText value="#{eachUser.username}" />
@@ -59,6 +59,8 @@
                             <p:commandButton  rendered="#{!eachUser.admin and eachUser.banned}" value="Unban" action="#{eachUser.unban()}" />
                         </p:column>
                     </p:dataTable>
+            </p:tab>
+            <p:tab title="View All Reviews">
             </p:tab>
         </p:accordionPanel>
         </p:panel>

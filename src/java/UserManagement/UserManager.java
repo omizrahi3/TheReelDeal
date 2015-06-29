@@ -10,9 +10,7 @@ import LoginRegistration.Login;
 import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -45,6 +43,9 @@ public class UserManager implements Serializable {
         // Create hard-coded administrator to demonstrate privileges
         allUsers.put("boss", new Administrator("Da Boss", "boss", "bossPassword"));
         passwords.put("boss", "bossPassword");
+        
+        // Update the ControlHub with this instance
+        ControlHub.getInstance().setUserManager(this);
     }
     
     /**
@@ -82,27 +83,35 @@ public class UserManager implements Serializable {
      * @throws Exception if user is locked
      */
     public String loginExistingUser() throws Exception {
-        if (login.checkLogin(allUsers, passwords)) {
-            User userToLogin = get(login.getUsername());
-            processLogin(userToLogin);
+        User userToLogin = get(login.getUsername());
+        if (login.checkLogin(allUsers, passwords) &&
+                processLogin(userToLogin)) {
             return ControlHub.dashboardPageURL(userToLogin.isAdmin());
         } else {
             System.out.println("Login failed!");
-            System.out.println("Current users:");
-            allUsers.values().stream().forEach((u) -> {
-                System.out.println(u.getAccount().getUsername() + ": " + 
-                        passwords.get(u.getAccount().getUsername()));
-            });
+            // TODO display message to user indicating login failure
+            printUsers();
             return null;
         }
     }
     
-    private void processLogin(User user) {
+    public void printUsers() {
+        System.out.println("Current users:");
+        allUsers.values().stream().forEach((u) -> {
+            System.out.println(u.getAccount().getUsername() + ": " + 
+                    passwords.get(u.getAccount().getUsername()));
+        });   
+    }
+    
+    private boolean processLogin(User user) {
         System.out.println("Processing login for " + user.getName());
         activeUser = user;
-        activeUser.loginToAccount();
-        login.clearData();
-        ControlHub.getInstance().setUserManager(this);
+        if (activeUser.loginToAccount()) {
+            login.clearData();
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -215,7 +224,8 @@ public class UserManager implements Serializable {
     }
     
     public List<User> getAllUsersAsList() {
-        return (List<User>)allUsers.values();
+        System.err.println("Returning list of users with size " + allUsers.values().size());
+        return new ArrayList<>(allUsers.values());
     }
 
     public void setAllUsers(HashMap<String, User> allUsers) {

@@ -47,13 +47,15 @@ public class User implements Serializable {
     /**
      * Attempt to log the user into his/her account. If the loginPageURL fails,
  notify the user on the web page
+     * @return login success or failure indication
      */
-    public void loginToAccount() {
+    public boolean loginToAccount() {
         try {
             account.login();
+            return true;
         } catch (Exception e) {
             // TODO indicate on webpage the loginPageURL failure due to account lock
-            System.out.println("Login failed!");
+            return false;
         }
     }
     

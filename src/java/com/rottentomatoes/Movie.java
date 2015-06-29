@@ -372,6 +372,10 @@ public class Movie implements Serializable {
     }
 
     public void addReelDealRating(ReelDealRating newRating) {
+        System.out.println("Added review from " +
+                newRating.getAuthor().getName() + " with " +
+                newRating.getValue() + " reels and feedback: " +
+                newRating.getComment());
         ratings.addReelDealRating(newRating);
     }
 }

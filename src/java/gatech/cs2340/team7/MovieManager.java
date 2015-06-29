@@ -138,20 +138,15 @@ public class MovieManager {
      * @return 
      */
     public String addRating() {
-        User author = ControlHub.getInstance().getActiveUser();
-        newRating.setAuthor(author);
-        ReelDealRating ratingToBeSet = new ReelDealRating(newRating);
-        
-        System.out.println("Added review from " + ratingToBeSet.getAuthor().getName() + " with " + ratingToBeSet.getValue() +
-                " reels and feedback: " + ratingToBeSet.getComment());
-        
         if (selectedMovie == null) {
             throw new java.util.NoSuchElementException("No Selected Movie!");
         }
+        newRating.setAuthor(ControlHub.getInstance().getActiveUser());
+        ReelDealRating ratingToBeSet = new ReelDealRating(newRating);
+
         selectedMovie.addReelDealRating(ratingToBeSet);
-        if (ratedMovies.get(selectedMovie.getId()) == null) {
-            ratedMovies.put(selectedMovie.getId(), selectedMovie);
-        }
+        // unnecessary for movie existing in map?
+        ratedMovies.put(selectedMovie.getId(), selectedMovie);
         newRating.clearData();
         return ControlHub.postReviewPageURL;
     }
@@ -169,7 +164,7 @@ public class MovieManager {
      * @return 
      */
     public List<Movie> getSearchResultMoviesList() {
-        return (List<Movie>) searchResultMovies.values();
+        return new ArrayList<>(searchResultMovies.values());
     }
 
     /**
@@ -209,7 +204,7 @@ public class MovieManager {
      * @return 
      */
     public List<Movie> getNewDVDReleasesList() {
-        return (List<Movie>) newDVDReleases.values();
+        return new ArrayList<>(newDVDReleases.values());
     }
 
     /**
@@ -245,7 +240,7 @@ public class MovieManager {
      * @return 
      */
     public List<Movie> getNewTheaterReleasesList() {
-        return (List<Movie>) newTheaterReleases.values();
+        return new ArrayList<>(newTheaterReleases.values());
     }
 
     /**
@@ -350,6 +345,10 @@ public class MovieManager {
 
     public HashMap<String, Movie> getRatedMovies() {
         return ratedMovies;
+    }
+    
+    public List<Movie> getRatedMoviesList() {
+        return new ArrayList<>(ratedMovies.values());
     }
 
     public void setRatedMovies(HashMap<String, Movie> ratedMovies) {
