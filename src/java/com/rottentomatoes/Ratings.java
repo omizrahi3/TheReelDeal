@@ -199,6 +199,10 @@ public class Ratings implements Serializable {
     public void setAudienceScore(String audienceScore) {
         this.audienceScore = audienceScore;
     }
+    
+    public int getNumberOfReelDealRatings() {
+        return reelDealRatings.size();
+    }
 
     @Override
     public String toString() {

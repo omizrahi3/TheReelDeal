@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -137,6 +136,10 @@ public class RottenTomatoesDataManager implements Serializable {
         this.query = query;
     }
 
+    public void saveState() {
+        movieManager.saveState();
+    }
+    
     /**
      * Get the movie manager handle
      * @return movie manager handle

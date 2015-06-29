@@ -70,14 +70,14 @@ public class ReelDealRating implements Serializable {
     public void reelsRatingChange() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         value = (params.get("rating") == null ? 0 : Integer.parseInt(params.get("rating")) );
-        reelsRatingChange(value);
+        assertReels(value);
     }
     
     /**
      * Set the reels according to the given value
      * @param value value to represent via reels
      */
-    public void reelsRatingChange(int value) {
+    public void assertReels(int value) {
         for (int i = 0; i < value; ++i) {
             reels[i] = GOLD_REEL_IMG;
         }
@@ -101,7 +101,7 @@ public class ReelDealRating implements Serializable {
                             MIN_VALUE + " < value < " + MAX_VALUE);
         }
         this.value = value;
-        reelsRatingChange(value);
+        assertReels(value);
     }
     
     /**
@@ -117,14 +117,14 @@ public class ReelDealRating implements Serializable {
      * @param reels 
      */
     public final void setReels(String[] reels) {
+        this.reels = new String[reels.length];
         for (int i = 0; i < reels.length; ++i) {
             if (reels[i] == null || reels[i].length() == 0) {
-                reels[i] = BLACK_REEL_IMG;
+                this.reels[i] = BLACK_REEL_IMG;
             } else {
-                reels[i] = GOLD_REEL_IMG;
+                this.reels[i] = GOLD_REEL_IMG;
             }
         }
-        this.reels = reels;
     }
     
     /**

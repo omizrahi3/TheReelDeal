@@ -61,6 +61,14 @@
                     </p:dataTable>
             </p:tab>
             <p:tab title="View All Reviews">
+                <p:dataTable var="eachMovie" value="#{rottenTomatoesDataManager.movieManager.ratedMoviesList}">
+                    <p:column headerText="Movie" >
+                        <h:outputText value="#{eachMovie.title}" />
+                    </p:column>
+                    <p:column headerText="# Reviews" >
+                        <h:outputText value="#{eachMovie.ratings.numberOfReelDealRatings}" />
+                    </p:column>
+                </p:dataTable>
             </p:tab>
         </p:accordionPanel>
         </p:panel>

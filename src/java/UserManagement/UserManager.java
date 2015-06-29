@@ -32,7 +32,6 @@ public class UserManager implements Serializable {
     private Registration registration;
     private User activeUser;
     
-    
     /**
      * Constructor
      */
@@ -61,7 +60,7 @@ public class UserManager implements Serializable {
     }
 
     public String editProfileSuccess() {
-        saveUserInfo();
+        saveState();
         return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
@@ -125,7 +124,7 @@ public class UserManager implements Serializable {
             User newUser = registration.registerNewUser();
             addUser(newUser);
             processLogin(newUser);
-            saveUserInfo();
+            saveState();
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
             PasswordIO.WriteToFile(passwords);
@@ -166,7 +165,7 @@ public class UserManager implements Serializable {
         }
     }
     
-    public void saveUserInfo() {
+    public void saveState() {
         System.out.println("Saving state of users");
         UserIO.WriteToFile(allUsers);
     }

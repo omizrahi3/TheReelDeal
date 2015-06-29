@@ -3,10 +3,13 @@ User class to represent the human user, and contain his/her Account and Profile.
  */
 package UserManagement;
 
+import IO.UserIO;
 import LoginRegistration.BannedAccountException;
 import LoginRegistration.LockedAccountException;
 import gatech.cs2340.team7.ControlHub;
+import com.rottentomatoes.ReelDealRating;
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -17,6 +20,7 @@ public class User implements Serializable {
     
     private Account account;
     private Profile profile;
+    private HashMap<String, ReelDealRating> movieRatings;
     //private List<Message> myMessages;
     
     /**
@@ -44,6 +48,7 @@ public class User implements Serializable {
         this.account = account;
         this.profile = profile;
         this.profile.setName(name);
+        this.movieRatings = new HashMap<>();
     }
     
     /**
@@ -100,6 +105,20 @@ public class User implements Serializable {
     
     public String getAccountStatus() {
         return account.getStatus();
+    }
+    
+    public void newMovieRating(String movieId, ReelDealRating newRating) {
+        movieRatings.put(movieId, newRating);
+    }
+    
+    public boolean hasRatedMovie(String movieId) {
+        return (movieRatings.get(movieId) != null);
+    }
+    
+    public ReelDealRating getMovieReviewFor(String movieId) {
+        ReelDealRating rating = movieRatings.get(movieId);
+        rating.assertReels(rating.getValue());
+        return rating;
     }
 
     /**
@@ -190,5 +209,12 @@ public class User implements Serializable {
     public void setLocked(boolean locked) {
         account.setLocked(locked);
     }
-    
+
+    public HashMap<String, ReelDealRating> getMovieRatings() {
+        return movieRatings;
+    }
+
+    public void setMoveRatings(HashMap<String, ReelDealRating> movieRatings) {
+        this.movieRatings = movieRatings;
+    }
 }

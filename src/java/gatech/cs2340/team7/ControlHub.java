@@ -54,7 +54,12 @@ public class ControlHub implements Serializable {
     }
     
     public void userUpdate() {
-        userManager.saveUserInfo();
+        userManager.saveState();
+    }
+    
+    public void saveState() {
+        dataManager.saveState();
+        userManager.saveState();
     }
     
     /**
