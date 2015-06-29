@@ -53,18 +53,6 @@ public class UserManager implements Serializable {
     }
     
     /**
-     * 
-     * @param username
-     * @return User with name username
-     */
-    public User get(String username) {
-        if (allUsers.get(username) != null) {
-            return allUsers.get(username);
-        }
-        throw new java.util.NoSuchElementException("Logged in a non-existent User!\nUsername: " + username);
-    }
-    
-    /**
      * Navigate to the edit profile page
      * @return page name for XHTML navigation
      */
@@ -87,9 +75,12 @@ public class UserManager implements Serializable {
      * @throws Exception if user is locked
      */
     public String loginExistingUser() throws Exception {
-        User userToLogin = get(login.getUsername());
-        if (login.checkLogin(allUsers, passwords) &&
-                processLogin(userToLogin)) {
+        User userToLogin = allUsers.get(login.getUsername());
+        if (userToLogin == null) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
+                        "User Does Not Exist!"));
+        } else if (login.checkLogin(passwords) && processLogin(userToLogin)) {
             return ControlHub.dashboardPageURL(userToLogin.isAdmin());
         }
         return null;
