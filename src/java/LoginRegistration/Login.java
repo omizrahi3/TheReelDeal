@@ -22,11 +22,10 @@ public class Login extends AccountAccessAttempt {
     /**
      * Validate the login attempt, using the provided list of users
      * and map of users to passwords
-     * @param users List of users to check existence of user to login
      * @param passwords Map of passwords to verify the user's provided password
      * @return Indication of login success
      */
-    public boolean checkLogin(HashMap<String, User> users, HashMap<String, String> passwords) {
+    public boolean checkLogin(HashMap<String, String> passwords) {
         System.out.println("Login attempt with username <" + username + "> "
             + " and password <" + password + ">");
         boolean passwordMatch = password.equals(passwords.get(username));
