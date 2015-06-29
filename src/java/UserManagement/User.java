@@ -3,6 +3,8 @@ User class to represent the human user, and contain his/her Account and Profile.
  */
 package UserManagement;
 
+import LoginRegistration.BannedAccountException;
+import LoginRegistration.LockedAccountException;
 import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -47,15 +49,15 @@ public class User implements Serializable {
     /**
      * Attempt to log the user into his/her account. If the loginPageURL fails,
  notify the user on the web page
-     * @return login success or failure indication
+     * @throws LockedAccountException
+     * @throws BannedAccountException
      */
-    public boolean loginToAccount() {
+    public void loginToAccount() throws LockedAccountException,
+            BannedAccountException {
         try {
             account.login();
-            return true;
-        } catch (Exception e) {
-            // TODO indicate on webpage the loginPageURL failure due to account lock
-            return false;
+        } catch (LockedAccountException | BannedAccountException accountException) {
+            throw accountException;
         }
     }
     

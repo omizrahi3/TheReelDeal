@@ -5,6 +5,8 @@ package UserManagement;
 
 import IO.PasswordIO;
 import IO.UserIO;
+import LoginRegistration.BannedAccountException;
+import LoginRegistration.LockedAccountException;
 import LoginRegistration.Registration;
 import LoginRegistration.Login;
 import gatech.cs2340.team7.ControlHub;
@@ -12,6 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -87,12 +91,8 @@ public class UserManager implements Serializable {
         if (login.checkLogin(allUsers, passwords) &&
                 processLogin(userToLogin)) {
             return ControlHub.dashboardPageURL(userToLogin.isAdmin());
-        } else {
-            System.out.println("Login failed!");
-            // TODO display message to user indicating login failure
-            printUsers();
-            return null;
         }
+        return null;
     }
     
     public void printUsers() {
@@ -106,10 +106,19 @@ public class UserManager implements Serializable {
     private boolean processLogin(User user) {
         System.out.println("Processing login for " + user.getName());
         activeUser = user;
-        if (activeUser.loginToAccount()) {
+        try {
+            activeUser.loginToAccount();
             login.clearData();
             return true;
-        } else {
+        } catch (BannedAccountException bannedException) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
+                        "Account is banned! Please contact the administrator"));
+            return false;
+        } catch (LockedAccountException lockedException) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
+                        "Account is locked! Please contact the administrator"));
             return false;
         }
     }

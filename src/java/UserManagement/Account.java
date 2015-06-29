@@ -4,6 +4,8 @@ Account class to represents a user's account-specific data.
 package UserManagement;
 
 import java.io.Serializable;
+import LoginRegistration.BannedAccountException;
+import LoginRegistration.LockedAccountException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -43,14 +45,19 @@ public class Account implements Serializable {
     
     /**
      * Login to the account
-     * @throws Exception if the account is locked by an admin
+     * @throws LockedAccountException if the account is locked
+     * @throws BannedAccountException if the account is locked
      */
-    public void login() throws Exception {
+    public void login() throws LockedAccountException, BannedAccountException {
         // change this logic for checking account lock
-        if (locked) {
-            // TODO throw more accurate exception
+        if (banned) {
+            System.out.print("This account is banned!");
+            throw new BannedAccountException(
+                    "Account is banned by an administrator!");  
+        } else if (locked) {
             System.out.print("This account is locked!");
-            throw new Exception("Account is locked by an administrator!");
+            throw new LockedAccountException(
+                    "Account is locked by an administrator!");
         }
         loggedIn = true;
     }
