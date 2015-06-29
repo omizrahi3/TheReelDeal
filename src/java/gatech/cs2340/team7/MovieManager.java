@@ -78,8 +78,8 @@ public class MovieManager {
         this.newDVDReleaseList = new ArrayList<>();
         this.newTheaterReleaseList = new ArrayList<>();
         this.searchResultMovieList = new ArrayList<>();
-        ratedMovies = new HashMap<>();
-        //ratedMovies = MovieIO.readFile();
+        //ratedMovies = new HashMap<>();
+        ratedMovies = MovieIO.readFile();
     }
     
     private void buildRatings() {
@@ -131,6 +131,9 @@ public class MovieManager {
             throw new java.util.NoSuchElementException("Movie with id " +
                     id + " not found!");
         }
+        if (ratedMovies.get(id) != null) {
+            selectedMovie.setReelDealRatings(ratedMovies.get(id).getReelDealRatings());
+        }
     }
     
     /**
@@ -148,6 +151,7 @@ public class MovieManager {
         // unnecessary for movie existing in map?
         ratedMovies.put(selectedMovie.getId(), selectedMovie);
         newRating.clearData();
+        MovieIO.WriteToFile(ratedMovies);
         return ControlHub.postReviewPageURL;
     }
     
