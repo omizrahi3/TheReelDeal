@@ -207,6 +207,6 @@ public class ControlHub implements Serializable {
     }
     
     public void movieUpdate() {
-        movieManager.saveMovieInfo();
+        movieManager.saveState();
     }
 }

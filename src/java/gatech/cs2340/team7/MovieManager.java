@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
-
 
 /**
  *
@@ -115,7 +113,7 @@ public class MovieManager {
         
     }
     
-    public void movieSelected(String id) {
+    public String movieSelected(String id) {
         Movie tempMovie;
         if ((tempMovie = newDVDReleases.get(id)) != null) {
             System.out.println("Selected movie: " + tempMovie.getTitle());
@@ -128,24 +126,18 @@ public class MovieManager {
             System.out.println("Selected movie: " + tempMovie.getTitle());
             selectedMovie = tempMovie;   
         } else {
-            throw new java.util.NoSuchElementException(
-                    "Selected Movie with id " + id + " not found!");
+            throw new java.util.NoSuchElementException("Movie with id " +
+                    id + " not found!");
         }
-        // Recognize if an existing rated movie is selected
-        if ((tempMovie = ratedMovies.get(id)) != null) {
-            selectedMovie = tempMovie;
-            System.out.println(selectedMovie.getTitle() + " has been selected" +
-                " and is recognized as already in ratedMovies.");
-            User author = ControlHub.getInstance().getActiveUser();
-            
-            // If the active user has already made a review for this movie
-            //   display the existing review, and allow for editing
-            if (author.hasRatedMovie(selectedMovie.getId())) {
-                System.out.println("Showing existing author review");
-                activeUserRating = author.getMovieReviewFor(selectedMovie.getId());
+        if (ratedMovies.get(id) != null) {
+            selectedMovie.setReelDealRatings(ratedMovies.get(id).getReelDealRatings());
+            User activeUser = ControlHub.getInstance().getActiveUser();
+            if (activeUser.getMovieRatings().containsKey(id)) {
+                //activeUserRating.assertReels(activeUser.getUserReels(id));
+                activeUserRating = activeUser.getMovieReviewFor(selectedMovie.getId());
             }
-            //selectedMovie.setReelDealRatings(ratedMovies.get(id).getReelDealRatings());
         }
+        return ControlHub.movieDetailedViewPageURL;
     }
     
     /**
@@ -156,41 +148,17 @@ public class MovieManager {
         if (selectedMovie == null) {
             throw new java.util.NoSuchElementException("No Selected Movie!");
         }
-        
-        // Create a ReelDealRating for the selected movie
-        User author = ControlHub.getInstance().getActiveUser();
+        User activeUser = ControlHub.getInstance().getActiveUser();
+        activeUserRating.setAuthor(activeUser);
         ReelDealRating ratingToBeSet = new ReelDealRating(activeUserRating);
-        ratingToBeSet.setAuthor(author);
-        
-        System.out.println("Reels of rating to be saved");
-        for (String s : ratingToBeSet.getReels()) {
-            System.out.println(s);
-        }
 
-        // If this is the movie's first ReelDeal rating, add the movie
-        //   to the collection of rated movies
-        // Else, add the rating to the existing rated movie
-        Movie existingMovie = ratedMovies.get(selectedMovie.getId());
-        if (existingMovie == null) {
-            // Movie's first review, add it to the rated movies collection
-            ratedMovies.put(selectedMovie.getId(), selectedMovie);
-        } else {
-            existingMovie.addReelDealRating(ratingToBeSet);
-        }
-        
-        // Add or update the user's record of the rating
-        author.newMovieRating(selectedMovie.getId(), ratingToBeSet);
-        
-        
-        // Save the new state of the rated movie collection
-        ControlHub.getInstance().saveState();
+        selectedMovie.addReelDealRating(ratingToBeSet);
+        // unnecessary for movie existing in map?
+        ratedMovies.put(selectedMovie.getId(), selectedMovie);
+        activeUser.newMovieRating(selectedMovie.getId(), activeUserRating);
         activeUserRating.clearData();
+        this.saveState();
         return ControlHub.postReviewPageURL;
-    }
-    
-    public void saveState() {
-        System.out.println("Saving state of movies");
-        MovieIO.WriteToFile(ratedMovies);
     }
     
     /**
@@ -322,7 +290,7 @@ public class MovieManager {
     }
 
     /**
-     * Get the new or existing Reel Deal rating
+     * Get the new Reel Deal rating
      * @return new Reel Deal rating
      */
     public ReelDealRating getActiveUserRating() {
@@ -330,7 +298,7 @@ public class MovieManager {
     }
 
     /**
-     * Set the new or existing Reel Deal rating
+     * Set the new Reel Deal rating
      * @param newRating new Reel Deal rating
      */
     public void setActiveUserRating(ReelDealRating newRating) {
@@ -338,16 +306,16 @@ public class MovieManager {
     }
     
     
-    //    public LinkedHashMap<String, Movie> sortMoviesByRating(HashMap<String, Movie> movies) {
-//        List movieList = new LinkedList(movies.entrySet());
-//        Collections.sort(movieList, new MovieRatingComparator());
-//        LinkedHashMap<String, Movie> sortedMovies = new LinkedHashMap<>();
-//        for (Iterator it = movieList.iterator(); it.hasNext();) {
-//            Map.Entry entry = (Map.Entry) it.next();
-//            sortedMovies.put((String) entry.getKey(), (Movie) entry.getValue());
-//        }
-//        return sortedMovies;
-//    }
+    public LinkedHashMap<String, Movie> sortMoviesByRating(HashMap<String, Movie> movies) {
+        List movieList = new LinkedList(movies.entrySet());
+        Collections.sort(movieList, new MovieRatingComparator());
+        LinkedHashMap<String, Movie> sortedMovies = new LinkedHashMap<>();
+      for (Iterator it = movieList.iterator(); it.hasNext();) {
+           Map.Entry entry = (Map.Entry) it.next();
+           sortedMovies.put((String) entry.getKey(), (Movie) entry.getValue());
+       }
+       return sortedMovies;
+   }
     
     public Movie getRecommendation() {
         System.out.println("Getting recommendation based on overall rating");
@@ -401,8 +369,14 @@ public class MovieManager {
         this.ratedMovies = ratedMovies;
     }
     
-    public void saveMovieInfo() {
+    public void saveState() {
         System.out.println("Saving state of users");
         MovieIO.WriteToFile(ratedMovies);
+    }
+    
+    public String backToMovieHub() {
+        selectedMovie = new Movie();
+        activeUserRating = new ReelDealRating();
+        return ControlHub.movieHubPageURL;
     }
 }

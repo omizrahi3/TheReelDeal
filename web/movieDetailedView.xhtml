@@ -29,7 +29,12 @@
         <h:form>
             <!-- maintain a ~4:1 width-to-height ratio for banner image -->
             <div class="banner"><img src="resources/images/Banner.jpg" width="1000px" height="248px" align="middle"/></div>
-            <h1><strong>#{rottenTomatoesDataManager.movieManager.selectedMovie.title}</strong></h1>
+                <h1><strong>#{rottenTomatoesDataManager.movieManager.selectedMovie.title}</strong><br>
+                    <p:tab title="Back to MovieHub">
+                        <h:commandButton id="BackToMovieHubButton" value="Back to MovieHub"  action="#{rottenTomatoesDataManager.movieManager.backToMovieHub()}" />
+                    </p:tab>
+                </br>
+                </h1>
             <p:tabView id="tabView" class="general">
                 <p:tab title="Details">
                     <h:panelGrid columns="2" cellpadding="5">
@@ -43,7 +48,7 @@
                         <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.mpaaRating}" />
                         <h:outputLabel class="label" value="Year: " />
                         <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.year}" />
-                        <h:outputLabel class="label" value="Critics Say: " />
+                        <h:outputLabel class="label" value="ReelDeal Average " />
                         <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.averageRating}" />
                         <h:outputLabel class="label" value="Synopsis: " />
                         <h:outputText value="#{rottenTomatoesDataManager.movieManager.selectedMovie.synopsis}" />

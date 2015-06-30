@@ -3,7 +3,6 @@ User class to represent the human user, and contain his/her Account and Profile.
  */
 package UserManagement;
 
-import IO.UserIO;
 import LoginRegistration.BannedAccountException;
 import LoginRegistration.LockedAccountException;
 import gatech.cs2340.team7.ControlHub;
@@ -109,6 +108,7 @@ public class User implements Serializable {
     
     public void newMovieRating(String movieId, ReelDealRating newRating) {
         movieRatings.put(movieId, newRating);
+        ControlHub.getInstance().userUpdate();
     }
     
     public boolean hasRatedMovie(String movieId) {
