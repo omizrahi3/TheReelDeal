@@ -1,5 +1,6 @@
 /*
-Generic RESTQuery class to process a REST query
+ * The gatech.cs2340.team7 package contains various overarching manager
+ * handles for directing the control and flow of the application
  */
 package gatech.cs2340.team7;
 
@@ -15,7 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- *
+ * Handles the processing and return of data from a REST call
  * @author Anthony
  */
 @ManagedBean(name = "rESTQuery", eager = true)
@@ -25,14 +26,14 @@ public class RESTQuery {
     private String queryURL;
     
     /**
-     * Constructor
+     * Empty Constructor
      */
     public RESTQuery() {
         queryURL = "";
     }
     
     /**
-     * Constructor
+     * Chained constructor call that sets the URL for the REST query
      * @param queryURL 
      */
     public RESTQuery(String queryURL) {
@@ -40,7 +41,7 @@ public class RESTQuery {
     }
 
     /**
-     * Return the query URL string
+     * Getter for the query URL
      * @return query URL
      */
     public String getQueryURL() {
@@ -48,16 +49,16 @@ public class RESTQuery {
     }
 
     /**
-     * Set the query URL string
-     * @param queryURL new query URL
+     * Setter for the query URL
+     * @param queryURL URL for the REST query
      */
     public void setQueryURL(String queryURL) {
         this.queryURL = formatQueryToken(queryURL);
     }
     
     /**
-     * Actual send the HTTP request and get the response
-     * @return raw data received from the HTTP request
+     * Send the HTTP request to Rotten Tomatoes and receive the response
+     * @return raw JSON data received from the Rotten Tomatoes response
      */
     public String processQuery() {
         // TODO throw exception if not valid token, have caller catch exceptio

@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -8,6 +11,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Handles the name of a cast member of a specific movie. Usually,
+ * an object will hold a collection of AbridgeCast
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 public class AbridgedCast implements Serializable {
 
@@ -17,36 +25,32 @@ public class AbridgedCast implements Serializable {
     private String id;
 
     /**
-     * 
-     * @return
-     *     The name
+     * Getter for the name of a specific cast member for a movie
+     * @return The cast member's name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 
-     * @param name
-     *     The name
+     * Setter for the name of a specific cast member for a movie
+     * @param name The cast member's name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * 
-     * @return
-     *     The id
+     * Getter for the unique identifier of the cast member
+     * @return Unique identifier string of the cast member
      */
     public String getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * Setter for the unique identifier of the cast member
+     * @param id Unique identifier of the cast member
      */
     public void setId(String id) {
         this.id = id;

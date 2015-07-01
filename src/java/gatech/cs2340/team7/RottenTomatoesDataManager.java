@@ -1,5 +1,6 @@
 /*
-Class to handle REST interfacing with the Rotten Tomatoes website
+ * The gatech.cs2340.team7 package contains various overarching manager
+ * handles for directing the control and flow of the application
  */
 package gatech.cs2340.team7;
 
@@ -16,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * Controls the maintenance and processing of all Rotten Tomatoes data
  * @author Anthony
  */
 @ManagedBean(name = "rottenTomatoesDataManager", eager = true)
@@ -38,7 +39,7 @@ public class RottenTomatoesDataManager implements Serializable {
     private final ControlHub controlHub;
       
     /**
-     * Constructor
+     * Empty constructor that sets default data
      */
     public RottenTomatoesDataManager() {
         System.out.println("New RottenTomatoesDataManager created");
@@ -51,6 +52,12 @@ public class RottenTomatoesDataManager implements Serializable {
         controlHub.setDataManager(this);
     }
     
+    /**
+     * Get the selected movie token set by the JSF page, and notify the 
+     * movie manager that the movie has been selected
+     * @return Next page to navigate to after notifying the movie manager that
+     * a movie has been selected
+     */
     public String movieSelected() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         System.out.println("Movie selected: " + params.get("selectedMovie"));
@@ -136,6 +143,9 @@ public class RottenTomatoesDataManager implements Serializable {
         this.query = query;
     }
 
+    /**
+     * Save the state of the movie manager to a binary file
+     */
     public void saveState() {
         movieManager.saveState();
     }

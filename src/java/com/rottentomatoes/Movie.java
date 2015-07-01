@@ -1,3 +1,7 @@
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import java.util.ArrayList;
@@ -11,6 +15,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.faces.bean.SessionScoped;
 
+/**
+ * Holds all data specific to a Movie, and provides additional logic
+ * to handle formatting of its data
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 @SessionScoped
 public class Movie implements Serializable {
@@ -48,7 +57,9 @@ public class Movie implements Serializable {
     private Links links;
 
 
-    
+    /**
+     * Empty constructor that instantiates default values
+     */
     public Movie() {
         ratings = new Ratings();
         posters = new Posters();
@@ -57,8 +68,9 @@ public class Movie implements Serializable {
     }
     
     /**
-     * Assert that the data to be displayed is readable to the common user
-     * (a.k.a. don't show default values returned by Rotten Tomatoes
+     * Asserts that the data to be displayed is readable to the common user.
+     * To accomplish this, all undefined data is set to
+     * default, readable values
      */
     public void assertDefaultValuesOfUndefData() {
         ratings.assertDefaultValuesOfUndefData();
@@ -75,90 +87,80 @@ public class Movie implements Serializable {
     }
     
     /**
-     * 
-     * @return
-     *     The id
+     * Getter for the unique identifier of the movie
+     * @return Unique identifier string of the movie
      */
     public String getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * Setter for the unique identifier of the movie
+     * @param id Unique identifier string of the movie
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The title
+     * Getter for the title of the movie
+     * @return Title of the movie
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * 
-     * @param title
-     *     The title
+     * Setter for the title of the movie
+     * @param title Title of the movie
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * 
-     * @return
-     *     The year
+     * Getter for the year of the movie's release
+     * @return Year of the movie's release
      */
     public Integer getYear() {
         return year;
     }
 
     /**
-     * 
-     * @param year
-     *     The year
+     * Setter for the year of the movie's release
+     * @param year Year of the movie's release
      */
     public void setYear(Integer year) {
         this.year = year;
     }
 
-    /**
-     * 
-     * @return
-     *     The mpaaRating
-     */
+   /**
+    * Getter for the MPAA rating of the movie
+    * @return MPAA rating of the movie
+    */
     public String getMpaaRating() {
         return mpaaRating;
     }
 
-    /**
-     * 
-     * @param mpaaRating
-     *     The mpaa_rating
-     */
+   /**
+    * Setter for the MPAA rating of the movie
+    * @param mpaaRating MPAA rating of the movie
+    */
     public void setMpaaRating(String mpaaRating) {
         this.mpaaRating = mpaaRating;
     }
 
     /**
-     * 
-     * @return
-     *     The runtime
+     * Getter for the runtime of the movie
+     * @return Runtime of the movie
      */
     public String getRuntime() {
         return runtime;
     }
 
     /**
-     * 
-     * @param runtime
-     *     The runtime
+     * Setter for the runtime of the movie
+     * @param runtime Runtime of the movie
      */
     public void setRuntime(String runtime) {
         System.out.println("Hello from setRuntime");
@@ -170,144 +172,128 @@ public class Movie implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The criticsConsensus
+     * Getter for a short snippet of the critic consensus for the movie
+     * @return Snippet of the critic consensus for the movie
      */
     public String getCriticsConsensus() {
         return criticsConsensus;
     }
 
     /**
-     * 
-     * @param criticsConsensus
-     *     The critics_consensus
+     * Setter for a short snippet of the critic consensus for the movie
+     * @param criticsConsensus Snippet of the critic consensus for the movie
      */
     public void setCriticsConsensus(String criticsConsensus) {
         this.criticsConsensus = criticsConsensus;
     }
 
     /**
-     * 
-     * @return
-     *     The releaseDates
+     * Getter for the handle of the release dates for the movie
+     * @return Handle of the release dates for the movie
      */
     public ReleaseDates getReleaseDates() {
         return releaseDates;
     }
 
     /**
-     * 
-     * @param releaseDates
-     *     The release_dates
+     * Setter for the handle of the release dates for the movie
+     * @param releaseDates Handle of the release dates for the movie
      */
     public void setReleaseDates(ReleaseDates releaseDates) {
         this.releaseDates = releaseDates;
     }
 
     /**
-     * 
-     * @return
-     *     The ratings
+     * Getter for the handle for the ratings of the movie
+     * @return Handle for the ratings of the movie
      */
     public Ratings getRatings() {
         return ratings;
     }
 
     /**
-     * 
-     * @param ratings
-     *     The ratings
+     * Setter for the handle for the ratings of the movie
+     * @param ratings Handle for the ratings of the movie
      */
     public void setRatings(Ratings ratings) {
         this.ratings = ratings;
     }
 
     /**
-     * 
-     * @return
-     *     The synopsis
+     * Getter for the summary of the movie
+     * @return Summary of the movie
      */
     public String getSynopsis() {
         return synopsis;
     }
 
     /**
-     * 
-     * @param synopsis
-     *     The synopsis
+     * Setter for the summary of the movie
+     * @param synopsis Summary of the movie
      */
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
 
     /**
-     * 
-     * @return
-     *     The posters
+     * Getter for the handle for the poster pictures of the movie
+     * @return Handle for the poster pictures of the movie
      */
     public Posters getPosters() {
         return posters;
     }
 
     /**
-     * 
-     * @param posters
-     *     The posters
+     * Setter for the handle for the poster pictures of the movie
+     * @param posters Handle for the poster pictures of the movie
      */
     public void setPosters(Posters posters) {
         this.posters = posters;
     }
 
     /**
-     * 
-     * @return
-     *     The abridgedCast
+     * Getter for the collection of cast members for the movie
+     * @return Collection of cast members for the movie
      */
     public List<AbridgedCast> getAbridgedCast() {
         return abridgedCast;
     }
 
     /**
-     * 
-     * @param abridgedCast
-     *     The abridged_cast
+     * Setter for the collection of cast members for the movie
+     * @param abridgedCast Collection of cast members for the movie
      */
     public void setAbridgedCast(List<AbridgedCast> abridgedCast) {
         this.abridgedCast = abridgedCast;
     }
 
     /**
-     * 
-     * @return
-     *     The alternateIds
+     * Getter for the handle of alternate identifiers for the movie
+     * @return Handle of alternate identifiers for the movie
      */
     public AlternateIds getAlternateIds() {
         return alternateIds;
     }
 
     /**
-     * 
-     * @param alternateIds
-     *     The alternate_ids
+     * Setter for the handle of alternate identifiers for the movie
+     * @param alternateIds Handle of alternate identifiers for the movie
      */
     public void setAlternateIds(AlternateIds alternateIds) {
         this.alternateIds = alternateIds;
     }
 
     /**
-     * 
-     * @return
-     *     The links
+     * Getter for the handle of links for the movie
+     * @return Handle of links for the movie
      */
     public Links getLinks() {
         return links;
     }
 
     /**
-     * 
-     * @param links
-     *     The links
+     * Setter for the handle of links for the movie
+     * @param links Handle of links for the movie
      */
     public void setLinks(Links links) {
         this.links = links;
@@ -356,21 +342,25 @@ public class Movie implements Serializable {
     }
 
     /**
-     * Return the movie's ReelDeal ratings
-     * @return ratings from the ReelDeal web app
+     * Getter for the movie's ReelDeal ratings
+     * @return Ratings from the ReelDeal web app
      */
     public List<ReelDealRating> getReelDealRatings() {
         return ratings.getReelDealRatings();
     }
 
     /**
-     * Set the movie's ReelDeal Rating
+     * Setter for the movie's ReelDeal Rating
      * @param reelDealRatings 
      */
     public void setReelDealRatings(List<ReelDealRating> reelDealRatings) {
         ratings.setReelDealRatings(reelDealRatings);
     }
 
+    /**
+     * Adds a new Reel Deal rating to the ratings handle for the movie 
+     * @param newRating 
+     */
     public void addReelDealRating(ReelDealRating newRating) {
         System.out.println("Added review from " +
                 newRating.getAuthor().getName() + " with " +

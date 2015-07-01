@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -8,6 +11,10 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Handles data for all release dates of the movie
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 public class ReleaseDates implements Serializable {
 
@@ -17,36 +24,32 @@ public class ReleaseDates implements Serializable {
     private String dvd;
 
     /**
-     * 
-     * @return
-     *     The theater
+     * Getter for the theater release date
+     * @return Theater release date
      */
     public String getTheater() {
         return theater;
     }
 
     /**
-     * 
-     * @param theater
-     *     The theater
+     * Setter for the theater release date
+     * @param theater Theater release date
      */
     public void setTheater(String theater) {
         this.theater = theater;
     }
 
     /**
-     * 
-     * @return
-     *     The dvd
+     * Getter for the DVD release date
+     * @return DVD release date
      */
     public String getDvd() {
         return dvd;
     }
 
     /**
-     * 
-     * @param dvd
-     *     The dvd
+     * Setter for the DVD release date
+     * @param dvd DVD release date
      */
     public void setDvd(String dvd) {
         this.dvd = dvd;

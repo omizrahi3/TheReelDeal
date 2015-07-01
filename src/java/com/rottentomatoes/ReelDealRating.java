@@ -1,5 +1,6 @@
-/*
- * Specific handle for reviews made on the Reel Deel website
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
  */
 package com.rottentomatoes;
 
@@ -14,7 +15,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
- * 
+ * Handles the creation and editing of a movie review made from
+ * the ReelDeal application
  * @author Anthony
  * @author Jimmy
  */
@@ -35,12 +37,17 @@ public class ReelDealRating implements Serializable {
 
     
     /**
-     * Empty constructor
+     * Empty constructor that makes a chain call to set default values
      */
     public ReelDealRating() {
         this(null, new String[MAX_VALUE], MIN_VALUE, "");
     }
     
+    /**
+     * Chained copy constructor that sets data members based on the 
+     * data passed in
+     * @param newRating 
+     */
     public ReelDealRating(ReelDealRating newRating) {
         this.reels = newRating.getReels();
         this.author = newRating.getAuthor();
@@ -49,16 +56,22 @@ public class ReelDealRating implements Serializable {
         this.flagged = false;
     }
     
+    /**
+     * Chained constructor call that sets data members based on the input data
+     * @param author Author of the review
+     * @param value Numerical score of the review
+     * @param comment Handle of the comment of the review
+     */
     public ReelDealRating(User author, int value, String comment) {
         this(author, new String[MAX_VALUE], value, comment);
     }
     
     /**
-     * Chained constructor
-     * @param author author
-     * @param value value
-     * @param comment comment
-     * @param reels reels
+     * Chained constructor call that sets data members based on the input data
+     * @param author Author of the review
+     * @param value Numerical score of the review
+     * @param comment Handle of the comment of the review
+     * @param reels Array of paths to custom reel images to display the score
      */
     public ReelDealRating(User author, String[] reels, int value,
             String comment) {
@@ -69,7 +82,8 @@ public class ReelDealRating implements Serializable {
     }
     
     /**
-     * Update the displayed reels rating
+     * Update the array of reels, which displays a gold reel for each point
+     * in the score given for the movie
      */
     public void reelsRatingChange() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -78,8 +92,8 @@ public class ReelDealRating implements Serializable {
     }
     
     /**
-     * Set the reels according to the given value
-     * @param value value to represent via reels
+     * Set the array of reels images according to the given value
+     * @param value Value to represent via reel images
      */
     public void assertReels(int value) {
         for (int i = 0; i < value; ++i) {
@@ -90,13 +104,9 @@ public class ReelDealRating implements Serializable {
         }        
     }
     
-    public void submit() {
-        System.out.println("Feedback received: " + comment.getContent());
-    }
-    
     /**
-     * Set the value of the rating
-     * @param value value
+     * Setter for the numerical score for the movie
+     * @param value Numerical score for the movie
      */
     public final void setValue(int value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
@@ -109,7 +119,7 @@ public class ReelDealRating implements Serializable {
     }
     
     /**
-     * Return the array of .png files to display
+     * Getter for the array of .png files to display
      * @return array of strings representing .png files
      */
     public String[] getReels() {
@@ -117,8 +127,8 @@ public class ReelDealRating implements Serializable {
     }
     
     /**
-     * Set the reels
-     * @param reels 
+     * Setter for the array of .png files to display
+     * @param reels array of strings representing .png files
      */
     public final void setReels(String[] reels) {
         this.reels = new String[reels.length];
@@ -132,16 +142,16 @@ public class ReelDealRating implements Serializable {
     }
     
     /**
-     * Get the value of the rating
-     * @return value 
+     * Getter for the value of the rating
+     * @return value Value of the rating
      */
     public int getValue() {
         return value;
     }
     
     /**
-     * Get the author of the rating
-     * @return author
+     * Getter for the author of the rating
+     * @return author Author of the rating
      */
     public User getAuthor() {
         return author;
@@ -149,7 +159,7 @@ public class ReelDealRating implements Serializable {
     
     /**
      * Set the author of the rating
-     * @param author author
+     * @param author Author of the rating
      */
     public void setAuthor(User author) {
         this.author = author;
@@ -157,7 +167,7 @@ public class ReelDealRating implements Serializable {
     
     /**
      * Get the major of the author
-     * @return major
+     * @return major Major for the author of the rating
      */
     public String getMajor() {
         if (author != null && author.getMajor() != null) {
@@ -170,7 +180,7 @@ public class ReelDealRating implements Serializable {
 
     /**
      * Get the comment of the rating
-     * @return comment
+     * @return comment Handle of the comment of the rating
      */
     public String getComment() {
         return comment.getContent();
@@ -178,7 +188,7 @@ public class ReelDealRating implements Serializable {
 
     /**
      * Set the comment of the rating
-     * @param comment comment
+     * @param comment Handle of the commment of the rating
      */
     public final void setComment(Comment comment) {
         this.comment = comment;
@@ -186,7 +196,7 @@ public class ReelDealRating implements Serializable {
     
     /**
      * Set the comment of the rating, based on a String input
-     * @param comment comment 
+     * @param comment Comment
      */
     public final void setComment(String comment) {
         System.out.println("Setting comment to " + comment);
@@ -205,6 +215,10 @@ public class ReelDealRating implements Serializable {
         }
     }
     
+    /**
+     * Flag the comment as potentially inappropriate
+     * @return Next page to load after processing flag
+     */
     public String flag() {
         System.out.println("Flagging comment " + this.getComment());
         flagged = true;
@@ -212,6 +226,10 @@ public class ReelDealRating implements Serializable {
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
     
+    /**
+     * Remove the comment from being flagged as potentially inappropriate
+     * @return Next page to load after processing unflag
+     */
     public String deFlag() {
         System.out.println("Flagging comment " + this.getComment());
         flagged = false;
@@ -219,6 +237,12 @@ public class ReelDealRating implements Serializable {
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
     
+    /**
+     * Return whether this rating is currently flagged as potentially
+     * inappropriate
+     * @return Whether this rating is currently flagged as potentially
+     * inappropriate
+     */
     public boolean isFlagged() {
         return flagged;
     }

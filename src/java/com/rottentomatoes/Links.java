@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -8,6 +11,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Provides links to various other web pages, which provide
+ * additional information about the movie
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 public class Links implements Serializable {
 
@@ -23,90 +31,80 @@ public class Links implements Serializable {
     private String similar;
 
     /**
-     * 
-     * @return
-     *     The self
+     * Getter for the main page of the movie
+     * @return Main page of the movie
      */
     public String getSelf() {
         return self;
     }
 
     /**
-     * 
-     * @param self
-     *     The self
+     * Setter for the main page of the movie
+     * @param self Main page of the movie
      */
     public void setSelf(String self) {
         this.self = self;
     }
 
     /**
-     * 
-     * @return
-     *     The alternate
+     * Getter for an alternate page for the movie
+     * @return Alternate page for the movie
      */
     public String getAlternate() {
         return alternate;
     }
 
-    /**
-     * 
-     * @param alternate
-     *     The alternate
-     */
+   /**
+    * Setter for an alternate page for the movie
+    * @param alternate Alternate page for the movie
+    */
     public void setAlternate(String alternate) {
         this.alternate = alternate;
     }
 
     /**
-     * 
-     * @return
-     *     The cast
+     * Getter for the cast page for the movie
+     * @return Cast page for the movie
      */
     public String getCast() {
         return cast;
     }
 
     /**
-     * 
-     * @param cast
-     *     The cast
+     * Setter for the cast page for the movie
+     * @param cast Cast page for the movie
      */
     public void setCast(String cast) {
         this.cast = cast;
     }
 
     /**
-     * 
-     * @return
-     *     The reviews
+     * Getter for the reviews page for the movie
+     * @return Reviews page for the movie
      */
     public String getReviews() {
         return reviews;
     }
 
     /**
-     * 
-     * @param reviews
-     *     The reviews
+     * Setter for the reviews page for the movie
+     * @param reviews Reviews page for the movie
      */
     public void setReviews(String reviews) {
         this.reviews = reviews;
     }
 
     /**
-     * 
-     * @return
-     *     The similar
+     * Getter for the page with similar movie recommendations
+     * @return Page with similar movie recommendations
      */
     public String getSimilar() {
         return similar;
     }
 
     /**
-     * 
-     * @param similar
-     *     The similar
+     * Setter for the page with similar movie recommendations
+     * @param similar Page with similar movie recommendations
      */
     public void setSimilar(String similar) {
         this.similar = similar;

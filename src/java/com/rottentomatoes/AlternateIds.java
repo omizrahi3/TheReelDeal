@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -8,6 +11,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Contains data members for alternate ID's for a movie.
+ * Currently, the only alternative id is that of IMDB
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 public class AlternateIds implements Serializable {
 
@@ -15,18 +23,16 @@ public class AlternateIds implements Serializable {
     private String imdb;
 
     /**
-     * 
-     * @return
-     *     The imdb
+     * Getter for the IMDB identifier of a movie
+     * @return IMDB identifier string of a movie
      */
     public String getImdb() {
         return imdb;
     }
 
     /**
-     * 
-     * @param imdb
-     *     The imdb
+     * Setter for the IMDB identifier of a movie
+     * @param imdb IMDB identifier string of a movie
      */
     public void setImdb(String imdb) {
         this.imdb = imdb;

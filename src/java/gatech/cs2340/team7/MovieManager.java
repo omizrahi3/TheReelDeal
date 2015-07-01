@@ -1,5 +1,6 @@
 /*
-MovieManager class to handle all movie data processing and maintenance
+ * The gatech.cs2340.team7 package contains various overarching manager
+ * handles for directing the control and flow of the application
  */
 package gatech.cs2340.team7;
 
@@ -22,7 +23,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- *
+ * Stores and handles processing of all movie-related data
  * @author Anthony
  */
 @ManagedBean(name = "movieManager", eager = true)
@@ -36,11 +37,6 @@ public class MovieManager {
     private ReelDealRating activeUserRating;
     private HashMap<String, Movie> ratedMovies;
     
-    // for display
-    private List<Movie> searchResultMovieList;
-    private List<Movie> newDVDReleaseList;
-    private List<Movie> newTheaterReleaseList;
-    
     /**
      * Empty Constructor
      */
@@ -49,7 +45,8 @@ public class MovieManager {
     }
     
     /**
-     * Data members with DVD and in-theater releases specified
+     * Chained constructor call that specifies
+     * DVD and in-theater releases data members
      * @param newDVDReleases
      * @param newTheaterReleases 
      */
@@ -59,10 +56,10 @@ public class MovieManager {
     
     /**
      * Constructor with all data members specified
-     * @param newTheaterReleases
-     * @param newDVDReleases
-     * @param searchResultMovies
-     * @param selectedMovie
+     * @param newTheaterReleases Collection of new theater releases
+     * @param newDVDReleases Collection of new DVD releases
+     * @param searchResultMovies Collection of movies from search results
+     * @param selectedMovie Movie selected by user to see further information
      */
     public MovieManager(HashMap<String, Movie> newDVDReleases,
             HashMap<String, Movie> newTheaterReleases,
@@ -73,32 +70,8 @@ public class MovieManager {
         this.searchResultMovies = searchResultMovies;
         this.selectedMovie = selectedMovie;
         this.activeUserRating = new ReelDealRating();
-        this.newDVDReleaseList = new ArrayList<>();
-        this.newTheaterReleaseList = new ArrayList<>();
-        this.searchResultMovieList = new ArrayList<>();
         //ratedMovies = new HashMap<>();
         ratedMovies = MovieIO.readFile();
-    }
-    
-    private void buildRatings() {
-        // Create dummy author
-        Profile csProfile = new Profile("csGuy", "Computer Science");
-        Account csAccount = new Account();
-        User csMajor = new User("", csAccount, csProfile);
-        
-        // Use random number generator to generate random review values
-        Random rand = new Random(System.currentTimeMillis());
-        
-        // Give each movie in the new DVD's list 10 random reviews
-        for (HashMap.Entry entry : newDVDReleases.entrySet()) {
-            Movie curMovie = (Movie) entry.getValue();
-            for (int i = 0; i < 10; ++i) {
-                curMovie.addReelDealRating(new ReelDealRating(csMajor,
-                    rand.nextInt(3) + 1, // random number 1-4 inclusive
-                    "")); // blank comment)
-            }
-            ratedMovies.put((String) entry.getKey(), curMovie);
-        }
     }
     
     /**
@@ -113,6 +86,12 @@ public class MovieManager {
         
     }
     
+    /**
+     * Use the given unique identifier to find the selected movie, depending on
+     * which collection the movie is currently in
+     * @param id Unique identifier for the selected movie
+     * @return Page to navigate to after finding the movie
+     */
     public String movieSelected(String id) {
         Movie tempMovie;
         if ((tempMovie = newDVDReleases.get(id)) != null) {
@@ -142,7 +121,7 @@ public class MovieManager {
     
     /**
      * Add the new Reel Deal rating to the selected movie
-     * @return 
+     * @return Page to navigate to after processing the addition
      */
     public String addRating() {
         if (selectedMovie == null) {
@@ -163,7 +142,7 @@ public class MovieManager {
     
     /**
      * Get movies returned by REST query
-     * @return 
+     * @return Collection of movies from search results, as a HashMap
      */
     public HashMap<String, Movie> getSearchResultMovies() {
         return searchResultMovies;
@@ -171,7 +150,7 @@ public class MovieManager {
     
     /**
      * Get movies returned by REST query
-     * @return 
+     * @return Collection of movies from search results, as a List
      */
     public List<Movie> getSearchResultMoviesList() {
         return new ArrayList<>(searchResultMovies.values());
@@ -179,10 +158,9 @@ public class MovieManager {
 
     /**
      * Set movies returned by REST query
-     * @param searchResultMovies 
+     * @param searchResultMovies Collection of movies from search results
      */
     public void setSearchResultMovies(HashMap<String, Movie> searchResultMovies) {
-        this.searchResultMovieList = (List<Movie>) searchResultMovies.values();
         this.searchResultMovies = searchResultMovies;
         System.out.println("Search Results");
         searchResultMovies.values().stream().forEach((m) -> {m.assertDefaultValuesOfUndefData();});
@@ -190,10 +168,9 @@ public class MovieManager {
     
     /**
      * Set movies returned by REST query
-     * @param searchResultMovies 
+     * @param searchResultMovies Collection of movies from search results
      */
     public void setSearchResultMovies(List<Movie> searchResultMovies) {
-        this.searchResultMovieList = searchResultMovies;
         this.searchResultMovies = new HashMap<>();
         searchResultMovies.stream().forEach((movie) -> {
             this.searchResultMovies.put(movie.getId(), movie);
@@ -203,7 +180,7 @@ public class MovieManager {
 
     /**
      * Get new DVD releases
-     * @return 
+     * @return New DVD releases
      */
     public HashMap<String, Movie> getNewDVDReleases() {
         return newDVDReleases;
@@ -211,7 +188,7 @@ public class MovieManager {
     
     /**
      * Get new DVD releases
-     * @return 
+     * @return New DVD releases
      */
     public List<Movie> getNewDVDReleasesList() {
         return new ArrayList<>(newDVDReleases.values());
@@ -219,19 +196,17 @@ public class MovieManager {
 
     /**
      * Set new DVD releases
-     * @param newDVDReleases 
+     * @param newDVDReleases New DVD releases
      */
     public void setNewDVDReleases(HashMap<String, Movie> newDVDReleases) {
         this.newDVDReleases = newDVDReleases;
-        this.newDVDReleaseList = (List<Movie>) newDVDReleases.values();
     }
     
     /**
      * Set new DVD releases
-     * @param newDVDReleases 
+     * @param newDVDReleases New DVD releases
      */
     public void setNewDVDReleases(List<Movie> newDVDReleases) {
-        this.newDVDReleaseList = newDVDReleases;
         newDVDReleases.stream().forEach((movie) -> {
             this.newDVDReleases.put(movie.getId(), movie);
         });
@@ -239,7 +214,7 @@ public class MovieManager {
 
     /**
      * Get new theater releases
-     * @return 
+     * @return New theater releases
      */
     public HashMap<String, Movie> getNewTheaterReleases() {
         return newTheaterReleases;
@@ -247,7 +222,7 @@ public class MovieManager {
     
     /**
      * Get new theater releases
-     * @return 
+     * @return New theater releases
      */
     public List<Movie> getNewTheaterReleasesList() {
         return new ArrayList<>(newTheaterReleases.values());
@@ -255,19 +230,17 @@ public class MovieManager {
 
     /**
      * Set new in-theater releases
-     * @param newTheaterReleases 
+     * @param newTheaterReleases New in-theater releases
      */
     public void setNewTheaterReleases(HashMap<String, Movie> newTheaterReleases) {
         this.newTheaterReleases = newTheaterReleases;
-        this.newTheaterReleaseList = (List<Movie>) newTheaterReleases.values();
     }
     
     /**
      * Set new in-theater releases
-     * @param newTheaterReleases 
+     * @param newTheaterReleases New in-theater releases
      */
     public void setNewTheaterReleases(List<Movie> newTheaterReleases) {
-        this.newTheaterReleaseList = newTheaterReleases;
         newTheaterReleases.stream().forEach((movie) -> {
             this.newTheaterReleases.put(movie.getId(), movie);
         });
@@ -275,7 +248,7 @@ public class MovieManager {
 
     /**
      * Return selected movie for detailed view
-     * @return selected movie handle
+     * @return Handle for the selected movie
      */
     public Movie getSelectedMovie() {
         return selectedMovie;
@@ -283,7 +256,7 @@ public class MovieManager {
 
     /**
      * Set selected movie for detailed view
-     * @param selectedMovie 
+     * @param selectedMovie Selected movie for more info to be displayed
      */
     public void setSelectedMovie(Movie selectedMovie) {
         this.selectedMovie = selectedMovie;
@@ -291,7 +264,7 @@ public class MovieManager {
 
     /**
      * Get the new Reel Deal rating
-     * @return new Reel Deal rating
+     * @return New Reel Deal rating
      */
     public ReelDealRating getActiveUserRating() {
         return activeUserRating;
@@ -305,7 +278,11 @@ public class MovieManager {
         this.activeUserRating = newRating;
     }
     
-    
+    /**
+     * Sort the collection of rated movies, by the Reel Deal numerical score
+     * @param movies
+     * @return 
+     */
     public LinkedHashMap<String, Movie> sortMoviesByRating(HashMap<String, Movie> movies) {
         List movieList = new LinkedList(movies.entrySet());
         Collections.sort(movieList, new MovieRatingComparator());
@@ -317,6 +294,10 @@ public class MovieManager {
        return sortedMovies;
    }
     
+    /**
+     * Return a recommended movie, based on the sorted Reel Deal scores 
+     * @return Recommended movie
+     */
     public Movie getRecommendation() {
         System.out.println("Getting recommendation based on overall rating");
         float highestRating = 0;
@@ -331,6 +312,12 @@ public class MovieManager {
         return recommendedMovie;
     }
     
+    /**
+     * Return a recommended movie, based on the sorted Reel Deal scores. Filter
+     * by ratings done by members of the same major as the active user
+     * @param major Major to filter sorting by
+     * @return Recommended movie
+     */
     public Movie getRecommendation(String major) {
         System.out.println("Getting recommendation based on major: " + major);
         float highestRating = 0;
@@ -345,35 +332,65 @@ public class MovieManager {
         return recommendedMovie;
     }
     
+    /**
+     * Show the recommendation
+     * @return Page to navigate to after showing the recommendation
+     */
     public String viewRecommendation() {
-        buildRatings();
         selectedMovie = getRecommendation();
-        return "movieDetailedView?faces-redirect=true";
+        return ControlHub.movieDetailedViewPageURL;
     }
     
+    /**
+     * Show the recommended movie, based on the major of the active user
+     * @param major Major of the active user
+     * @return Page to navigate to after showing the recommendation
+     */
     public String viewRecommendation(String major) {
-        buildRatings();
         selectedMovie = getRecommendation(major);
-        return "movieDetailedView?faces-redirect=true";
+        return ControlHub.movieDetailedViewPageURL;
     }
 
+    /**
+     * Getter for the collection of movies rated through the Reel Deal
+     * application
+     * @return Collection of movies rated through the Reel Deal application
+     */
     public HashMap<String, Movie> getRatedMovies() {
         return ratedMovies;
     }
     
+    /**
+     * Getter for the collection of movies rated through the Reel Deal
+     * application, as a List
+     * @return Collection of movies rated through the Reel Deal application
+     */
     public List<Movie> getRatedMoviesList() {
         return new ArrayList<>(ratedMovies.values());
     }
 
+    /**
+     * Setter for the collection of movies rated through the Reel Deal
+     * application
+     * @param ratedMovies Collection of movies rated through the Reel Deal
+     * application
+     */
     public void setRatedMovies(HashMap<String, Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
     }
     
+    /**
+     * Save the state of all movies to a binary file
+     */
     public void saveState() {
         System.out.println("Saving state of users");
         MovieIO.WriteToFile(ratedMovies);
     }
     
+    /**
+     * Return to the movie hub page
+     * @return 
+     */
     public String backToMovieHub() {
         selectedMovie = new Movie();
         activeUserRating = new ReelDealRating();

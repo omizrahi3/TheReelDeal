@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import java.util.ArrayList;
@@ -12,6 +15,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Data transfer object which contains all data returned from a
+ * Rotten Tomatoes API REST call
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 @SessionScoped
 public class RottenTomatoesDTO implements Serializable {
@@ -27,72 +35,64 @@ public class RottenTomatoesDTO implements Serializable {
     private String linkTemplate;
 
     /**
-     * 
-     * @return
-     *     The total
+     * Getter for the total amount of results returned from Rotten Tomatoes
+     * @return Total amount of results returned from Rotten Tomatoes
      */
     public Integer getTotal() {
         return total;
     }
 
     /**
-     * 
-     * @param total
-     *     The total
+     * Setter for the total amount of results returned from Rotten Tomatoes
+     * @param total Total amount of results returned from Rotten Tomatoes
      */
     public void setTotal(Integer total) {
         this.total = total;
     }
 
     /**
-     * 
-     * @return
-     *     The movies
+     * Getter for the collection of movies
+     * @return Collection of movies
      */
     public List<Movie> getMovies() {
         return movies;
     }
 
     /**
-     * 
-     * @param movies
-     *     The movies
+     * Setter for the collection of movies
+     * @param movies Collection of movies
      */
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
     }
 
     /**
-     * 
-     * @return
-     *     The links
+     * Getter for the handle of links to other pages
+     * @return Handle of links to other pages
      */
     public Links_ getLinks() {
         return links;
     }
 
     /**
-     * 
-     * @param links
-     *     The links
+     * Setter for the handle of links to other pages
+     * @param links Handle of links to other pages
      */
     public void setLinks(Links_ links) {
         this.links = links;
     }
 
     /**
-     * 
-     * @return
-     *     The linkTemplate
+     * Getter for the template for the links held
+     * @return Template for the links held
      */
     public String getLinkTemplate() {
         return linkTemplate;
     }
 
     /**
-     * 
-     * @param linkTemplate
-     *     The link_template
+     * Setter for the template for the links held
+     * @param linkTemplate Template for the links held
      */
     public void setLinkTemplate(String linkTemplate) {
         this.linkTemplate = linkTemplate;

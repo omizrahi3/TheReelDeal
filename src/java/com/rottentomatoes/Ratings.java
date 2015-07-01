@@ -1,3 +1,7 @@
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -12,6 +16,10 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.faces.bean.SessionScoped;
 
+/**
+ * Stores and handles audience, critic, and Reel Deal ratings for the movie
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 @SessionScoped
 public class Ratings implements Serializable {
@@ -28,13 +36,19 @@ public class Ratings implements Serializable {
     @SerializedName("audience_score")
     @Expose
     private String audienceScore;
-    
     private List<ReelDealRating> reelDealRatings;
     
+    /**
+     * Empty constructor that initializes default data
+     */
     public Ratings() {
         reelDealRatings = new ArrayList();
     }
     
+    /**
+     * Chained constructor that sets the collection of Reel Deal Ratings
+     * @param reelDealRatings Collection of Reel Deal Ratings
+     */
     public Ratings(List<ReelDealRating> reelDealRatings) {
         this.criticsRating = "";
         this.criticsScore = "";
@@ -63,6 +77,11 @@ public class Ratings implements Serializable {
         return -1;
     }
     
+    /**
+     * Gets the average Reel Deal rating for the movie, and ensures that 
+     * the value returned is in a user-friendly form for readability
+     * @return 
+     */
     public String getDisplayableAverageRating() {
         Float avg = getAverageRating();
         return (avg == -1 ? "n/a" : avg.toString());
@@ -115,90 +134,98 @@ public class Ratings implements Serializable {
         
     }
     
-    /**
-     * 
-     * @return
-     *     The criticsRating
-     */
+   /**
+    * Getter for the critic rating of the movie
+    * @return Critic rating of the movie
+    */
     public String getCriticsRating() {
         return criticsRating;
     }
 
-    /**
-     * 
-     * @param criticsRating
-     *     The critics_rating
-     */
+   /**
+    * Setter for the critic rating of the movie
+    * @param criticsRating Critic rating of the movie
+    */
     public void setCriticsRating(String criticsRating) {
         this.criticsRating = criticsRating;
     }
 
     /**
-     * 
-     * @return
-     *     The criticsScore
+     * Getter for the critics score for the movie
+     * @return Critics score for the movie
      */
     public String getCriticsScore() {
         return criticsScore;
     }
 
     /**
-     * 
-     * @param criticsScore
-     *     The critics_score
+     * Setter for the critics score for the movie
+     * @param criticsScore Critics score for the movie
      */
     public void setCriticsScore(String criticsScore) {
         this.criticsScore = criticsScore;
     }
 
+    /**
+     * Setter for the collection of Reel Deal ratings for the movie
+     * @param reelDealRatings Collection of Reel Deal ratings for the movie
+     */
     public void setReelDealRatings(List<ReelDealRating> reelDealRatings) {
         this.reelDealRatings = reelDealRatings;
     }
 
+    /**
+     * Getter for the collection of Reel Deal ratings for the movie
+     * @return Collection of Reel Deal ratings for the movie
+     */
     public List<ReelDealRating> getReelDealRatings() {
         return reelDealRatings;
     }
     
+    /**
+     * Add a new Reel Deal rating for the movie
+     * @param newRating New Reel Deal rating for the movie
+     */
     public void addReelDealRating(ReelDealRating newRating) {
         reelDealRatings.add(newRating);
     }
 
     /**
-     * 
-     * @return
-     *     The audienceRating
+     * Getter for the audience rating for the movie
+     * @return Audience rating for the movie
      */
     public String getAudienceRating() {
         return audienceRating;
     }
 
     /**
-     * 
-     * @param audienceRating
-     *     The audience_rating
+     * Setter for the audience rating for the movie
+     * @param audienceRating Audience rating for the movie
      */
     public void setAudienceRating(String audienceRating) {
         this.audienceRating = audienceRating;
     }
 
     /**
-     * 
-     * @return
-     *     The audienceScore
+     * Getter for the audience score for the movie
+     * @return Audience score for the movie
      */
     public String getAudienceScore() {
         return audienceScore;
     }
 
     /**
-     * 
-     * @param audienceScore
-     *     The audience_score
+     * Setter for the audience score for the movie
+     * @param audienceScore Audience score for the movie
      */
     public void setAudienceScore(String audienceScore) {
         this.audienceScore = audienceScore;
     }
     
+    /**
+     * Returns the number of Reel Deal ratings the movie has
+     * @return Size of the Reel Deal ratings collection
+     */
     public int getNumberOfReelDealRatings() {
         return reelDealRatings.size();
     }

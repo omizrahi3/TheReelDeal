@@ -1,4 +1,7 @@
-
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
+ */
 package com.rottentomatoes;
 
 import javax.annotation.Generated;
@@ -8,6 +11,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Holds links to page for more movies returned by the 
+ * Rotten Tomatoes API
+ * @author Anthony
+ */
 @Generated("org.jsonschema2pojo")
 public class Links_ implements Serializable {
 
@@ -17,36 +25,32 @@ public class Links_ implements Serializable {
     private String next;
 
     /**
-     * 
-     * @return
-     *     The self
+     * Getter for the link to the current page of movies
+     * @return Link to the current page of movies
      */
     public String getSelf() {
         return self;
     }
 
     /**
-     * 
-     * @param self
-     *     The self
+     * Setter for the link to the current page of movies
+     * @param self Link to the current page of movies
      */
     public void setSelf(String self) {
         this.self = self;
     }
 
     /**
-     * 
-     * @return
-     *     The next
+     * Getter for the link to the next page of movies
+     * @return Link to the next page of movies
      */
     public String getNext() {
         return next;
     }
 
     /**
-     * 
-     * @param next
-     *     The next
+     * Setter for the link to the next page of movies
+     * @param next Link to the next page of movies
      */
     public void setNext(String next) {
         this.next = next;

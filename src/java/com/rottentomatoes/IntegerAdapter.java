@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The com.rottentomatoes package handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API
  */
 package com.rottentomatoes;
 
@@ -13,7 +12,8 @@ import com.google.gson.TypeAdapter;
 import java.io.Serializable;
 
 /**
- *
+ * Custom GSON adapter extension to handle receiving an
+ * empty string for an int or Integer type data member
  * @author Anthony
  */
 public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable {
