@@ -1,6 +1,6 @@
-/*
-Registration class to handle aspect of a new user's registration. This class
-extends the abstract AccountAcessAttempt.
+/**
+ * The LoginRegistration package handles logging into the app The Reel Deal
+ * as well as registering for an account to access the app The Reel Deal
  */
 package LoginRegistration;
 
@@ -16,12 +16,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * Handles the registration process for a new user
+ * Extension of abstract class AccountAcessAttempt
  * @author Anthony
+ * @version 1.0
  */
 @ManagedBean(name = "registration", eager = true)
 @SessionScoped
 public class Registration extends AccountAccessAttempt implements Serializable {
+    
     private String name;
     private String passwordRepeat;
     private String major;
@@ -29,17 +32,16 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     boolean validRegistration;
     
     /**
-     * Constructor
+     * Constructs a major menu as part of registration
      */
     public Registration() {
         majorChooser = new MajorChooserMenu();
     }
     
     /**
-     * Create a new user.
-     * NOTE: This method will only be called after registration data
-     *       has been validated
-     * @return new User with relevant data populated
+     * Creates a new valid user
+     * Only called after registration data has been validated
+     * @return new User A user with a name, account, and profile
      */
     public User registerNewUser() {
         System.out.println("Creating account for " + name +
@@ -48,10 +50,10 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     }
     
     /**
-     * Check the validity of the registration data, and return whether
-     * data is valid or not
+     * Checks the validity of the registration data
+     * Determines whether the data is valid or not
      * @param users List of users to check existence of desired username
-     * @return Whether registration data is valid
+     * @return validRegistration Whether registration data is valid
      */
     public boolean checkNewUserRegistration(HashMap<String, User> users) {
         // check if username already exists
@@ -76,8 +78,9 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     }
     
     /**
-     * Returns whether the given user already exists in the user list
+     * Determines if a given user already exists in the user list
      * @param username User to check for
+     * @param users HashMap of valid preexisting users
      * @return Indication of the user's preexistence in the user list 
      */
     public boolean usernameExists(String username, HashMap<String, User> users) {
@@ -88,13 +91,16 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     }
     
     /**
-     * Determine whether the password and repeated password match
+     * Determines whether the password and repeated password match
      * @return Indication of whether the password and repeated password match
      */
     public boolean passwordsMatch() {
         return password.equals(passwordRepeat);
     }
     
+    /**
+     * Clears all data after an account has been made
+     */
     @Override
     public void clearData() {
         super.clearData();
@@ -104,80 +110,80 @@ public class Registration extends AccountAccessAttempt implements Serializable {
         this.validRegistration = false;
     }
     /**
-     * Get name of the prospective user
-     * @return name of the prospective user
+     * Getter method for the name of the prospective user
+     * @return name The name of the prospective user
      */
     public String getName() {
         return name;
     }
     
     /**
-     * Get repeated password for the prospective account
-     * @return repeated password for the prospective account
+     * Getter method for the repeated password of the prospective account
+     * @return passwordRepeat The repeated password for the prospective account
      */
     public String getPasswordRepeat() {
         return passwordRepeat;
     }
     
     /**
-     * Get the major of the prospective user
-     * @return major of the prospective user
+     * Getter method for the major of the prospective user
+     * @return major The major of the prospective user
      */
     public String getMajor() {
         return major;
     }
     
     /**
-     * Get the major chooser MajorChooserMenu of the prospective user
-     * @return major chooser MajorChooserMenu of the prospective user
+     * Getter method for the major selection menu for a prospective user
+     * @return majorChooser The major menu for a prospective user
      */
     public MajorChooserMenu getMajorChooser() {
         return majorChooser;
     }
     
     /**
-     * Get whether registration data is valid
-     * @return whether registration data is valid
+     * Getter method for validity of registration data
+     * @return validRegistration Whether registration data is valid
      */
     public boolean isValidRegistration() {
         return validRegistration;
     }
     
     /**
-     * Set the name of the prospective user
-     * @param name name of the prospective user
+     * Setter method for the name of the prospective user
+     * @param name The name of the prospective user
      */
     public void setName(String name) {
         this.name = name;
     }
     
     /**
-     * Set the repeated password of the prospective account
-     * @param passwordRepeat repeated password of the prospective account
+     * Setter method for the repeated password of the prospective account
+     * @param passwordRepeat The repeated password of the prospective account
      */
     public void setPasswordRepeat(String passwordRepeat) {
         this.passwordRepeat = passwordRepeat;
     }
     
     /**
-     * Set the major of the prospective user
-     * @param major major of the prospective user
+     * Setter method for the major of the prospective user
+     * @param major The major of the prospective user
      */
     public void setMajor(String major) {
         this.major = major;
     }
     
     /**
-     * Set the major chooser for the prospective user
-     * @param majorChooser major choose for the prospective user
+     * Setter method for the major menu of the prospective user
+     * @param majorChooser The major menu of the prospective user
      */
     public void setMajorChooser(MajorChooserMenu majorChooser) {
         this.majorChooser = majorChooser;
     }
     
     /**
-     * Set the validity of the attempted registration
-     * @param validRegistration validity of the attempted registration
+     * Setter method for validity of registration data
+     * @param validRegistration Whether registration data is valid
      */
     public void setValidRegistration(boolean validRegistration) {
         this.validRegistration = validRegistration;

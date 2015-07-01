@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The IO package handles persistence within the web application The Reel Deal
  */
 package IO;
 
@@ -16,12 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * IO handling for passwords needed to get into the app
  * @author ODell
+ * @version 1.0
  */
 public class PasswordIO implements Serializable {
     
-    
+    /**
+     * Reads in a file holding login credential info and creates a usable HashMap
+     * @return passwords A HashMap containing passwords
+     */
     public static HashMap<String, String> readFile() {
         HashMap<String, String> passwords = new HashMap<>();
         try {
@@ -37,7 +39,10 @@ public class PasswordIO implements Serializable {
         return passwords;
     }
     
-    
+    /**
+     * Writes a file that holds password related data
+     * @param passwords A Map containing passwords
+     */
     public static void WriteToFile(Map<String, String> passwords) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(

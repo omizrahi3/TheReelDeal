@@ -1,20 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The LoginRegistration package handles logging into the app The Reel Deal
+ * as well as registering for an account to access the app The Reel Deal
  */
 package LoginRegistration;
 
 /**
- *
+ * Blocks a banned user from accessing the app despite correct login credentials
  * @author Anthony
+ * @version 1.0
  */
 public class BannedAccountException extends Exception {
    
+    /**
+     * Constructor for the exception that blocks the banned user
+     * @param message The "You are banned" message relayed to the app user
+     */
     public BannedAccountException(String message) {
         super(message);
     }
     
+    /**
+     * Constructor for the exception that blocks the banned user
+     * @param message The "You are banned" message relayed to the app user
+     * @param cause The triggered error that leads to this exception call
+     */
     public BannedAccountException(String message, Throwable cause) {
         super(message, cause);
     }

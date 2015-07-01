@@ -1,5 +1,6 @@
-/*
-Back-end pojo to handle the user setting his/her major via the UI element.
+/**
+ * The LoginRegistration package handles logging into the app The Reel Deal
+ * as well as registering for an account to access the app The Reel Deal
  */
 package LoginRegistration;
 
@@ -11,28 +12,29 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
 /**
- *
+ * Handles the user setting their major via the UI element
  * @author Anthony
+ * @version 1.0
  */
 @ManagedBean(name = "majorMenuView", eager = true)
 @SessionScoped
 public class MajorChooserMenu {
+    
     private String major;
     private List<SelectItem> schools;
     
     /**
-     * Constructor
+     * Constructs a major menu
      */
     public MajorChooserMenu() {
         initMenu();
     }
 
     /**
-     * Initialize all schools and majors of each school. This
-     * data is what will be seen by the user when choosing his/her
-     * major. The data will be categorized by each school, which is
-     * implemented as a SelectItemGroup. Within each school, each major
-     * is implemented as a SelectItem, with a text and label property.
+     * Initializes all schools and majors of each school
+     * This data is what will be seen by the user when choosing their major
+     * The data will be categorized by school (implemented as SelectItemGroup)
+     * Each major is implemented as a SelectItem with a text and label property
      * e.g. new SelectItem("Text1", "Label1") will create a SelectItem
      *      that returns Text1 when the user chooses Label1. Label1 is what 
      *      the user will see and Text1 is what will set internally
@@ -101,32 +103,32 @@ public class MajorChooserMenu {
     }
     
     /**
-     * Get the chosen major
-     * @return chosen major
+     * Getter method for the chosen major
+     * @return major The chosen major
      */
     public String getMajor() {
         return major;
     }
     
     /**
-     * Get the list of schools
-     * @return list of schools
+     * Getter method for the list of schools
+     * @return schools The list of schools
      */
     public List<SelectItem> getSchools() {
         return schools;
     }
     
     /**
-     * Set the chosen major
-     * @param major chosen major
+     * Setter method for the chosen major
+     * @param major The chosen major
      */
     public void setMajor(String major) {
         this.major = major;
     }
     
     /**
-     * Set the list of schools
-     * @param schools list of schools
+     * Setter method for the list of schools
+     * @param schools The list of schools
      */
     public void setSchools(List<SelectItem> schools) {
         this.schools = schools;

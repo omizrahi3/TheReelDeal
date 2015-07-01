@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * The IO package handles persistence within the web application The Reel Deal
  */
 package IO;
 
@@ -18,11 +16,16 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- *
+ * IO handling for various collections of movie info used by the app
  * @author ODell
+ * @version 1.0
  */
 public class MovieIO implements Serializable {
     
+    /**
+     * Reads in a file holding movie related data and creates a usable HashMap
+     * @return movies A HashMap containing movies and their information
+     */
     public static HashMap<String, Movie> readFile() {
        HashMap<String, Movie> movies = new HashMap<>();
         try {
@@ -38,6 +41,10 @@ public class MovieIO implements Serializable {
         return movies;
     }
     
+    /**
+     * Writes a file that holds movie related data
+     * @param m A Map connecting movie info to its movie
+     */
     public static void WriteToFile(Map<String, Movie> m) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(

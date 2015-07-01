@@ -1,5 +1,5 @@
-/*
-Account class to represents a user's account-specific data.
+/**
+ * The UserManagement package handles the features of a user
  */
 package UserManagement;
 
@@ -10,8 +10,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- *
+ * Represents a user's account-specific data
  * @author Anthony
+ * @version 1.0
  */
 @ManagedBean(name = "account", eager = true)
 @SessionScoped

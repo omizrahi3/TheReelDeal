@@ -1,5 +1,6 @@
-/*
-Login class to handle a user login. This class extends the abstract AccountAccessAttempt
+/**
+ * The LoginRegistration package handles logging into the app The Reel Deal
+ * as well as registering for an account to access the app The Reel Deal
  */
 package LoginRegistration;
 
@@ -12,17 +13,19 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * Handles the validation of a user's login credentials
+ * Extension of abstract class AccountAccessAttempt
  * @author Anthony
+ * @version 1.0
  */
 @ManagedBean(name = "login", eager = true)
 @SessionScoped
 public class Login extends AccountAccessAttempt {
     
     /**
-     * Validate the login attempt, using the provided list of users
-     * and map of users to passwords
-     * @param passwords Map of passwords to verify the user's provided password
+     * Validates a login attempt using the provided 
+     * map between valid users and their passwords
+     * @param passwords HashMap of passwords to verify the provided password
      * @return Indication of login success
      */
     public boolean checkLogin(HashMap<String, String> passwords) {
