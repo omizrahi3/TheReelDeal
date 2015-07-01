@@ -1,5 +1,5 @@
-/*
-UserManager class that controls and handles all users and their actions.
+/**
+ * The UserManagement package handles the features of a user
  */
 package UserManagement;
 
@@ -20,12 +20,14 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 /**
- *
+ * Controls and handles all users and their actions
  * @author Anthony
+ * @version 1.0
  */
 @ManagedBean(name = "userManager", eager = true)
 @ApplicationScoped
 public class UserManager implements Serializable {
+    
     private HashMap<String, User> allUsers;
     private final HashMap<String, String> passwords;
     private Login login;
@@ -33,7 +35,7 @@ public class UserManager implements Serializable {
     private User activeUser;
     
     /**
-     * Constructor
+     * Constructs a user manager which handles user status and login credentials
      */
     public UserManager() {
         allUsers = new HashMap<>();
@@ -52,24 +54,32 @@ public class UserManager implements Serializable {
     }
     
     /**
-     * Navigate to the edit profile page
+     * Navigates to the edit profile page
      * @return page name for XHTML navigation
      */
     public String editProfile() {
         return ControlHub.editProfilePageURL;
     }
 
+    /**
+     * Saves edits to profile
+     * @return home page name for XTML navigation
+     */
     public String editProfileSuccess() {
         saveState();
         return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
+    /**
+     * Navigates the user back to the home page
+     * @return home page name for XTML navigation
+     */
     public String backHome() {
         return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
     /**
-     * Attempt to log in an existing user
+     * Attempts to log in an existing user
      * @return page name for XHTML navigation (if applicable)
      * @throws Exception if user is locked
      */
@@ -85,6 +95,9 @@ public class UserManager implements Serializable {
         return null;
     }
     
+    /**
+     * Prints out a list of valid users within the system
+     */
     public void printUsers() {
         System.out.println("Current users:");
         allUsers.values().stream().forEach((u) -> {
@@ -93,6 +106,12 @@ public class UserManager implements Serializable {
         });   
     }
     
+    /**
+     * Attempts to log the user into their account
+     * Handles cases where the user is banned or locked out
+     * @param user The user logging into The Reel Deal
+     * @return Whether the user successfully logged in
+     */
     private boolean processLogin(User user) {
         System.out.println("Processing login for " + user.getName());
         activeUser = user;
@@ -114,8 +133,8 @@ public class UserManager implements Serializable {
     }
     
     /**
-     * Register a new user
-     * @return new page to navigation to (if registration is successful)
+     * Registers a new user within the system
+     * @return the user's home page to navigate to (if registration is successful)
      */
     public String registerNewUser() {
         if (registration.checkNewUserRegistration(allUsers)) {
@@ -137,8 +156,8 @@ public class UserManager implements Serializable {
     }
     
     /**
-     * Add the user to the list
-     * @param u User to add
+     * Adds the user to the valid user list
+     * @param u The user to add to the list
      */
     public void addUser(User u) {
         if (u == null) {
@@ -155,7 +174,7 @@ public class UserManager implements Serializable {
     
     /**
      * Removes the user from the user list (and therefore the entire system)
-     * @param u User to remove
+     * @param u The user to remove from the list
      */
     public void removeUser(User u) {
         if (u == null) {
@@ -165,68 +184,83 @@ public class UserManager implements Serializable {
         }
     }
     
+    /**
+     * Writes to an output file the most current user list
+     */
     public void saveState() {
         System.out.println("Saving state of users");
         UserIO.WriteToFile(allUsers);
     }
     
     /**
-     * Return the loginPageURL handle
-     * @return loginPageURL handle
+     * Getter method for the loginPageURL handle
+     * @return login The loginPageURL handle
      */
     public Login getLogin() {
         return login;
     }
     
     /**
-     * Return the registration handle
-     * @return registration handle
+     * The getter method for the registration handle
+     * @return registration The registration handle
      */
     public Registration getRegistration() {
         return registration;
     }
     
     /**
-     * Return the current active user
-     * @return active user
+     * Getter method for the current active user
+     * @return activeUser The active user
      */
     public User getActiveUser() {
         return activeUser;
     }
 
     /**
-     * Set the loginPageURL handle
-     * @param login new loginPageURL handle
+     * Setter method for the loginPageURL handle
+     * @param login The new loginPageURL handle
      */
     public void setLogin(Login login) {
         this.login = login;
     }
 
     /**
-     * Set the registration handle
-     * @param registration new registration handle
+     * Setter method for the registration handle
+     * @param registration The new registration handle
      */
     public void setRegistration(Registration registration) {
         this.registration = registration;
     }
     
     /**
-     * Set the active user
-     * @param activeUser active user
+     * Setter method for the active user
+     * @param activeUser The active user
      */
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
     }
 
+    /**
+     * Getter method for a map holding all valid users
+     * @return allUsers The users registered with the application
+     */
     public HashMap<String, User> getAllUsers() {
         return allUsers;
     }
     
+    /**
+     * Getter method for a list holding all valid users
+     * @return An array list holding all users
+     */
     public List<User> getAllUsersAsList() {
         System.err.println("Returning list of users with size " + allUsers.values().size());
         return new ArrayList<>(allUsers.values());
     }
 
+    /**
+     * Setter method for the map holding all valid users
+     * @param allUsers The users registered with the application
+     */
     public void setAllUsers(HashMap<String, User> allUsers) {
         this.allUsers = allUsers;
     }
