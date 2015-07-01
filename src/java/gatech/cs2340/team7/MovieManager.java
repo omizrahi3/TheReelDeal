@@ -134,7 +134,8 @@ public class MovieManager {
         selectedMovie.addReelDealRating(ratingToBeSet);
         // unnecessary for movie existing in map?
         ratedMovies.put(selectedMovie.getId(), selectedMovie);
-        activeUser.newMovieRating(selectedMovie.getId(), activeUserRating);
+        activeUser.newMovieRating(selectedMovie.getId(),
+                new ReelDealRating(activeUserRating));
         activeUserRating.clearData();
         this.saveState();
         return ControlHub.postReviewPageURL;
@@ -302,7 +303,7 @@ public class MovieManager {
         System.out.println("Getting recommendation based on overall rating");
         float highestRating = 0;
         Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
-        for (Movie m : newDVDReleases.values()) { //TODO: change to all rated movies instead of DVD releases
+        for (Movie m : ratedMovies.values()) {
             float curRating = m.getAverageRating();
             if (curRating > highestRating) {
                 highestRating = curRating;
@@ -322,7 +323,7 @@ public class MovieManager {
         System.out.println("Getting recommendation based on major: " + major);
         float highestRating = 0;
         Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
-        for (Movie m : newDVDReleases.values()) { //TODO: change to all rated movies instead of DVD releases
+        for (Movie m : ratedMovies.values()) { //TODO: change to all rated movies instead of DVD releases
             float curRating = m.getMajorSpecificRating(major);
             if (curRating > highestRating) {
                 highestRating = curRating;
