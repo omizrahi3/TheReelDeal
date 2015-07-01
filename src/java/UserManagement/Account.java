@@ -25,16 +25,16 @@ public class Account implements Serializable {
     private boolean admin;
     
     /**
-     * Empty constructor
+     * Constructs an empty account
      */
     public Account() {
         this(null, false);
     }
     
     /**
-     * Constructor specifying all relevant members for the new account
+     * Constructs an account with all relevant members belonging to an account
      * @param username Username for the new account
-     * @param admin Is an administrator?
+     * @param admin Whether the account belongs to an admin
      */
     public Account(String username, boolean admin) {
         this.username = username;
@@ -45,7 +45,8 @@ public class Account implements Serializable {
     }
     
     /**
-     * Login to the account
+     * Blocks the user from the account if necessary
+     * Else validates the login attempt
      * @throws LockedAccountException if the account is locked
      * @throws BannedAccountException if the account is locked
      */
@@ -63,6 +64,10 @@ public class Account implements Serializable {
         loggedIn = true;
     }
     
+    /**
+     * Checks and returns the status of the account
+     * @return new String A string stating the status
+     */
     public String getStatus() {
         if (admin) {
             return "Administrator";
@@ -75,51 +80,63 @@ public class Account implements Serializable {
         }
     }
     
+    /**
+     * Alters the status of the account to "locked"
+     */
     public void lock() {
         locked = true;
         banned = false;
     }
     
+    /**
+     * Alters the status of the account to "unlocked"
+     */
     public void unlock() {
         locked = false;
         banned = false;
     }
     
+    /**
+     * Alters the status of the account to "banned"
+     */
     public void ban() {
         banned = true;
         locked = true;
     }
     
+    /**
+     * Alters the status of the account to "unbanned"
+     */
     public void unban() {
         banned = false;
     }
     
     /**
-     * Get username for the account
-     * @return username
+     * Getter method for the username of the account
+     * @return username The user who possesses the account
      */
     public String getUsername() {
         return this.username;
     }
     
     /**
-     * Get whether the account is logged in
-     * @return Whether the account is logged in
+     * Getter method for login status
+     * @return loggedIn Whether the account is logged in
      */
     public boolean isLoggedIn() {
         return loggedIn;
     }
     
     /**
-     * Get whether the account is locked
-     * @return Whether the account is locked
+     * Getter method for account locking status
+     * @return locked Whether the account is locked
      */
     public boolean isLocked() {
         return locked;
     }
     
     /**
-     * Set the username for the account
+     * Setter method for the username associated with the account
      * @param username New username for the account
      */
     public void setUsername(String username) {
@@ -127,7 +144,7 @@ public class Account implements Serializable {
     }
     
     /**
-     * Set the login state of the account
+     * Setter method for the login state of the account
      * @param loggedIn State of login to change to
      */
     public void setLoggedIn(boolean loggedIn) {
@@ -135,25 +152,41 @@ public class Account implements Serializable {
     }
     
     /**
-     * Set the locked state of the account
+     * Setter method for the locked state of the account
      * @param locked State of account lock to change to
      */
     public void setLocked(boolean locked) {
         this.locked = locked;
     }
-
+    
+    /**
+     * Determines if the account user is an admin
+     * @return admin Whether the account belongs to an admin
+     */
     public boolean isAdmin() {
         return admin;
     }
 
+    /**
+     * Setter method for the admin state of the account
+     * @param admin State of user privileges to change to
+     */
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 
+    /**
+     * Getter method for user banishment status
+     * @return banned Whether the user holding the account is banned
+     */
     public boolean isBanned() {
         return banned;
     }
 
+    /**
+     * Setter method for user banishment status
+     * @param banned State of account ban to change to
+     */
     public void setBanned(boolean banned) {
         this.banned = banned;
     }
