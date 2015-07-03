@@ -130,12 +130,22 @@ public class MovieManager {
         User activeUser = ControlHub.getInstance().getActiveUser();
         activeUserRating.setAuthor(activeUser);
         ReelDealRating ratingToBeSet = new ReelDealRating(activeUserRating);
-
+        if (activeUser.getMovieRatings().containsKey(selectedMovie.getId())) { 
+            activeUser.setMoveRatings(selectedMovie.getId(), ratingToBeSet);
+            for (int i = 0; i < selectedMovie.getReelDealRatings().size(); i++) {
+                if (selectedMovie.getReelDealRatings().get(i).getAuthor().equals(activeUser)) {
+                    selectedMovie.getReelDealRatings().get(i).setValue(ratingToBeSet.getValue());
+                    selectedMovie.getReelDealRatings().get(i).setComment(ratingToBeSet.getComment());
+                    ControlHub.getInstance().userUpdate();
+                }
+            }
+        } else {
         selectedMovie.addReelDealRating(ratingToBeSet);
         // unnecessary for movie existing in map?
         ratedMovies.put(selectedMovie.getId(), selectedMovie);
         activeUser.newMovieRating(selectedMovie.getId(),
                 new ReelDealRating(activeUserRating));
+        }
         activeUserRating.clearData();
         this.saveState();
         return ControlHub.postReviewPageURL;

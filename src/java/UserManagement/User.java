@@ -301,7 +301,7 @@ public class User implements Serializable {
      * Setter method for the movie rating assigned by the user
      * @param movieRatings The given movie rating attached to a movie ID
      */
-    public void setMoveRatings(HashMap<String, ReelDealRating> movieRatings) {
-        this.movieRatings = movieRatings;
-    }
+    public void setMoveRatings(String movieId, ReelDealRating newRating) {
+        movieRatings.replace(movieId, newRating);
+     }
 }
