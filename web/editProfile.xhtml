@@ -28,7 +28,7 @@
     <h:body styleClass="team7">
         <h:form  styleClass="accordion">
         <h:panelGrid styleClass="buttons" columns="1">
-            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.backHome()}" />
+            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.userHomePage}" />
             <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
         </h:panelGrid>
         <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
@@ -52,8 +52,8 @@
                 <h3> About you:</h3>
             <p:inputTextarea id= "About" rows ="10" cols="60" value = "#{userManager.activeUser.profile.aboutMe}"/>
             </p>
-                    <p:commandButton value="Submit Changes" action= "#{userManager.editProfileSuccess()}" styleClass="ui-priority-primary" />
-                    <p:commandButton value="Cancel" action= "#{userManager.backHome()}" styleClass="ui-priority-primary" />
+                    <p:commandButton value="Submit Changes" action= "#{userManager.saveEditedProfile()}" styleClass="ui-priority-primary" />
+                    <p:commandButton value="Cancel" action= "#{userManager.userHomePage}" styleClass="ui-priority-primary" />
                 </h:form>
             </p:tab>
         </p:accordionPanel>

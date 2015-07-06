@@ -28,10 +28,19 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class UserManager implements Serializable {
     
+    // Map holding all users, keyed by their username
     private HashMap<String, User> allUsers;
+    
+    // Map holding all passwords, keyed by the associated username
     private final HashMap<String, String> passwords;
+    
+    // Handle for processing all login attempts
     private Login login;
+    
+    // Handle for processing all registration attempts
     private Registration registration;
+    
+    // Reference to the current active user
     private User activeUser;
     
     /**
@@ -39,13 +48,15 @@ public class UserManager implements Serializable {
      */
     public UserManager() {
         allUsers = new HashMap<>();
-        passwords = PasswordIO.readFile();
         login = new Login();
         registration = new Registration();
         activeUser = null;
-        allUsers = UserIO.readFile();
         
-        // Create hard-coded administrator to demonstrate privileges
+        // Read in persisted user/password data
+        allUsers = UserIO.readFile();
+        passwords = PasswordIO.readFile();
+        
+        // Create hard-coded administrator to demonstrate admin privileges
         allUsers.put("boss", new Administrator("Da Boss", "boss", "bossPassword"));
         passwords.put("boss", "bossPassword");
         
@@ -57,7 +68,7 @@ public class UserManager implements Serializable {
      * Navigates to the edit profile page
      * @return page name for XHTML navigation
      */
-    public String editProfile() {
+    public String getEditProfilePage() {
         return ControlHub.EDIT_PROFILE_URL;
     }
 
@@ -74,35 +85,26 @@ public class UserManager implements Serializable {
      * Navigates the user back to the home page
      * @return home page name for XTML navigation
      */
-    public String backHome() {
+    public String getUserHomePage() {
         return ControlHub.dashboardPageURL(activeUser.isAdmin());
     }
     
     /**
      * Attempts to log in an existing user
-     * @return page name for XHTML navigation (if applicable)
+     * @return next XHTML page URL to display
      */
     public String loginExistingUser() {
         User userToLogin = allUsers.get(login.getUsername());
+        String nextPage = null;
         if (userToLogin == null) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
-                        "User Does Not Exist!"));
+                        "Username Does Not Exist! Please register for an " +
+                        "account."));
         } else if (login.checkLogin(passwords) && processLogin(userToLogin)) {
-            return ControlHub.dashboardPageURL(userToLogin.isAdmin());
+            nextPage = ControlHub.dashboardPageURL(userToLogin.isAdmin());
         }
-        return null;
-    }
-    
-    /**
-     * Prints out a list of valid users within the system
-     */
-    public void printUsers() {
-        System.out.println("Current users:");
-        allUsers.values().stream().forEach((u) -> {
-            System.out.println(u.getAccount().getUsername() + ": " + 
-                    passwords.get(u.getAccount().getUsername()));
-        });   
+        return nextPage;
     }
     
     /**
@@ -112,23 +114,18 @@ public class UserManager implements Serializable {
      * @return Whether the user successfully logged in
      */
     private boolean processLogin(User user) {
-        System.out.println("Processing login for " + user.getName());
-        activeUser = user;
         try {
             activeUser.loginToAccount();
             login.clearData();
+            activeUser = user;
             return true;
-        } catch (BannedAccountException bannedException) {
+        } catch (BannedAccountException |
+                LockedAccountException accountException) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
-                        "Account is banned! Please contact the administrator"
-                        + " at aagnone3@gatech.edu"));
-            return false;
-        } catch (LockedAccountException lockedException) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
-                        "Account is locked! Please contact the administrator"
-                        + " at aagnone3@gatech.edu"));
+                        accountException.getMessage() +
+                        "! Please contact the administrator"
+                        + " at aagnone3@gatech.edu.")); // constant member
             return false;
         }
     }
@@ -138,22 +135,22 @@ public class UserManager implements Serializable {
      * @return the user's home page to navigate to (if registration is successful)
      */
     public String registerNewUser() {
+        String nextPage = null;
         if (registration.checkNewUserRegistration(allUsers)) {
             // Registration USER_HOME_URL, create the user, account, and profile
             System.out.println("Successful registration attempt!");
             User newUser = registration.registerNewUser();
             addUser(newUser);
             processLogin(newUser);
-            saveState();
             // Add the user->password mapping
             passwords.put(registration.getUsername(), registration.getPassword());
-            PasswordIO.WriteToFile(passwords);
             registration.clearData();
-            return ControlHub.USER_HOME_URL;
+            saveState();
+            nextPage = ControlHub.USER_HOME_URL;
         } else {
             System.out.println("Failed registration attempt!");
-            return null;
         }
+        return nextPage;
     }
     
     /**
@@ -166,11 +163,7 @@ public class UserManager implements Serializable {
         } else {
             allUsers.put(u.getUsername(), u);
             System.out.println("Added new user. Updated user list:");
-            allUsers.values().stream().forEach((user) -> {
-                System.out.println("- " + user.getAccount().getUsername());
-            });
         }
-        
     }
     
     /**
@@ -181,7 +174,7 @@ public class UserManager implements Serializable {
         if (u == null) {
             throw new IllegalArgumentException("Cannot input null data!");
         } else {
-            allUsers.remove(u);
+            allUsers.remove(u.getUsername());
         }
     }
     
@@ -189,8 +182,9 @@ public class UserManager implements Serializable {
      * Writes to an output file the most current user list
      */
     public void saveState() {
-        System.out.println("Saving state of users");
+        System.out.println("Saving state of users.");
         UserIO.WriteToFile(allUsers);
+        PasswordIO.WriteToFile(passwords);
     }
     
     /**
@@ -254,7 +248,6 @@ public class UserManager implements Serializable {
      * @return An array list holding all users
      */
     public List<User> getAllUsersAsList() {
-        System.err.println("Returning list of users with size " + allUsers.values().size());
         return new ArrayList<>(allUsers.values());
     }
 
