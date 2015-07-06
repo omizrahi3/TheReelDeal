@@ -30,6 +30,7 @@ public class ReelDealRating implements Serializable {
     public static final String GOLD_REEL_IMG = "resources/images/GoldReel.png";
     
     private String[] reels;
+    private String displayDescriptor;
     private User author;
     private int value;
     private Comment comment;
@@ -79,6 +80,7 @@ public class ReelDealRating implements Serializable {
         setReels(reels);
         setValue(value);
         this.comment = new Comment(comment);
+        this.displayDescriptor = "Leave a Review";
     }
     
     /**
@@ -222,7 +224,7 @@ public class ReelDealRating implements Serializable {
     public String flag() {
         System.out.println("Flagging comment " + this.getComment());
         flagged = true;
-        ControlHub.getInstance().movieUpdate();
+        ControlHub.getInstance().saveState();
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
     
@@ -247,4 +249,23 @@ public class ReelDealRating implements Serializable {
         return flagged;
     }
 
+     /**
+     * Get the description label for the given review, which indicates
+     * whether a new review is being made, or an existing review is
+     * being edited
+     * @return Review Label Description
+     */
+    public String getDisplayDescriptor() {
+        return displayDescriptor;
+    }
+
+     /**
+     * Update the description label for the given review, which indicates
+     * whether a new review is being made, or an existing review is
+     * being edited
+     * @param displayDescriptor New Review Label Description
+     */
+    public void setDisplayDescriptor(String displayDescriptor) {
+        this.displayDescriptor = displayDescriptor;
+    }
 }

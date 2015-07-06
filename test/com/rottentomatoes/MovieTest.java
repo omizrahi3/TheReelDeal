@@ -46,7 +46,7 @@ public class MovieTest {
         System.out.println("getAverageRating");
         Movie instance = new Movie();
         float expResult = 0.0F;
-        float result = instance.getAverageRating();
+        float result = Float.parseFloat(instance.getAverageRating());
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

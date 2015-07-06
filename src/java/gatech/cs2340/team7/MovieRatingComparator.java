@@ -19,7 +19,8 @@ public class MovieRatingComparator implements Comparator<Object> {
     public int compare(Object a, Object b) {
         Movie movieA = ((Movie)((Map.Entry)a).getValue());
         Movie movieB = ((Movie)((Map.Entry)b).getValue());
-        float result = movieA.getAverageRating() - movieB.getAverageRating(); 
+        float result = Float.parseFloat(movieA.getAverageRating()) - 
+                Float.parseFloat(movieB.getAverageRating()); 
         if (result < 0) {
             return 1;
         } else if (result > 0) {

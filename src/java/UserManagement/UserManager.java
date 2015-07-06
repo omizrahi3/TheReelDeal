@@ -58,7 +58,7 @@ public class UserManager implements Serializable {
      * @return page name for XHTML navigation
      */
     public String editProfile() {
-        return ControlHub.editProfilePageURL;
+        return ControlHub.EDIT_PROFILE_URL;
     }
 
     /**
@@ -81,9 +81,8 @@ public class UserManager implements Serializable {
     /**
      * Attempts to log in an existing user
      * @return page name for XHTML navigation (if applicable)
-     * @throws Exception if user is locked
      */
-    public String loginExistingUser() throws Exception {
+    public String loginExistingUser() {
         User userToLogin = allUsers.get(login.getUsername());
         if (userToLogin == null) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -122,12 +121,14 @@ public class UserManager implements Serializable {
         } catch (BannedAccountException bannedException) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
-                        "Account is banned! Please contact the administrator"));
+                        "Account is banned! Please contact the administrator"
+                        + " at aagnone3@gatech.edu"));
             return false;
         } catch (LockedAccountException lockedException) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_FATAL, "Login Failed",
-                        "Account is locked! Please contact the administrator"));
+                        "Account is locked! Please contact the administrator"
+                        + " at aagnone3@gatech.edu"));
             return false;
         }
     }
@@ -138,7 +139,7 @@ public class UserManager implements Serializable {
      */
     public String registerNewUser() {
         if (registration.checkNewUserRegistration(allUsers)) {
-            // Registration userDashboardPageURL, create the user, account, and profile
+            // Registration USER_HOME_URL, create the user, account, and profile
             System.out.println("Successful registration attempt!");
             User newUser = registration.registerNewUser();
             addUser(newUser);
@@ -148,7 +149,7 @@ public class UserManager implements Serializable {
             passwords.put(registration.getUsername(), registration.getPassword());
             PasswordIO.WriteToFile(passwords);
             registration.clearData();
-            return ControlHub.userDashboardPageURL;
+            return ControlHub.USER_HOME_URL;
         } else {
             System.out.println("Failed registration attempt!");
             return null;
@@ -193,8 +194,8 @@ public class UserManager implements Serializable {
     }
     
     /**
-     * Getter method for the loginPageURL handle
-     * @return login The loginPageURL handle
+     * Getter method for the LOGIN_URL handle
+     * @return login The LOGIN_URL handle
      */
     public Login getLogin() {
         return login;
@@ -217,8 +218,8 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Setter method for the loginPageURL handle
-     * @param login The new loginPageURL handle
+     * Setter method for the LOGIN_URL handle
+     * @param login The new LOGIN_URL handle
      */
     public void setLogin(Login login) {
         this.login = login;

@@ -30,7 +30,7 @@ public class MovieIO implements Serializable {
        HashMap<String, Movie> movies = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream(ControlHub.pathToDataPersistence + "movies.bin"));
+                    new FileInputStream(ControlHub.SAVE_PATH + "movies.bin"));
             movies = (HashMap<String, Movie>) is.readObject();
             is.close();
         } catch (IOException e) {
@@ -48,7 +48,7 @@ public class MovieIO implements Serializable {
     public static void WriteToFile(Map<String, Movie> m) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ControlHub.pathToDataPersistence + "movies.bin"));
+                    new FileOutputStream(ControlHub.SAVE_PATH + "movies.bin"));
             os.writeObject(m);
             os.close();
         } catch (IOException e) {

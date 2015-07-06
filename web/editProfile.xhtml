@@ -20,10 +20,17 @@
             .ui-selectonemenu-items-wrapper {
                 height: 200px !important
             }
+            .buttons {
+                float: right;
+            }
        </style>
     </h:head>
     <h:body styleClass="team7">
-         <h:form  styleClass="accordion">
+        <h:form  styleClass="accordion">
+        <h:panelGrid styleClass="buttons" columns="1">
+            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.backHome()}" />
+            <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
+        </h:panelGrid>
         <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
         <p:accordionPanel activeIndex="1">
             <p:tab title="Log Out">

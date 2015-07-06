@@ -71,17 +71,37 @@ public class User implements Serializable {
     
     /**
      * Attempts to log the user into their account 
-     * If the loginPageURL fails, it notifies the user on the web page
+ If the LOGIN_URL fails, it notifies the user on the web page
      * @throws LockedAccountException Handles a locked out user
      * @throws BannedAccountException Handles a banned user 
      */
     public void loginToAccount() throws LockedAccountException,
             BannedAccountException {
         try {
+            countNumberOfFlaggedComments();
             account.login();
         } catch (LockedAccountException | BannedAccountException accountException) {
             throw accountException;
         }
+    }
+    
+    /**
+     * Count the number of the user's comments that have been flagged by
+     * other users.
+     */
+    public void countNumberOfFlaggedComments() {
+        int numberFlagged = 0;
+        for (ReelDealRating rating : movieRatings.values()) {
+            if (rating.isFlagged()) {
+                ++numberFlagged;
+            } else {
+                System.out.println("Rating " + rating.getComment() +
+                        " is not flagged.");
+            }
+        }
+        System.out.println("Account has " + numberFlagged +
+                " flagged comments");
+        account.setNumberFlaggedComments(numberFlagged);
     }
     
     /**
@@ -130,11 +150,11 @@ public class User implements Serializable {
     
     /**
      * Logs the user out of the application
-     * @return indexPageURL The xhtml page navigation token
+     * @return INDEX_URL The xhtml page navigation token
      */
     public String logout() {  
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return ControlHub.indexPageURL;
+        return ControlHub.INDEX_URL;
     }
     
     /**
@@ -161,7 +181,7 @@ public class User implements Serializable {
      * @return Whether a rating was given
      */
     public boolean hasRatedMovie(String movieId) {
-        return (movieRatings.get(movieId) != null);
+        return movieRatings.containsKey(movieId);
     }
     
     /**
@@ -301,7 +321,19 @@ public class User implements Serializable {
      * Setter method for the movie rating assigned by the user
      * @param movieRatings The given movie rating attached to a movie ID
      */
-    public void setMoveRatings(String movieId, ReelDealRating newRating) {
-        movieRatings.replace(movieId, newRating);
+    public void setMovieRatings(HashMap<String, ReelDealRating> movieRatings) {
+        this.movieRatings = movieRatings;
+    }
+
+    
+    /**
+     * Update an existing Reel Deal rating with the given rating
+     * @param movieId Identifier used to store the rating
+     * @param newRating New rating to use
+     */
+    public void updateMovieRating(String movieId, ReelDealRating newRating) {
+        if (movieRatings.containsKey(movieId)) {
+            movieRatings.replace(movieId, newRating);
+        }
      }
 }

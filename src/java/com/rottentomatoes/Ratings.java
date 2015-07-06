@@ -4,16 +4,18 @@
  */
 package com.rottentomatoes;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.io.Serializable;
+import UserManagement.User;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import javax.annotation.Generated;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -55,6 +57,15 @@ public class Ratings implements Serializable {
         this.audienceRating = "";
         this.audienceScore = "";
         this.reelDealRatings = reelDealRatings;
+    }
+    
+    public void updateReelDealRating(User author, ReelDealRating rating) {
+        for (int i = 0; i < reelDealRatings.size(); i++) {
+            if (reelDealRatings.get(i).getAuthor().equals(author)) {
+                reelDealRatings.get(i).setValue(rating.getValue());
+                reelDealRatings.get(i).setComment(rating.getComment());
+            }
+        }
     }
     
     /**

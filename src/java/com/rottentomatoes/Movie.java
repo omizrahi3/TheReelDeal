@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import UserManagement.User;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -84,6 +85,10 @@ public class Movie implements Serializable {
             criticsConsensus = "n/a";
         }
         ratings.assertDefaultValuesOfUndefData();
+    }
+    
+    public void updateMovieRating(User author, ReelDealRating rating) {
+        ratings.updateReelDealRating(author, rating);
     }
     
     /**
@@ -305,8 +310,9 @@ public class Movie implements Serializable {
      * 
      * @return average rating or -1
      */
-    public float getAverageRating() {
-        return ratings.getAverageRating();
+    public String getAverageRating() {
+        Float rating = ratings.getAverageRating();
+        return (rating == -1f ? "n/a" : rating.toString());
     }
     
     /**

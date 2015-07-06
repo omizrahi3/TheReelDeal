@@ -11,8 +11,18 @@ and open the template in the editor.
     <h:head>
         <title>Profile Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            .buttons {
+                float: right;
+            }
+        </style>
     </h:head>
     <body>
+        <h:form>
+        <h:panelGrid styleClass="buttons" columns="1">
+            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.backHome()}" />
+            <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
+        </h:panelGrid>
         <h1>#{userManager.activeUser.account.username}'s Profile</h1>
         <img src= "#{userManager.activeUser.profile.imageURL}" alt= "Profile Picture"> </img>
         <p> 
@@ -24,7 +34,6 @@ and open the template in the editor.
         <p>
                 <pre>#{userManager.activeUser.profile.aboutMe}</pre>
         </p>
-        <h:form>
             <p>
                 <p:commandButton value="Edit Profile" action= "editProfile" styleClass="ui-priority-primary" />
             </p>

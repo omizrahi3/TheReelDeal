@@ -18,11 +18,14 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Account implements Serializable {
     
+    public static final int MAX_NUMBER_FLAGGED_COMMENTS = 2;
+    
     private String username;
     private boolean loggedIn;
     private boolean locked;
     private boolean banned;
     private boolean admin;
+    private int numberFlaggedComments;
     
     /**
      * Constructs an empty account
@@ -42,6 +45,7 @@ public class Account implements Serializable {
         this.locked = false;
         this.banned = false;
         this.admin  = admin;
+        this.numberFlaggedComments = 0;
     }
     
     /**
@@ -51,7 +55,7 @@ public class Account implements Serializable {
      * @throws BannedAccountException if the account is locked
      */
     public void login() throws LockedAccountException, BannedAccountException {
-        // change this logic for checking account lock
+        assertAccountStatus();
         if (banned) {
             System.out.print("This account is banned!");
             throw new BannedAccountException(
@@ -62,6 +66,20 @@ public class Account implements Serializable {
                     "Account is locked by an administrator!");
         }
         loggedIn = true;
+    }
+    
+    /**
+     * Assert that the account is locked if the number of flagged comments
+     * exceeds the maximum allowed. Ideally, this method will be expanded
+     * in future implementations, to account for different factors that could
+     * affect the accounts locked/unlocked status
+     */
+    public void assertAccountStatus() {
+        System.out.println("Account has " + this.numberFlaggedComments +
+                " flagged comments");
+        if (numberFlaggedComments > MAX_NUMBER_FLAGGED_COMMENTS) {
+            locked = true;
+        }
     }
     
     /**
@@ -190,6 +208,24 @@ public class Account implements Serializable {
     public void setBanned(boolean banned) {
         this.banned = banned;
     }
+
+    /**
+     * Getter for the number of flagged comments the account has received
+     * @return Number of flagged comments associated with the account
+     */
+    public int getNumberFlaggedComments() {
+        return numberFlaggedComments;
+    }
+
+    /**
+     * Setter for the number of flagged comments the account has received
+     * @param numberFlaggedComments Number of flagged comments
+     *        associated with the account
+     */
+    public void setNumberFlaggedComments(int numberFlaggedComments) {
+        this.numberFlaggedComments = numberFlaggedComments;
+    }
+    
     
     
 }

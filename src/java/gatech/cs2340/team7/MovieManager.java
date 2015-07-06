@@ -15,12 +15,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.HashMap;
 import UserManagement.User;
-import UserManagement.Profile;
-import UserManagement.Account;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Iterator;
-import java.util.Random;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  * Stores and handles processing of all movie-related data
@@ -45,16 +44,6 @@ public class MovieManager {
     }
     
     /**
-     * Chained constructor call that specifies
-     * DVD and in-theater releases data members
-     * @param newDVDReleases
-     * @param newTheaterReleases 
-     */
-    public MovieManager(List<Movie> newDVDReleases, List<Movie> newTheaterReleases) {
-        this(new HashMap<>(), new HashMap<>(), null, null);
-    }
-    
-    /**
      * Constructor with all data members specified
      * @param newTheaterReleases Collection of new theater releases
      * @param newDVDReleases Collection of new DVD releases
@@ -72,6 +61,7 @@ public class MovieManager {
         this.activeUserRating = new ReelDealRating();
         //ratedMovies = new HashMap<>();
         ratedMovies = MovieIO.readFile();
+        ControlHub.getInstance().setMovieManager(this);
     }
     
     /**
@@ -114,9 +104,10 @@ public class MovieManager {
             if (activeUser.getMovieRatings().containsKey(id)) {
                 //activeUserRating.assertReels(activeUser.getUserReels(id));
                 activeUserRating = activeUser.getMovieReviewFor(selectedMovie.getId());
+                activeUserRating.setDisplayDescriptor("Edit Your Review");
             }
         }
-        return ControlHub.movieDetailedViewPageURL;
+        return ControlHub.MOVIE_DETAIL_URL;
     }
     
     /**
@@ -130,25 +121,19 @@ public class MovieManager {
         User activeUser = ControlHub.getInstance().getActiveUser();
         activeUserRating.setAuthor(activeUser);
         ReelDealRating ratingToBeSet = new ReelDealRating(activeUserRating);
-        if (activeUser.getMovieRatings().containsKey(selectedMovie.getId())) { 
-            activeUser.setMoveRatings(selectedMovie.getId(), ratingToBeSet);
-            for (int i = 0; i < selectedMovie.getReelDealRatings().size(); i++) {
-                if (selectedMovie.getReelDealRatings().get(i).getAuthor().equals(activeUser)) {
-                    selectedMovie.getReelDealRatings().get(i).setValue(ratingToBeSet.getValue());
-                    selectedMovie.getReelDealRatings().get(i).setComment(ratingToBeSet.getComment());
-                    ControlHub.getInstance().userUpdate();
-                }
-            }
+        if (activeUser.hasRatedMovie(selectedMovie.getId())) {
+            activeUser.updateMovieRating(selectedMovie.getId(), ratingToBeSet);
+            selectedMovie.updateMovieRating(activeUser, ratingToBeSet);
         } else {
-        selectedMovie.addReelDealRating(ratingToBeSet);
-        // unnecessary for movie existing in map?
-        ratedMovies.put(selectedMovie.getId(), selectedMovie);
-        activeUser.newMovieRating(selectedMovie.getId(),
-                new ReelDealRating(activeUserRating));
+            selectedMovie.addReelDealRating(
+                    new ReelDealRating(activeUserRating));
+            ratedMovies.put(selectedMovie.getId(), selectedMovie);
+            activeUser.newMovieRating(selectedMovie.getId(),
+                    new ReelDealRating(activeUserRating));
         }
         activeUserRating.clearData();
-        this.saveState();
-        return ControlHub.postReviewPageURL;
+        ControlHub.getInstance().saveState();
+        return ControlHub.POST_REVIEW_URL;
     }
     
     /**
@@ -310,17 +295,7 @@ public class MovieManager {
      * @return Recommended movie
      */
     public Movie getRecommendation() {
-        System.out.println("Getting recommendation based on overall rating");
-        float highestRating = 0;
-        Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
-        for (Movie m : ratedMovies.values()) {
-            float curRating = m.getAverageRating();
-            if (curRating > highestRating) {
-                highestRating = curRating;
-                recommendedMovie = m;
-            }
-        }
-        return recommendedMovie;
+        return getRecommendation("");
     }
     
     /**
@@ -332,9 +307,11 @@ public class MovieManager {
     public Movie getRecommendation(String major) {
         System.out.println("Getting recommendation based on major: " + major);
         float highestRating = 0;
-        Movie recommendedMovie = new Movie();   //TODO: This is an empty movie. If no ratings, this is returned. Handle this better
-        for (Movie m : ratedMovies.values()) { //TODO: change to all rated movies instead of DVD releases
-            float curRating = m.getMajorSpecificRating(major);
+        Movie recommendedMovie = null;
+        for (Movie m : ratedMovies.values()) {
+            float curRating = (major.length() > 0 ? 
+                    m.getMajorSpecificRating(major) : 
+                    Float.parseFloat(m.getAverageRating()));
             if (curRating > highestRating) {
                 highestRating = curRating;
                 recommendedMovie = m;
@@ -348,8 +325,7 @@ public class MovieManager {
      * @return Page to navigate to after showing the recommendation
      */
     public String viewRecommendation() {
-        selectedMovie = getRecommendation();
-        return ControlHub.movieDetailedViewPageURL;
+        return viewRecommendation("");
     }
     
     /**
@@ -358,8 +334,22 @@ public class MovieManager {
      * @return Page to navigate to after showing the recommendation
      */
     public String viewRecommendation(String major) {
-        selectedMovie = getRecommendation(major);
-        return ControlHub.movieDetailedViewPageURL;
+        String nextPage = null;
+        // If there are rated movies, then get and show the recommendation.
+        //   Otherwise, stay on the current page and show an error message
+        if (ratedMovies.values().size() > 0) {
+            System.out.println("Processing Recommendation.");
+            selectedMovie = getRecommendation();
+            nextPage = ControlHub.MOVIE_DETAIL_URL;
+        } else {
+            // Show error message
+            System.out.println("No movies to rate.");
+             FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", 
+                            "There are no movies rated, so a recommendation cannot be given! " +
+                            "Take some time to write some reviews, and then we can try again."));
+        }
+        return nextPage;
     }
 
     /**
@@ -405,6 +395,6 @@ public class MovieManager {
     public String backToMovieHub() {
         selectedMovie = new Movie();
         activeUserRating = new ReelDealRating();
-        return ControlHub.movieHubPageURL;
+        return ControlHub.MOVIE_HUB_URL;
     }
 }

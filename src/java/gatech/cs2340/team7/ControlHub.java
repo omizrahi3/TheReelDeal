@@ -6,27 +6,41 @@ package gatech.cs2340.team7;
 import UserManagement.User;
 import UserManagement.UserManager;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  * Coordinates between the UserManager and RottenTomatoesDataManager
  * @author Anthony
  * @version 1.0
  */
+@ManagedBean(name = "controlHub", eager = true)
+@SessionScoped
 public class ControlHub implements Serializable {
     
     // Static constant strings for ease of xhtml page navigation
-    public static final String registerPageURL          = "register?faces-redirect=true";
-    public static final String editProfilePageURL       = "editProfile?faces-redirect=true";
-    public static final String userDashboardPageURL     = "userDashboard?faces-redirect=true";
-    public static final String loginPageURL             = "login?faces-redirect=true";
-    public static final String indexPageURL             = "index?faces-redirect=true";
-    public static final String movieHubPageURL          = "movieHub?faces-redirect=true";
-    public static final String postReviewPageURL        = "postReview?faces-redirect=true";
-    public static final String errorPageURL             = "error?faces-redirect=true";
-    public static final String movieDetailedViewPageURL = "movieDetailedView?faces-redirect=true";
-    public static final String adminDashboardPageURL    = "adminDashboard?faces-redirect=true";
+    public static final String REGISTER_URL     
+            = "register?faces-redirect=true";
+    public static final String EDIT_PROFILE_URL 
+            = "editProfile?faces-redirect=true";
+    public static final String USER_HOME_URL    
+            = "userDashboard?faces-redirect=true";
+    public static final String LOGIN_URL        
+            = "login?faces-redirect=true";
+    public static final String INDEX_URL        
+            = "index?faces-redirect=true";
+    public static final String MOVIE_HUB_URL    
+            = "movieHub?faces-redirect=true";
+    public static final String POST_REVIEW_URL  
+            = "postReview?faces-redirect=true";
+    public static final String ERROR_URL        
+            = "error?faces-redirect=true";
+    public static final String MOVIE_DETAIL_URL 
+            = "movieDetailedView?faces-redirect=true";
+    public static final String ADMIN_HOME_URL   
+            = "adminDashboard?faces-redirect=true";
     
-    public static final String pathToDataPersistence    = "C:\\Users\\Anthony\\Desktop\\Temp\\";
+    public static final String SAVE_PATH    = "C:\\Users\\Anthony\\Desktop\\Temp\\";
     
     // Instance data members
     private UserManager userManager;
@@ -57,8 +71,9 @@ public class ControlHub implements Serializable {
      * @param isAdmin Whether the user is an admin
      * @return The appropriate XHTML information for the home page
      */
-    public static String dashboardPageURL(boolean isAdmin) {
-        return (isAdmin ? adminDashboardPageURL : userDashboardPageURL);
+    public static String dashboardPageURL(
+            final boolean isAdmin) {
+        return (isAdmin ? ADMIN_HOME_URL : USER_HOME_URL);
     }
     
     /**
@@ -66,8 +81,8 @@ public class ControlHub implements Serializable {
      * @return The appropriate XHTML information for the home page
      */
     public String activeUserDashboardPageURL() {
-        return (userManager.getActiveUser().isAdmin() ? adminDashboardPageURL :
-                userDashboardPageURL);
+        return (userManager.getActiveUser().isAdmin() ? ADMIN_HOME_URL :
+                USER_HOME_URL);
     }
     
     /**
@@ -84,16 +99,6 @@ public class ControlHub implements Serializable {
     public void saveState() {
         dataManager.saveState();
         userManager.saveState();
-    }
-    
-    /**
-     * Constructs a ControlHub with a specified userManager and movieManager
-     * @param userManager The user controller
-     * @param movieManager The movie controller
-     */
-    public ControlHub(UserManager userManager, MovieManager movieManager) {
-        this.userManager = userManager;
-        this.movieManager = movieManager;
     }
     
     /**
@@ -116,17 +121,18 @@ public class ControlHub implements Serializable {
      * Setter method for the user manager
      * @param userManager The user manager
      */
-    public void setUserManager(UserManager userManager) {
+    public void setUserManager(
+            final UserManager userManager) {
         System.out.println("Setting user mgt to " + userManager);
         this.userManager = userManager;
     }
-    
-    
+     
     /**
      * Setter method for the movie manager
      * @param movieManager The movie manager
      */
-    public void setMovieManager(MovieManager movieManager) {
+    public void setMovieManager(
+            final MovieManager movieManager) {
         System.out.println("Setting movie mgt to " + movieManager);
         this.movieManager = movieManager;
     }
@@ -154,80 +160,81 @@ public class ControlHub implements Serializable {
      * Setter method for the data manager
      * @param dataManager The data manager
      */
-    public void setDataManager(RottenTomatoesDataManager dataManager) {
+    public void setDataManager(
+            final RottenTomatoesDataManager dataManager) {
         this.dataManager = dataManager;
     }
 
     /**
-     * Getter method for the indexPageURL page string
-     * @return indexPageURL The page string
+     * Getter method for the INDEX_URL page string
+     * @return INDEX_URL The page string
      */
-    public String getIndexPageURL() {
-        return indexPageURL;
+    public String getIndexUrl() {
+        return INDEX_URL;
     }
 
     /**
-     * Getter method for the registerPageURL page string
-     * @return registerPageURL The page string
+     * Getter method for the REGISTER_URL page string
+     * @return REGISTER_URL The page string
      */
-    public String getRegisterPageURL() {
-        return registerPageURL;
+    public String getRegisterUrl() {
+        return REGISTER_URL;
     }
 
     /**
      * Getter method for the edit profile page string
-     * @return editProfilePageURL The page string
+     * @return EDIT_PROFILE_URL The page string
      */
-    public String getEditProfilePageURL() {
-        return editProfilePageURL;
+    public String getEditProfileUrl() {
+        return EDIT_PROFILE_URL;
     }
 
     /**
      * Getter method for the movie hub page string
-     * @return movieHubPageURL The page string
+     * @return MOVIE_HUB_URL The page string
      */
-    public String getMovieHubPageURL() {
-        return movieHubPageURL;
+    public String getMovieHubUrl() {
+        return MOVIE_HUB_URL;
     }
 
     /**
-     * Getter method for the userDashboardPageURL page string
-     * @return userDashboardPageURL The page string
+     * Getter method for the USER_HOME_URL page string
+     * @return USER_HOME_URL The page string
      */
-    public String getUserDashboardPageURL() {
-        return userDashboardPageURL;
+    public String getUserHomeUrl() {
+        return USER_HOME_URL;
     }
 
     /**
      * Getter method for the post review page string
-     * @return postReviewPageURL The page string
+     * @return POST_REVIEW_URL The page string
      */
-    public String getPostReviewPageURL() {
-        return postReviewPageURL;
+    public String getPostReviewUrl() {
+        return POST_REVIEW_URL;
     }
 
     /**
      * Getter method for the movie detailed view page string
-     * @return movieDetailedViewPageURL The page string
+     * @return MOVIE_DETAIL_URL The page string
      */
-    public String getMovieDetailedViewPageURL() {
-        return movieDetailedViewPageURL;
+    public String getMovieDetailUrl() {
+        return MOVIE_DETAIL_URL;
     }
 
     /**
-     * Getter method for the loginPageURL page string
-     * @return loginPageURL The page string
+     * Getter method for the LOGIN_URL page string
+     * @return LOGIN_URL The page string
      */
-    public String getLoginPageURL() {
-        return loginPageURL;
+    public String getLoginUrl() {
+        return LOGIN_URL;
     }
 
     /**
-     * Getter method for the errorPageURL page string
-     * @return errorPageURL The page string
+     * Getter method for the ERROR_URL page string
+     * @return ERROR_URL The page string
      */
-    public String getErrorPageURL() {
-        return errorPageURL;
+    public String getErrorUrl() {
+        return ERROR_URL;
     }
     
     /**

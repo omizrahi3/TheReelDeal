@@ -63,7 +63,7 @@ public class RottenTomatoesDataManager implements Serializable {
         System.out.println("Movie selected: " + params.get("selectedMovie"));
         selectedMovieTok = params.get("selectedMovie");
         movieManager.movieSelected(selectedMovieTok);
-        return ControlHub.movieDetailedViewPageURL;
+        return ControlHub.MOVIE_DETAIL_URL;
     }
     
     /**
@@ -105,7 +105,7 @@ public class RottenTomatoesDataManager implements Serializable {
             movieManager.setSearchResultMovies(JSONToPOJO(query.processQuery()).getMovies());
             showSearchData = true;
             queryToken = "";
-            return ControlHub.movieHubPageURL;
+            return ControlHub.MOVIE_HUB_URL;
         }
         queryToken = "";
         return null;

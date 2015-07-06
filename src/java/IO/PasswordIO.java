@@ -28,7 +28,7 @@ public class PasswordIO implements Serializable {
         HashMap<String, String> passwords = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream(ControlHub.pathToDataPersistence + "passwords.bin"));
+                    new FileInputStream(ControlHub.SAVE_PATH + "passwords.bin"));
             passwords = (HashMap<String, String>) is.readObject();
             is.close();
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class PasswordIO implements Serializable {
     public static void WriteToFile(Map<String, String> passwords) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ControlHub.pathToDataPersistence + "passwords.bin"));
+                    new FileOutputStream(ControlHub.SAVE_PATH + "passwords.bin"));
             os.writeObject(passwords);
             os.close();
         } catch (IOException e) {

@@ -7,30 +7,31 @@
     <h:head>
         <title>Welcome!</title>
         <style>
-            .accordion{
-                position:absolute;
-                right: 0;
-                width:45%
-            }
-            .team7{
-                background-image:url("resources/images/Logo.jpg");
-                background-size:cover;
-                background-repeat:no-repeat
-            } 
             .ui-selectonemenu-items-wrapper {
                 height: 200px !important
             }
+            body {
+                background-color: rgb(250, 249, 245);
+            }
+            body .banner {
+                text-align: center;
+            }
+            .buttons {
+                float: right;
+            } 
        </style>
     </h:head>
-    <h:body styleClass="team7">
-         <h:form  styleClass="accordion">
+    <h:body>
+        <h:form>
+        <h:panelGrid styleClass="buttons" columns="1">
+            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.backHome()}" />
+            <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
+        </h:panelGrid>
+        <!-- maintain a ~4.04 width-to-height ratio for image below -->
+        <div class="banner"><img src="resources/images/Banner.jpg" width="1000px" height="248px" align="middle"/></div>
         <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
-        <p:accordionPanel activeIndex="1">
-            <p:tab title="Log Out">
-                <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
-            </p:tab>
-            <p:tab title="Your Profile">
-                <h:form>
+        <p:tabView orientation="top" activeIndex="0">
+            <p:tab title="View My Profile">
                 <h:panelGrid columns="2" cellpadding="10">
                     <p:graphicImage height="150" width="150" url="#{userManager.activeUser.profile.imageURL}" alt="Upload a photo!" ></p:graphicImage>
                     <p><strong>Name:</strong> #{userManager.activeUser.profile.name} </p>
@@ -40,17 +41,23 @@
                     <p> <pre>#{userManager.activeUser.profile.aboutMe}</pre> </p>
                 </h:panelGrid>
                     <p:commandButton id="EditProfileButton" value="Edit Profile" action="#{userManager.editProfile}" />
-                </h:form>
             </p:tab>
-            <p:tab title="Movie Search">
+            <p:tab title="Find a Movie">
                 <p:link outcome="movieHub" value="Search Now"/>
             </p:tab>
-            <p:tab title="Recommendation">
-                 <p:commandButton id="overallRecButton" value="Overall" action="#{rottenTomatoesDataManager.movieManager.viewRecommendation()}" />
-                <br />
-                <p:commandButton id="majorRecButton" value="By My Major" action="#{rottenTomatoesDataManager.movieManager.viewRecommendation(userManager.activeUser.profile.major)}" />
+            <p:tab title="Get a Recommendation">
+                <h:panelGrid columns="2" cellpadding="10" >
+                    <p:growl id="growlOverall" showDetail="true" />
+                    <p:commandButton id="overallRecButton" value="Overall" 
+                        action="#{rottenTomatoesDataManager.movieManager.viewRecommendation()}"
+                        update="growlOverall"/>
+                    <p:growl id="growlMajor" showDetail="true" />
+                    <p:commandButton id="majorRecButton" value="By My Major"
+                        action="#{rottenTomatoesDataManager.movieManager.viewRecommendation(userManager.activeUser.profile.major)}"
+                        update="growlMajor"/>
+                </h:panelGrid>
             </p:tab>
-        </p:accordionPanel>
+        </p:tabView>
         </p:panel>
         </h:form>
     </h:body>
