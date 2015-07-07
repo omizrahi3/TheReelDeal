@@ -1,12 +1,12 @@
 /**
- * The LoginRegistration package handles logging into the app The Reel Deal
- * as well as registering for an account to access the app The Reel Deal
+ * Handles logging into the application The Reel Deal as well as 
+ * registering for an account to access the application The Reel Deal.
  */
-package LoginRegistration;
+package loginregistration;
 
-import UserManagement.Account;
-import UserManagement.Profile;
-import UserManagement.User;
+import usermanagement.Account;
+import usermanagement.Profile;
+import usermanagement.User;
 import java.io.Serializable;
 import java.util.HashMap;
 

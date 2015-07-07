@@ -1,12 +1,12 @@
 /**
- * The com.rottentomatoes package handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API
+ * Handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API.
  */
 package com.rottentomatoes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import UserManagement.User;
+import usermanagement.User;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

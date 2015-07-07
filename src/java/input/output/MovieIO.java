@@ -1,9 +1,9 @@
 /**
- * The IO package handles persistence within the web application The Reel Deal
+ * Handles persistence within the web application The Reel Deal.
  */
-package IO;
+package input.output;
 
-import UserManagement.User;
+import usermanagement.User;
 import com.rottentomatoes.Movie;
 import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;

@@ -1,10 +1,10 @@
 /*
- * The gatech.cs2340.team7 package contains various overarching manager
- * handles for directing the control and flow of the application
+ * Contains various overarching manager
+ * handles for directing the control and flow of the application.
  */
 package gatech.cs2340.team7;
 
-import IO.MovieIO;
+import input.output.MovieIO;
 import com.rottentomatoes.Movie;
 import com.rottentomatoes.ReelDealRating;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.HashMap;
-import UserManagement.User;
+import usermanagement.User;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Iterator;

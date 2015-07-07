@@ -1,14 +1,14 @@
 /**
- * The UserManagement package handles the features of a user
+ * Handles the features of a user.
  */
-package UserManagement;
+package usermanagement;
 
-import IO.PasswordIO;
-import IO.UserIO;
-import LoginRegistration.BannedAccountException;
-import LoginRegistration.LockedAccountException;
-import LoginRegistration.Registration;
-import LoginRegistration.Login;
+import input.output.PasswordIO;
+import input.output.UserIO;
+import loginregistration.BannedAccountException;
+import loginregistration.LockedAccountException;
+import loginregistration.Registration;
+import loginregistration.Login;
 import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 import java.util.ArrayList;

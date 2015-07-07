@@ -1,6 +1,6 @@
 /*
- * The gatech.cs2340.team7 package contains various overarching manager
- * handles for directing the control and flow of the application
+ * Contains various overarching manager
+ * handles for directing the control and flow of the application.
  */
 package gatech.cs2340.team7;
 

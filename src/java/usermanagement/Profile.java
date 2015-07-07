@@ -1,7 +1,7 @@
 /**
- * The UserManagement package handles the features of a user
+ * Handles the features of a user.
  */
-package UserManagement;
+package usermanagement;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;

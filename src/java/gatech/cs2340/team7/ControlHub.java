@@ -1,10 +1,11 @@
-/**
- * The gatech.cs2340.team7 package holds controllers
+/*
+ * Contains various overarching manager
+ * handles for directing the control and flow of the application.
  */
 package gatech.cs2340.team7;
 
-import UserManagement.User;
-import UserManagement.UserManager;
+import usermanagement.User;
+import usermanagement.UserManager;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

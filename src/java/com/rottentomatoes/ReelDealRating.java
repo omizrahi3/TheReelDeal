@@ -1,12 +1,12 @@
 /**
- * The com.rottentomatoes package handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API
+ * Handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API.
  */
 package com.rottentomatoes;
 
 import java.util.Map;
 
-import UserManagement.User;
+import usermanagement.User;
 import gatech.cs2340.team7.ControlHub;
 import java.io.Serializable;
 

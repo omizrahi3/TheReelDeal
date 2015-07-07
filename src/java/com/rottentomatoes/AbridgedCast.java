@@ -1,6 +1,6 @@
 /**
- * The com.rottentomatoes package handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API
+ * Handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -19,63 +19,71 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 public class AbridgedCast implements Serializable {
 
+    /**
+     * The name of the cast member.
+     */
     @Expose
     private String name;
+
+    /**
+     * The unique identifier of the cast member.
+     */
     @Expose
     private String id;
 
     /**
-     * Getter for the name of a specific cast member for a movie
+     * Getter for the name of a specific cast member for a movie.
      * @return The cast member's name
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     /**
-     * Setter for the name of a specific cast member for a movie
-     * @param name The cast member's name
+     * Setter for the name of a specific cast member for a movie.
+     * @param castMember The cast member's name
      */
-    public void setName(String name) {
-        this.name = name;
+    public final void setName(final String castMember) {
+        name = castMember;
     }
 
     /**
-     * Getter for the unique identifier of the cast member
+     * Getter for the unique identifier of the cast member.
      * @return Unique identifier string of the cast member
      */
-    public String getId() {
+    public final String getId() {
         return id;
     }
 
     /**
-     * Setter for the unique identifier of the cast member
-     * @param id Unique identifier of the cast member
+     * Setter for the unique identifier of the cast member.
+     * @param identification Unique identifier of the cast member
      */
-    public void setId(String id) {
-        this.id = id;
+    public final void setId(final String identification) {
+        id = identification;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return new HashCodeBuilder().append(name).append(id).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
         if (other == this) {
             return true;
         }
-        if ((other instanceof AbridgedCast) == false) {
+        if (!(other instanceof AbridgedCast)) {
             return false;
         }
         AbridgedCast rhs = ((AbridgedCast) other);
-        return new EqualsBuilder().append(name, rhs.name).append(id, rhs.id).isEquals();
+        return new EqualsBuilder().append(name, rhs.name)
+                .append(id, rhs.id).isEquals();
     }
 
 }

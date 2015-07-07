@@ -1,6 +1,6 @@
 /**
- * The com.rottentomatoes package handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API
+ * Handles all of the data that
+ * is returned from a REST call to the Rotten Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -19,41 +19,44 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 public class AlternateIds implements Serializable {
 
+    /**
+     * The IMDB identifier of a movie.
+     */
     @Expose
     private String imdb;
 
     /**
-     * Getter for the IMDB identifier of a movie
+     * Getter for the IMDB identifier of a movie.
      * @return IMDB identifier string of a movie
      */
-    public String getImdb() {
+    public final String getImdb() {
         return imdb;
     }
 
     /**
-     * Setter for the IMDB identifier of a movie
-     * @param imdb IMDB identifier string of a movie
+     * Setter for the IMDB identifier of a movie.
+     * @param imdbIdentifier IMDB identifier string of a movie
      */
-    public void setImdb(String imdb) {
-        this.imdb = imdb;
+    public final void setImdb(final String imdbIdentifier) {
+        imdb = imdbIdentifier;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return new HashCodeBuilder().append(imdb).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
         if (other == this) {
             return true;
         }
-        if ((other instanceof AlternateIds) == false) {
+        if (!(other instanceof AlternateIds)) {
             return false;
         }
         AlternateIds rhs = ((AlternateIds) other);

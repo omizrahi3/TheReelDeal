@@ -1,10 +1,10 @@
 /**
- * The UserManagement package handles the features of a user
+ * Handles the features of a user.
  */
-package UserManagement;
+package usermanagement;
 
-import LoginRegistration.BannedAccountException;
-import LoginRegistration.LockedAccountException;
+import loginregistration.BannedAccountException;
+import loginregistration.LockedAccountException;
 import gatech.cs2340.team7.ControlHub;
 import com.rottentomatoes.ReelDealRating;
 import java.io.Serializable;

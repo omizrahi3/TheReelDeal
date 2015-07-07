@@ -1,11 +1,11 @@
 /**
- * The UserManagement package handles the features of a user
+ * Handles the features of a user.
  */
-package UserManagement;
+package usermanagement;
 
 import java.io.Serializable;
-import LoginRegistration.BannedAccountException;
-import LoginRegistration.LockedAccountException;
+import loginregistration.BannedAccountException;
+import loginregistration.LockedAccountException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
