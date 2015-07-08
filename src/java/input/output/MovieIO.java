@@ -19,8 +19,14 @@ import java.util.HashMap;
  * @author ODell
  * @version 1.0
  */
-public class MovieIO implements Serializable {
+public final class MovieIO implements Serializable {
 
+    /**
+     *
+     */
+    private MovieIO() {
+
+    }
     /**
      *
      */
@@ -47,11 +53,10 @@ public class MovieIO implements Serializable {
      * @param m A Map connecting movie info to its movie
      */
     public static void writeToFile(final Map<String, Movie> m) {
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ControlHub.SAVE_PATH + "movies.bin"));
+        try (ObjectOutputStream os = new ObjectOutputStream(
+                    new FileOutputStream(ControlHub.SAVE_PATH
+                            + "movies.bin"));) {
             os.writeObject(m);
-            os.close();
         } catch (IOException e) {
             System.out.println("Could not save file");
         }

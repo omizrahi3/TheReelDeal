@@ -19,7 +19,14 @@ import java.util.HashMap;
  * @author ODell
  * @version 1.0
  */
-public class UserIO implements Serializable {
+public final class UserIO implements Serializable {
+
+    /**
+     *
+     */
+    private UserIO() {
+
+    }
     /**
      *
      */
@@ -48,9 +55,9 @@ public class UserIO implements Serializable {
      * @param users A Map containing user names
      */
     public static void writeToFile(final Map<String, User> users) {
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ControlHub.SAVE_PATH + "users.bin"));
+        try (ObjectOutputStream os = new ObjectOutputStream(
+                    new FileOutputStream(ControlHub.SAVE_PATH
+                            + "users.bin"));) {
             os.writeObject(users);
             os.close();
         } catch (IOException e) {

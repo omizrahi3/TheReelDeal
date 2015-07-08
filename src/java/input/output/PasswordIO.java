@@ -18,7 +18,14 @@ import java.util.Map;
  * @author ODell
  * @version 1.0
  */
-public class PasswordIO implements Serializable {
+public final class PasswordIO implements Serializable {
+
+    /**
+     *
+     */
+    private PasswordIO() {
+
+    }
     /**
      *
      */
@@ -47,10 +54,9 @@ public class PasswordIO implements Serializable {
      * @param passwords A Map containing passwords
      */
     public static void writeToFile(final Map<String, String> passwords) {
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(
+        try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
-                            + "passwords.bin"));
+                            + "passwords.bin"));) {
             os.writeObject(passwords);
             os.close();
         } catch (IOException e) {
