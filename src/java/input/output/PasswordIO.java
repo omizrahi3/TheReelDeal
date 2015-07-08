@@ -14,43 +14,47 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * IO handling for passwords needed to get into the app
+ * IO handling for passwords needed to get into the app.
  * @author ODell
  * @version 1.0
  */
 public class PasswordIO implements Serializable {
-    
     /**
-     * Reads in a file holding login credential info and creates a usable HashMap
+     *
+     */
+    private static final long serialVersionUID = 480163338657802062L;
+    /**
+     * Reads in a file holding login credential info and
+     * creates a usable HashMap.
      * @return passwords A HashMap containing passwords
      */
     public static HashMap<String, String> readFile() {
         HashMap<String, String> passwords = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream(ControlHub.SAVE_PATH + "passwords.bin"));
+                    new FileInputStream(ControlHub.SAVE_PATH
+                            + "passwords.bin"));
             passwords = (HashMap<String, String>) is.readObject();
             is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("File did not open");
         }
         return passwords;
     }
-    
+
     /**
-     * Writes a file that holds password related data
+     * Writes a file that holds password related data.
      * @param passwords A Map containing passwords
      */
-    public static void WriteToFile(Map<String, String> passwords) {
+    public static void writeToFile(final Map<String, String> passwords) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ControlHub.SAVE_PATH + "passwords.bin"));
+                    new FileOutputStream(ControlHub.SAVE_PATH
+                            + "passwords.bin"));
             os.writeObject(passwords);
             os.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not save file");
         }
     }
 }

@@ -5,26 +5,26 @@
 package loginregistration;
 
 /**
- * Blocks a banned user from accessing the app despite correct login credentials
+ * Blocks a banned user from accessing the app despite correct login credential.
  * @author Anthony
  * @version 1.0
  */
 public class BannedAccountException extends Exception {
-   
+
     /**
-     * Constructor for the exception that blocks the banned user
+     * Constructor for the exception that blocks the banned user.
      * @param message The "You are banned" message relayed to the app user
      */
-    public BannedAccountException(String message) {
+    public BannedAccountException(final String message) {
         super(message);
     }
-    
+
     /**
-     * Constructor for the exception that blocks the banned user
+     * Constructor for the exception that blocks the banned user.
      * @param message The "You are banned" message relayed to the app user
      * @param cause The triggered error that leads to this exception call
      */
-    public BannedAccountException(String message, Throwable cause) {
+    public BannedAccountException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

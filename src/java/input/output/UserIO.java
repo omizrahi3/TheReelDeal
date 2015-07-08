@@ -20,9 +20,14 @@ import java.util.HashMap;
  * @version 1.0
  */
 public class UserIO implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 480189657473802062L;
 
     /**
-     * Reads in a file holding login credential info and creates a usable HashMap
+     * Reads in a file holding login credential
+     * info and creates a usable HashMap.
      * @return users A HashMap containing users
      */
     public static HashMap<String, User> readFile() {
@@ -32,26 +37,24 @@ public class UserIO implements Serializable {
                     new FileInputStream(ControlHub.SAVE_PATH + "users.bin"));
             users = (HashMap<String, User>) is.readObject();
             is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Could not read file");
         }
         return users;
     }
-    
+
     /**
-     * Writes a file that holds user related data
+     * Writes a file that holds user related data.
      * @param users A Map containing user names
      */
-    public static void WriteToFile(Map<String, User> users) {
+    public static void writeToFile(final Map<String, User> users) {
         try {
             ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH + "users.bin"));
             os.writeObject(users);
             os.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not save file");
         }
     }
 }
