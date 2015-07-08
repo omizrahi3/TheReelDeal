@@ -10,6 +10,9 @@ package loginregistration;
  * @version 1.0
  */
 public class BannedAccountException extends Exception {
+    /**
+     *
+     */
     private static final long serialVersionUID = 6033229138280070606L;
 
     /**

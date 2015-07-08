@@ -10,6 +10,9 @@ package loginregistration;
  * @version 1.0
  */
 public class LockedAccountException extends Exception {
+    /**
+     *
+     */
     private static final long serialVersionUID = 1350192024329225098L;
 
     /**
