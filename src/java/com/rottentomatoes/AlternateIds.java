@@ -53,14 +53,16 @@ public class AlternateIds implements Serializable {
 
     @Override
     public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final AlternateIds rhs = ((AlternateIds) other);
+            equality = new EqualsBuilder().append(imdb, rhs.imdb)
+                .append(imdb, rhs.imdb).isEquals();
+        } else {
+            equality = false;
         }
-        if (!(other instanceof AlternateIds)) {
-            return false;
-        }
-        AlternateIds rhs = ((AlternateIds) other);
-        return new EqualsBuilder().append(imdb, rhs.imdb).isEquals();
+        return equality;
     }
-
 }

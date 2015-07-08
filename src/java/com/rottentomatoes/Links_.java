@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -12,8 +12,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Holds links to page for more movies returned by the 
- * Rotten Tomatoes API
+ * Holds links to page for more movies returned by the Rotten Tomatoes API.
+ *
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
@@ -25,57 +25,63 @@ public class Links_ implements Serializable {
     private String next;
 
     /**
-     * Getter for the link to the current page of movies
+     * Getter for the link to the current page of movies.
+     *
      * @return Link to the current page of movies
      */
-    public String getSelf() {
+    public final String getSelf() {
         return self;
     }
 
     /**
-     * Setter for the link to the current page of movies
-     * @param self Link to the current page of movies
+     * Setter for the link to the current page of movies.
+     *
+     * @param newSelf Link to the current page of movies
      */
-    public void setSelf(String self) {
-        this.self = self;
+    public final void setSelf(final String newSelf) {
+        this.self = newSelf;
     }
 
     /**
-     * Getter for the link to the next page of movies
+     * Getter for the link to the next page of movies.
+     *
      * @return Link to the next page of movies
      */
-    public String getNext() {
+    public final String getNext() {
         return next;
     }
 
     /**
-     * Setter for the link to the next page of movies
-     * @param next Link to the next page of movies
+     * Setter for the link to the next page of movies.
+     *
+     * @param newNext Link to the next page of movies
      */
-    public void setNext(String next) {
-        this.next = next;
+    public final void setNext(final String newNext) {
+        this.next = newNext;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return new HashCodeBuilder().append(self).append(next).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final Links_ rhs = ((Links_) other);
+            equality = new EqualsBuilder().append(self, rhs.self)
+                    .append(next, rhs.next).isEquals();
+        } else {
+            equality = false;
         }
-        if ((other instanceof Links_) == false) {
-            return false;
-        }
-        Links_ rhs = ((Links_) other);
-        return new EqualsBuilder().append(self, rhs.self).append(next, rhs.next).isEquals();
+        return equality;
     }
-
 }

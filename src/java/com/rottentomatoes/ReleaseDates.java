@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -12,7 +12,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Handles data for all release dates of the movie
+ * Handles data for all release dates of the movie.
+ *
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
@@ -24,57 +25,63 @@ public class ReleaseDates implements Serializable {
     private String dvd;
 
     /**
-     * Getter for the theater release date
+     * Getter for the theater release date.
+     *
      * @return Theater release date
      */
-    public String getTheater() {
+    public final String getTheater() {
         return theater;
     }
 
     /**
-     * Setter for the theater release date
-     * @param theater Theater release date
+     * Setter for the theater release date.
+     *
+     * @param newTheater Theater release date
      */
-    public void setTheater(String theater) {
-        this.theater = theater;
+    public final void setTheater(final String newTheater) {
+        this.theater = newTheater;
     }
 
     /**
-     * Getter for the DVD release date
+     * Getter for the DVD release date.
+     *
      * @return DVD release date
      */
-    public String getDvd() {
+    public final String getDvd() {
         return dvd;
     }
 
     /**
-     * Setter for the DVD release date
-     * @param dvd DVD release date
+     * Setter for the DVD release date.
+     *
+     * @param newDvd DVD release date
      */
-    public void setDvd(String dvd) {
-        this.dvd = dvd;
+    public final void setDvd(final String newDvd) {
+        this.dvd = newDvd;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return new HashCodeBuilder().append(theater).append(dvd).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final ReleaseDates rhs = ((ReleaseDates) other);
+            equality = new EqualsBuilder().append(theater, rhs.theater)
+                    .append(dvd, rhs.dvd).isEquals();
+        } else {
+            equality = false;
         }
-        if ((other instanceof ReleaseDates) == false) {
-            return false;
-        }
-        ReleaseDates rhs = ((ReleaseDates) other);
-        return new EqualsBuilder().append(theater, rhs.theater).append(dvd, rhs.dvd).isEquals();
+        return equality;
     }
-
 }

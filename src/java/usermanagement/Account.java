@@ -25,7 +25,7 @@ public class Account implements Serializable {
     /**
      * max number of flagged comments.
      */
-    public static final int MAX_NUMBER_FLAGGED_COMMENTS = 2;
+    public static final int MAX_COMMENT_FLAGS = 2;
 
     /**
      * username associated with the account.
@@ -48,14 +48,14 @@ public class Account implements Serializable {
     private boolean banned;
 
     /**
-     * boolean describing admin status of account.
+     * boolean describing administrator status of account.
      */
     private boolean admin;
 
     /**
      * number of flagged comments associated with the account.
      */
-    private int numberFlaggedComments;
+    private int numCommentFlags;
 
     /**
      * Constructs an empty account.
@@ -67,7 +67,7 @@ public class Account implements Serializable {
     /**
      * Constructs an account with all relevant members belonging to an account.
      * @param newUsername Username for the new account
-     * @param newAdmin Whether the account belongs to an admin
+     * @param newAdmin Whether the account belongs to an administrator
      */
     public Account(final String newUsername, final boolean newAdmin) {
         this.username = newUsername;
@@ -75,7 +75,7 @@ public class Account implements Serializable {
         this.locked = false;
         this.banned = false;
         this.admin  = newAdmin;
-        this.numberFlaggedComments = 0;
+        this.numCommentFlags = 0;
     }
 
     /**
@@ -88,11 +88,9 @@ public class Account implements Serializable {
             BannedAccountException {
         assertAccountStatus();
         if (banned) {
-            System.out.print("This account is banned!");
             throw new BannedAccountException(
                     "Account is banned by an administrator!");
         } else if (locked) {
-            System.out.print("This account is locked!");
             throw new LockedAccountException(
                     "Account is locked by an administrator!");
         }
@@ -106,9 +104,7 @@ public class Account implements Serializable {
      * affect the accounts locked/unlocked status
      */
     public final void assertAccountStatus() {
-        System.out.println("Account has " + this.numberFlaggedComments
-            + " flagged comments");
-        if (numberFlaggedComments > MAX_NUMBER_FLAGGED_COMMENTS) {
+        if (numCommentFlags > MAX_COMMENT_FLAGS) {
             locked = true;
         }
     }
@@ -118,15 +114,17 @@ public class Account implements Serializable {
      * @return new String A string stating the status
      */
     public final String getStatus() {
+        String status;
         if (admin) {
-            return "Administrator";
+            status = "Administrator";
         } else if (banned) {
-            return "Banned";
+            status = "Banned";
         } else if (locked) {
-            return "Locked";
+            status = "Locked";
         } else {
-            return "Active";
+            status = "Active";
         }
+        return status;
     }
 
     /**
@@ -244,18 +242,18 @@ public class Account implements Serializable {
      * Getter for the number of flagged comments the account has received.
      * @return Number of flagged comments associated with the account
      */
-    public final int getNumberFlaggedComments() {
-        return numberFlaggedComments;
+    public final int getNumCommentFlags() {
+        return numCommentFlags;
     }
 
     /**
      * Setter for the number of flagged comments the account has received.
-     * @param newNumberFlaggedComments Number of flagged comments
+     * @param newNumFlags Number of flagged comments
      *        associated with the account
      */
-    public final void setNumberFlaggedComments(
-            final int newNumberFlaggedComments) {
-        this.numberFlaggedComments = newNumberFlaggedComments;
+    public final void setNumCommentFlags(
+            final int newNumFlags) {
+        this.numCommentFlags = newNumFlags;
     }
 
 

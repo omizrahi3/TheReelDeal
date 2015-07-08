@@ -141,7 +141,7 @@ public class UserManager implements Serializable {
     private boolean processLogin(final User user) {
         try {
             user.loginToAccount();
-            login.clearData();
+            login.clearLoginData();
             activeUser = user;
             return true;
         } catch (BannedAccountException
@@ -173,7 +173,7 @@ public class UserManager implements Serializable {
             // Add the user->password mapping
             passwords.put(registration.getUsername(),
                     registration.getPassword());
-            registration.clearData();
+            registration.clearRegistrationData();
             saveState();
             nextPage = ControlHub.USER_HOME_URL;
         } else {

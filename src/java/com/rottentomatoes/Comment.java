@@ -27,17 +27,17 @@ public class Comment implements Serializable {
     /**
      * Chained constructor that sets the content of the comment for
      * a movie rating.
-     * @param content Text content of the rating
+     * @param newContent Text content of the rating
      */
-    public Comment(String content) {
-        setContent(content);
+    public Comment(final String newContent) {
+        setContent(newContent);
     }
 
     /**
      * Getter for the text content of the review.
      * @return Text content of the review
      */
-    public String getContent() {
+    public final String getContent() {
         return content;
     }
 

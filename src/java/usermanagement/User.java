@@ -118,7 +118,7 @@ public class User implements Serializable {
         }
         System.out.println("Account has " + numberFlagged
             + " flagged comments");
-        account.setNumberFlaggedComments(numberFlagged);
+        account.setNumCommentFlags(numberFlagged);
     }
 
     /**

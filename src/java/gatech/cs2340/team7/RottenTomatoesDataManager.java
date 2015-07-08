@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 /**
- * Controls the maintenance and processing of all Rotten Tomatoes data
+ * Controls the maintenance and processing of all Rotten Tomatoes data.
  *
  * @author Anthony
  */
@@ -152,7 +152,7 @@ public class RottenTomatoesDataManager implements Serializable {
     /**
      * Perform a query to Rotten Tomatoes for a specific keyword.
      *
-     * @return data received from the HTTP query
+     * @return next XHTML page to navigate to.
      */
     public final String queryForMovie() {
         if (RESTQuery.validQueryToken(queryToken)) {

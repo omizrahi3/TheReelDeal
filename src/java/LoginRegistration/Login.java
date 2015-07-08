@@ -3,7 +3,7 @@
  * registering for an account to access the application The Reel Deal.
  */
 package loginregistration;
-import java.util.HashMap;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,52 +17,88 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "login", eager = true)
 @SessionScoped
-public class Login extends AccountAccessAttempt {
+public class Login {
 
     /**
-     *
+     * Username to uniquely identify the user to login.
      */
-    private boolean passwordMatch;
+    private String username;
 
     /**
-     * login constructor.
+     * Password to use in attempting to login the user.
      */
-    public Login() {
-        passwordMatch = false;
-    }
+    private String password;
+
     /**
      * Validates a login attempt using the provided
      * map between valid users and their passwords.
      * @param passwords HashMap of passwords to verify the provided password
      * @return Indication of login success
      */
-    public final boolean checkLogin(final HashMap<String, String> passwords) {
+    public final boolean checkLogin(final Map<String, String> passwords) {
+        boolean loginCheck;
         if (passwords == null) {
-            return false;
-        }
-        System.out.println("Login attempt with username <"
-                + AccountAccessAttempt.getUsername() + "> "
-            + " and password <" + AccountAccessAttempt.getPassword() + ">");
-        passwordMatch = AccountAccessAttempt.getPassword().
-                equals(passwords.get(AccountAccessAttempt.getUsername()));
-
-        if (passwordMatch) {
-            return true;
-        } else if (AccountAccessAttempt.getUsername().length() == 0) {
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Error", "Please enter username."));
-            return false;
-        } else if (AccountAccessAttempt.getPassword().length() == 0) {
-             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Error", "Please enter password."));
-            return false;
+            loginCheck = false;
         } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            "Error", "Incorrect username or password!"));
-            return false;
+            if (password.equals(passwords.get(username))) {
+                loginCheck = true;
+            } else if (username.length() == 0) {
+                 FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "Error", "Please enter username."));
+                loginCheck = false;
+            } else if (password.length() == 0) {
+                 FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                "Error", "Please enter password."));
+                loginCheck = false;
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                "Error", "Incorrect username or password!"));
+                loginCheck = false;
+            }
         }
+        return loginCheck;
+    }
+
+    /**
+     * Clears all data after an account access has been made.
+     */
+    public final void clearLoginData() {
+        username = "";
+        password = "";
+    }
+
+    /**
+     * Getter method for username.
+     * @return username The user's account name
+     */
+    public final String getUsername() {
+        return username;
+    }
+
+    /**
+     * Getter method for password.
+     * @return password The user's password
+     */
+    public final String getPassword() {
+        return password;
+    }
+
+    /**
+     * Setter method for username.
+     * @param newUsername The altered username
+     */
+    public final void setUsername(final String newUsername) {
+        username = newUsername;
+    }
+
+    /**
+     * Setter method for password.
+     * @param newPassword The altered password
+     */
+    public final void setPassword(final String newPassword) {
+        password = newPassword;
     }
 }

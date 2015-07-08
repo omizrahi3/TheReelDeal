@@ -102,15 +102,19 @@ public class Posters implements Serializable {
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final Posters rhs = ((Posters) other);
+            equality = new EqualsBuilder().append(thumbnail, rhs.thumbnail)
+                    .append(profile, rhs.profile)
+                    .append(detailed, rhs.detailed)
+                    .append(original, rhs.original).isEquals();
+        } else {
+            equality = false;
         }
-        if ((other instanceof Posters) == false) {
-            return false;
-        }
-        Posters rhs = ((Posters) other);
-        return new EqualsBuilder().append(thumbnail, rhs.thumbnail).append(profile, rhs.profile).append(detailed, rhs.detailed).append(original, rhs.original).isEquals();
+        return equality;
     }
-
 }

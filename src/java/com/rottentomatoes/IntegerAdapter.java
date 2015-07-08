@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -12,29 +12,31 @@ import com.google.gson.TypeAdapter;
 import java.io.Serializable;
 
 /**
- * Custom GSON adapter extension to handle receiving an
- * empty string for an int or Integer type data member
+ * Custom GSON adapter extension to handle receiving an empty string for an int
+ * or Integer type data member.
+ *
  * @author Anthony
  */
 public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable {
-    
+
     @Override
-    public Integer read(JsonReader reader) throws IOException {
+    public final Integer read(final JsonReader reader) throws IOException {
+        int result;
         if (reader.peek() == JsonToken.NULL) {
             reader.nextNull();
-            return null;
         }
-        String val = reader.nextString();
+        final String val = reader.nextString();
         try {
-            return Integer.parseInt(val);
+            result = Integer.parseInt(val);
         } catch (NumberFormatException nfe) {
-            System.out.println("Caught number format exception, returning -2");
-            return -2;
+            result = -2;
         }
+        return result;
     }
-    
+
     @Override
-    public void write(JsonWriter writer, Integer val) throws IOException {
+    public final void write(
+            final JsonWriter writer, Integer val) throws IOException {
         if (val == null) {
             writer.nullValue();
             return;

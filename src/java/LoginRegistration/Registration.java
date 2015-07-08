@@ -8,7 +8,7 @@ import usermanagement.Account;
 import usermanagement.Profile;
 import usermanagement.User;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "registration", eager = true)
 @SessionScoped
-public class Registration extends AccountAccessAttempt implements Serializable {
+public class Registration implements Serializable {
 
     /**
      *
@@ -51,6 +51,16 @@ public class Registration extends AccountAccessAttempt implements Serializable {
     private boolean validRegistration;
 
     /**
+     * Username to uniquely identify the user to login.
+     */
+    private String username;
+
+    /**
+     * Password to use in attempting to login the user.
+     */
+    private String password;
+
+    /**
      * Constructs a major menu as part of registration.
      */
     public Registration() {
@@ -63,11 +73,8 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * @return new User A user with a name, account, and profile
      */
     public final User registerNewUser() {
-        System.out.println("Creating account for "
-                + name
-                + " with username " + AccountAccessAttempt.getUsername());
         return new User(name,
-                new Account(AccountAccessAttempt.getUsername(), false),
+                new Account(username, false),
                 new Profile(name, major));
     }
 
@@ -77,42 +84,41 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * @param users List of users to check existence of desired username
      * @return validRegistration Whether registration data is valid
      */
-    public final boolean checkNewUserRegistration(final HashMap<String,
+    public final boolean checkNewUserRegistration(final Map<String,
             User> users) {
         // check if username already exists
-        if (usernameExists(AccountAccessAttempt.getUsername(), users)) {
+        if (usernameExists(username, users)) {
             // tell the user that username already exists
              FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "Username already exists!"));
              validRegistration = false;
-        } else if (!passwordsMatch()) {
+        } else if (passwordsMatch()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            "Success!", "Preparing your profile..."));
+            validRegistration = true;
+        } else {
             // tell the user that the passwords don't match
             // OPTIONAL: check for numbers as well as letters in password
              FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR,
                             "Error", "Passwords do not match!"));
              validRegistration = false;
-        } else {
-            System.out.println("Major chosen: <" + major + ">");
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Success!", "Preparing your profile..."));
-            validRegistration = true;
         }
         return validRegistration;
     }
 
     /**
      * Determines if a given user already exists in the user list.
-     * @param username User to check for
+     * @param tmpUsername User to check for
      * @param users HashMap of valid preexisting users
      * @return Indication of the user's preexistence in the user list
      */
-    public final boolean usernameExists(final String username,
-            final HashMap<String,
+    public final boolean usernameExists(final String tmpUsername,
+            final Map<String,
             User> users) {
-        if (username == null) {
+        if (tmpUsername == null) {
             throw new IllegalArgumentException("Cannot input null data!");
         }
         return users.containsKey(username);
@@ -123,15 +129,16 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      * @return Indication of whether the password and repeated password match
      */
     public final boolean passwordsMatch() {
-        return AccountAccessAttempt.getPassword().equals(passwordRepeat);
+        return password.equals(passwordRepeat);
     }
 
     /**
      * Clears all data after an account has been made.
      */
-    public final void clearData2() {
-        AccountAccessAttempt.clearData();
+    public final void clearRegistrationData() {
         this.name = "";
+        this.username = "";
+        this.password = "";
         this.passwordRepeat = "";
         this.major = "";
         this.validRegistration = false;
@@ -179,10 +186,10 @@ public class Registration extends AccountAccessAttempt implements Serializable {
 
     /**
      * Setter method for the name of the prospective user.
-     * @param n The name of the prospective user
+     * @param newName The name of the prospective user
      */
-    public final void setName(final String n) {
-        name = n;
+    public final void setName(final String newName) {
+        name = newName;
     }
 
     /**
@@ -215,5 +222,37 @@ public class Registration extends AccountAccessAttempt implements Serializable {
      */
     public final void setValidRegistration(final boolean valid) {
         validRegistration = valid;
+    }
+
+    /**
+     * Getter method for username.
+     * @return username The user's account name
+     */
+    public final String getUsername() {
+        return username;
+    }
+
+    /**
+     * Getter method for password.
+     * @return password The user's password
+     */
+    public final String getPassword() {
+        return password;
+    }
+
+    /**
+     * Setter method for username.
+     * @param userName The altered username
+     */
+    public final void setUsername(final String userName) {
+        username = userName;
+    }
+
+    /**
+     * Setter method for password.
+     * @param pword The altered password
+     */
+    public final void setPassword(final String pword) {
+        password = pword;
     }
 }

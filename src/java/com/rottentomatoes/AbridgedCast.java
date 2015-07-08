@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -12,8 +12,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Handles the name of a cast member of a specific movie. Usually,
- * an object will hold a collection of AbridgeCast
+ * Handles the name of a cast member of a specific movie. Usually, an object
+ * will hold a collection of AbridgeCast
+ *
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
@@ -33,6 +34,7 @@ public class AbridgedCast implements Serializable {
 
     /**
      * Getter for the name of a specific cast member for a movie.
+     *
      * @return The cast member's name
      */
     public final String getName() {
@@ -41,6 +43,7 @@ public class AbridgedCast implements Serializable {
 
     /**
      * Setter for the name of a specific cast member for a movie.
+     *
      * @param castMember The cast member's name
      */
     public final void setName(final String castMember) {
@@ -49,6 +52,7 @@ public class AbridgedCast implements Serializable {
 
     /**
      * Getter for the unique identifier of the cast member.
+     *
      * @return Unique identifier string of the cast member
      */
     public final String getId() {
@@ -57,6 +61,7 @@ public class AbridgedCast implements Serializable {
 
     /**
      * Setter for the unique identifier of the cast member.
+     *
      * @param identification Unique identifier of the cast member
      */
     public final void setId(final String identification) {
@@ -75,15 +80,16 @@ public class AbridgedCast implements Serializable {
 
     @Override
     public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final AbridgedCast rhs = ((AbridgedCast) other);
+            equality = new EqualsBuilder().append(name, rhs.name)
+                    .append(id, rhs.id).isEquals();
+        } else {
+            equality = false;
         }
-        if (!(other instanceof AbridgedCast)) {
-            return false;
-        }
-        AbridgedCast rhs = ((AbridgedCast) other);
-        return new EqualsBuilder().append(name, rhs.name)
-                .append(id, rhs.id).isEquals();
+        return equality;
     }
-
 }

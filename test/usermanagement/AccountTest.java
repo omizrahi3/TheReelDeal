@@ -26,7 +26,7 @@ public class AccountTest {
     @Test
     public final void testIdealLogin() 
         throws LockedAccountException, BannedAccountException {
-        account.setNumberFlaggedComments(0);
+        account.setNumCommentFlags(0);
         account.login();
         assertTrue("Account is not logged in!", account.isLoggedIn());
         assertFalse("Account is incorrectly locked!", account.isLocked());
@@ -52,7 +52,7 @@ public class AccountTest {
     @Test(expected = LockedAccountException.class)
     public final void testAccountFlagLockedLogin()
         throws LockedAccountException, BannedAccountException {
-        account.setNumberFlaggedComments(3);
+        account.setNumCommentFlags(3);
         account.login();
         assertFalse("Account is incorrectly logged in!", account.isLoggedIn());
     }

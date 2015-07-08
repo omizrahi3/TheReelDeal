@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -16,8 +16,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Data transfer object which contains all data returned from a
- * Rotten Tomatoes API REST call
+ * Data transfer object which contains all data returned from a Rotten Tomatoes
+ * API REST call.
+ *
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
@@ -35,89 +36,101 @@ public class RottenTomatoesDTO implements Serializable {
     private String linkTemplate;
 
     /**
-     * Getter for the total amount of results returned from Rotten Tomatoes
+     * Getter for the total amount of results returned from Rotten Tomatoes.
+     *
      * @return Total amount of results returned from Rotten Tomatoes
      */
-    public Integer getTotal() {
+    public final Integer getTotal() {
         return total;
     }
 
     /**
-     * Setter for the total amount of results returned from Rotten Tomatoes
-     * @param total Total amount of results returned from Rotten Tomatoes
+     * Setter for the total amount of results returned from Rotten Tomatoes.
+     *
+     * @param newTotal Total amount of results returned from Rotten Tomatoes
      */
-    public void setTotal(Integer total) {
-        this.total = total;
+    public final void setTotal(final Integer newTotal) {
+        this.total = newTotal;
     }
 
     /**
-     * Getter for the collection of movies
+     * Getter for the collection of movies.
+     *
      * @return Collection of movies
      */
-    public List<Movie> getMovies() {
+    public final List<Movie> getMovies() {
         return movies;
     }
 
     /**
-     * Setter for the collection of movies
-     * @param movies Collection of movies
+     * Setter for the collection of movies.
+     *
+     * @param newMovies Collection of movies
      */
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public final void setMovies(final List<Movie> newMovies) {
+        this.movies = newMovies;
     }
 
     /**
-     * Getter for the handle of links to other pages
+     * Getter for the handle of links to other pages.
+     *
      * @return Handle of links to other pages
      */
-    public Links_ getLinks() {
+    public final Links_ getLinks() {
         return links;
     }
 
     /**
-     * Setter for the handle of links to other pages
-     * @param links Handle of links to other pages
+     * Setter for the handle of links to other pages.
+     *
+     * @param newLinks Handle of links to other pages
      */
-    public void setLinks(Links_ links) {
-        this.links = links;
+    public final void setLinks(final Links_ newLinks) {
+        this.links = newLinks;
     }
 
     /**
-     * Getter for the template for the links held
+     * Getter for the template for the links held.
+     *
      * @return Template for the links held
      */
-    public String getLinkTemplate() {
+    public final String getLinkTemplate() {
         return linkTemplate;
     }
 
     /**
-     * Setter for the template for the links held
-     * @param linkTemplate Template for the links held
+     * Setter for the template for the links held.
+     *
+     * @param newTemplate Template for the links held
      */
-    public void setLinkTemplate(String linkTemplate) {
-        this.linkTemplate = linkTemplate;
+    public final void setLinkTemplate(final String newTemplate) {
+        this.linkTemplate = newTemplate;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(total).append(movies).append(links).append(linkTemplate).toHashCode();
+    public final int hashCode() {
+        return new HashCodeBuilder().append(total).append(movies)
+                .append(links).append(linkTemplate).toHashCode();
     }
 
     @Override
-    public boolean equals(Object other) {
+    public final boolean equals(final Object other) {
+        boolean equality;
         if (other == this) {
-            return true;
+            equality = true;
+        } else if (other instanceof AbridgedCast) {
+            final RottenTomatoesDTO rhs = ((RottenTomatoesDTO) other);
+            equality = new EqualsBuilder().append(total, rhs.total)
+                    .append(movies, rhs.movies).append(links, rhs.links)
+                    .append(linkTemplate, rhs.linkTemplate).isEquals();
+        } else {
+            equality = false;
         }
-        if ((other instanceof RottenTomatoesDTO) == false) {
-            return false;
-        }
-        RottenTomatoesDTO rhs = ((RottenTomatoesDTO) other);
-        return new EqualsBuilder().append(total, rhs.total).append(movies, rhs.movies).append(links, rhs.links).append(linkTemplate, rhs.linkTemplate).isEquals();
+        return equality;
     }
-
 }
