@@ -214,8 +214,8 @@ public class UserManager implements Serializable {
      */
     public final void saveState() {
         System.out.println("Saving state of users.");
-        UserIO.WriteToFile(allUsers);
-        PasswordIO.WriteToFile(passwords);
+        UserIO.writeToFile(allUsers);
+        PasswordIO.writeToFile(passwords);
     }
 
     /**

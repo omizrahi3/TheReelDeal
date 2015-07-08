@@ -463,7 +463,7 @@ public class MovieManager {
      */
     public final void saveState() {
         System.out.println("Saving state of users");
-        MovieIO.WriteToFile(ratedMovies);
+        MovieIO.writeToFile(ratedMovies);
     }
 
     /**
