@@ -19,6 +19,11 @@ import java.io.Serializable;
  */
 public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable {
 
+    /**
+     * Default number to return when empty string received for an number.
+     */
+    public static final int DEFAULT_INT = -2;
+
     @Override
     public final Integer read(final JsonReader reader) throws IOException {
         int result;
@@ -29,14 +34,14 @@ public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable
         try {
             result = Integer.parseInt(val);
         } catch (NumberFormatException nfe) {
-            result = -2;
+            result = DEFAULT_INT;
         }
         return result;
     }
 
     @Override
     public final void write(
-            final JsonWriter writer, Integer val) throws IOException {
+            final JsonWriter writer, final Integer val) throws IOException {
         if (val == null) {
             writer.nullValue();
             return;

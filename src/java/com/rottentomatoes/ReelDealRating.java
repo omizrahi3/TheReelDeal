@@ -273,6 +273,19 @@ public class ReelDealRating implements Serializable {
     }
 
     /**
+     * Return whether this rating is currently flagged as potentially
+     * inappropriate.
+     *
+     * @param flag Whether this rating is currently flagged as potentially
+     * inappropriate
+     */
+    public final void setFlagged(final boolean flag) {
+        this.flagged = flag;
+    }
+
+
+
+    /**
      * Get the description label for the given review, which indicates whether a
      * new review is being made, or an existing review is being edited.
      *

@@ -19,9 +19,6 @@ import static org.junit.Assert.*;
  */
 public class MovieTest {
     
-    public MovieTest() {
-    }
-    
     @BeforeClass
     public static void setUpClass() {
     }

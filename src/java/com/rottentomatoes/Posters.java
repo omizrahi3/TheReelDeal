@@ -1,6 +1,6 @@
 /**
- * Handles all of the data that
- * is returned from a REST call to the Rotten Tomatoes API.
+ * Handles all of the data that is returned from a REST call to the Rotten
+ * Tomatoes API.
  */
 package com.rottentomatoes;
 
@@ -12,7 +12,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * Handle for the poster pictures for the movie
+ * Handle for the poster pictures for the movie.
+ *
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
@@ -28,77 +29,87 @@ public class Posters implements Serializable {
     private String original;
 
     /**
-     * Getter for the thumbnail picture URL for the movie
+     * Getter for the thumbnail picture URL for the movie.
+     *
      * @return Thumbnail picture URL for the movie
      */
-    public String getThumbnail() {
+    public final String getThumbnail() {
         return thumbnail;
     }
 
     /**
-     * Setter for the thumbnail picture URL for the movie
-     * @param thumbnail Thumbnail picture URL for the movie
+     * Setter for the thumbnail picture URL for the movie.
+     *
+     * @param newThumbnail Thumbnail picture URL for the movie
      */
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public final void setThumbnail(final String newThumbnail) {
+        this.thumbnail = newThumbnail;
     }
 
     /**
-     * Getter for the profile picture URL for the movie
+     * Getter for the profile picture URL for the movie.
+     *
      * @return Profile picture URL for the movie
      */
-    public String getProfile() {
+    public final String getProfile() {
         return profile;
     }
 
     /**
-     * Setter for the profile picture URL for the movie
-     * @param profile Profile picture URL for the movie
+     * Setter for the profile picture URL for the movie.
+     *
+     * @param newProfile Profile picture URL for the movie
      */
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public final void setProfile(final String newProfile) {
+        this.profile = newProfile;
     }
 
     /**
-     * Getter for the detailed picture URL for the movie
+     * Getter for the detailed picture URL for the movie.
+     *
      * @return Detailed picture URL for the movie
      */
-    public String getDetailed() {
+    public final String getDetailed() {
         return detailed;
     }
 
     /**
-     * Setter for the detailed picture URL for the movie
-     * @param detailed Detailed picture URL for the movie
+     * Setter for the detailed picture URL for the movie.
+     *
+     * @param newDetailed Detailed picture URL for the movie
      */
-    public void setDetailed(String detailed) {
-        this.detailed = detailed;
+    public final void setDetailed(final String newDetailed) {
+        this.detailed = newDetailed;
     }
 
     /**
-     * Getter for the original picture URL for the movie
+     * Getter for the original picture URL for the movie.
+     *
      * @return Original picture URL for the movie
      */
-    public String getOriginal() {
+    public final String getOriginal() {
         return original;
     }
 
     /**
-     * Setter for the original picture URL for the movie
-     * @param original Original picture URL for the movie
+     * Setter for the original picture URL for the movie.
+     *
+     * @param newOriginal Original picture URL for the movie
      */
-    public void setOriginal(String original) {
-        this.original = original;
+    public final void setOriginal(final String newOriginal) {
+        this.original = newOriginal;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
     @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(thumbnail).append(profile).append(detailed).append(original).toHashCode();
+    public final int hashCode() {
+        return new HashCodeBuilder().append(thumbnail)
+                .append(profile).append(detailed)
+                .append(original).toHashCode();
     }
 
     @Override

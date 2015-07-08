@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "controlHub", eager = true)
 @SessionScoped
-public class ControlHub implements Serializable {
+public final class ControlHub implements Serializable {
 
     /**
      * XHTML URL for the registration page.
