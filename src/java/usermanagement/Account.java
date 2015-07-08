@@ -18,6 +18,11 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Account implements Serializable {
     /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 4063661824855772967L;
+
+    /**
      * max number of flagged comments.
      */
     public static final int MAX_NUMBER_FLAGGED_COMMENTS = 2;
@@ -61,15 +66,15 @@ public class Account implements Serializable {
 
     /**
      * Constructs an account with all relevant members belonging to an account.
-     * @param username Username for the new account
-     * @param admin Whether the account belongs to an admin
+     * @param newUsername Username for the new account
+     * @param newAdmin Whether the account belongs to an admin
      */
-    public Account(String username, boolean admin) {
-        setUsername(username);
+    public Account(final String newUsername, final boolean newAdmin) {
+        this.username = newUsername;
         this.loggedIn = false;
         this.locked = false;
         this.banned = false;
-        this.admin  = admin;
+        this.admin  = newAdmin;
         this.numberFlaggedComments = 0;
     }
 
@@ -181,26 +186,26 @@ public class Account implements Serializable {
 
     /**
      * Setter method for the username associated with the account.
-     * @param username New username for the account
+     * @param newUsername New username for the account
      */
-    public final void setUsername(String username) {
-        this.username = username;
+    public final void setUsername(final String newUsername) {
+        this.username = newUsername;
     }
 
     /**
      * Setter method for the login state of the account.
-     * @param loggedIn State of login to change to
+     * @param newLoggedIn State of login to change to
      */
-    public final void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+    public final void setLoggedIn(final boolean newLoggedIn) {
+        this.loggedIn = newLoggedIn;
     }
 
     /**
      * Setter method for the locked state of the account.
-     * @param locked State of account lock to change to
+     * @param newLocked State of account lock to change to
      */
-    public final void setLocked(boolean locked) {
-        this.locked = locked;
+    public final void setLocked(final boolean newLocked) {
+        this.locked = newLocked;
     }
 
     /**
@@ -213,10 +218,10 @@ public class Account implements Serializable {
 
     /**
      * Setter method for the admin state of the account.
-     * @param admin State of user privileges to change to
+     * @param newAdmin State of user privileges to change to
      */
-    public final void setAdmin(boolean admin) {
-        this.admin = admin;
+    public final void setAdmin(final boolean newAdmin) {
+        this.admin = newAdmin;
     }
 
     /**
@@ -229,10 +234,10 @@ public class Account implements Serializable {
 
     /**
      * Setter method for user banishment status.
-     * @param banned State of account ban to change to
+     * @param newBanned State of account ban to change to
      */
-    public final void setBanned(boolean banned) {
-        this.banned = banned;
+    public final void setBanned(final boolean newBanned) {
+        this.banned = newBanned;
     }
 
     /**
@@ -245,11 +250,12 @@ public class Account implements Serializable {
 
     /**
      * Setter for the number of flagged comments the account has received.
-     * @param numberFlaggedComments Number of flagged comments
+     * @param newNumberFlaggedComments Number of flagged comments
      *        associated with the account
      */
-    public final void setNumberFlaggedComments(int numberFlaggedComments) {
-        this.numberFlaggedComments = numberFlaggedComments;
+    public final void setNumberFlaggedComments(
+            final int newNumberFlaggedComments) {
+        this.numberFlaggedComments = newNumberFlaggedComments;
     }
 
 

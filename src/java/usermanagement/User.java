@@ -14,7 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
- * Represents the user of the application The Reel Deal
+ * Represents the user of the application The Reel Deal.
  * Contains their Account and Profile
  * @author Anthony
  * @version 1.0
@@ -22,316 +22,337 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "user", eager = true)
 @SessionScoped
 public class User implements Serializable {
-    
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 803944453811308236L;
+
+    /**
+     * user's account.
+     */
     private Account account;
+
+    /**
+     * user's profile.
+     */
     private Profile profile;
+
+    /**
+     * user's movie ratings.
+     */
     private HashMap<String, ReelDealRating> movieRatings;
-    
+
     //Feature that could be added later
     //private List<Message> myMessages;
-    
+
     /**
-     * Constructs a user with no name who possesses a new account and profile
+     * Constructs a user with no name who possesses a new account and profile.
      */
     public User() {
         this(null, new Account(), new Profile());
     }
-    
+
     /**
-     * Constructs a user with a specified name, username, password, and admin status
+     * Constructs a user with a specified name, username, password, and admin
+     * status.
      * @param name The birth name of the user
      * @param username The screen name of the user
-     * @param password The password credential that grants account access
      * @param admin Whether the user has admin privileges
      */
-    public User(String name, String username, String password, boolean admin) {
+    public User(final String name, final String username, final boolean admin) {
         this(name, new Account(username, admin), new Profile());
     }
-    
+
     /**
-     * Determines if the user has admin privileges
+     * Determines if the user has admin privileges.
      * @return isAdmin Whether the user's account has admin features
      */
-    public boolean isAdmin() {
+    public final boolean isAdmin() {
         return account.isAdmin();
     }
-    
+
     /**
-     * Constructs a user with a specified name, account, and profile
+     * Constructs a user with a specified name, account, and profile.
      * @param name The birth name of the user
-     * @param account The user's account
-     * @param profile The user's profile
+     * @param newAccount The user's account
+     * @param newProfile The user's profile
      */
-    public User(String name, Account account, Profile profile) {
-        this.account = account;
-        this.profile = profile;
+    public User(final String name, final Account newAccount,
+            final Profile newProfile) {
+        this.account = newAccount;
+        this.profile = newProfile;
         this.profile.setName(name);
         this.movieRatings = new HashMap<>();
     }
-    
+
     /**
-     * Attempts to log the user into their account 
- If the LOGIN_URL fails, it notifies the user on the web page
+     * Attempts to log the user into their account.
+     * If the LOGIN_URL fails, it notifies the user on the web page
      * @throws LockedAccountException Handles a locked out user
-     * @throws BannedAccountException Handles a banned user 
+     * @throws BannedAccountException Handles a banned user
      */
-    public void loginToAccount() throws LockedAccountException,
+    public final void loginToAccount() throws LockedAccountException,
             BannedAccountException {
         try {
             countNumberOfFlaggedComments();
             account.login();
-        } catch (LockedAccountException | BannedAccountException accountException) {
+        } catch (LockedAccountException
+                | BannedAccountException accountException) {
             throw accountException;
         }
     }
-    
+
     /**
      * Count the number of the user's comments that have been flagged by
      * other users.
      */
-    public void countNumberOfFlaggedComments() {
+    public final void countNumberOfFlaggedComments() {
         int numberFlagged = 0;
         for (ReelDealRating rating : movieRatings.values()) {
             if (rating.isFlagged()) {
                 ++numberFlagged;
             } else {
-                System.out.println("Rating " + rating.getComment() +
-                        " is not flagged.");
+                System.out.println("Rating " + rating.getComment()
+                    + " is not flagged.");
             }
         }
-        System.out.println("Account has " + numberFlagged +
-                " flagged comments");
+        System.out.println("Account has " + numberFlagged
+            + " flagged comments");
         account.setNumberFlaggedComments(numberFlagged);
     }
-    
+
     /**
-     * Locks the account and prints a message recording that action
+     * Locks the account and prints a message recording that action.
      * @return activeUserDashboardPageURL The home screen of the user
      */
-    public String lock() {
+    public final String lock() {
         System.out.println("Locking user " + this.getUsername());
         account.lock();
         ControlHub.getInstance().userUpdate();
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
-    
+
     /**
-     * Unlocks the account and prints a message recording that action
+     * Unlocks the account and prints a message recording that action.
      * @return activeUserDashboardPageURL The home screen of the user
      */
-    public String unlock() {
+    public final String unlock() {
         System.out.println("Unlocking user " + this.getUsername());
         account.unlock();
         ControlHub.getInstance().userUpdate();
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
-    
+
     /**
-     * Bans the user from account access and prints a message on that act
+     * Bans the user from account access and prints a message on that act.
      * @return activeUserDashboardPageURL The home screen of the user
      */
-    public String ban() {
+    public final String ban() {
         System.out.println("Banning user " + this.getUsername());
         account.ban();
         ControlHub.getInstance().userUpdate();
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
-    
+
     /**
-     * Unbans the user from account access and prints a message on that act
+     * Unbans the user from account access and prints a message on that act.
      * @return activeUserDashboardPageURL The home screen of the user
      */
-    public String unban() {
+    public final String unban() {
         System.out.println("Unbanning user " + this.getUsername());
         account.unban();
         ControlHub.getInstance().userUpdate();
         return ControlHub.getInstance().activeUserDashboardPageURL();
     }
-    
+
     /**
-     * Logs the user out of the application
+     * Logs the user out of the application.
      * @return INDEX_URL The xhtml page navigation token
      */
-    public String logout() {  
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    public final String logout() {
+        FacesContext.getCurrentInstance().getExternalContext()
+                .invalidateSession();
         return ControlHub.INDEX_URL;
     }
-    
+
     /**
-     * Determines the status of the account in terms of ban and lock
+     * Determines the status of the account in terms of ban and lock.
      * @return account.getStatus The status of the user's account
      */
-    public String getAccountStatus() {
+    public final String getAccountStatus() {
         return account.getStatus();
     }
-    
+
     /**
-     * Creates a rating for a movie selected by the user
+     * Creates a rating for a movie selected by the user.
      * @param movieId The ID of the film
      * @param newRating The user's rating based on The Reel Deal rating system
      */
-    public void newMovieRating(String movieId, ReelDealRating newRating) {
+    public final void newMovieRating(final String movieId,
+            final ReelDealRating newRating) {
         movieRatings.put(movieId, newRating);
         ControlHub.getInstance().userUpdate();
     }
-    
+
     /**
-     * Determines whether the user has rated a particular movie
+     * Determines whether the user has rated a particular movie.
      * @param movieId The ID of the film
      * @return Whether a rating was given
      */
-    public boolean hasRatedMovie(String movieId) {
+    public final boolean hasRatedMovie(final String movieId) {
         return movieRatings.containsKey(movieId);
     }
-    
+
     /**
-     * Getter method for a rated movie
+     * Getter method for a rated movie.
      * @param movieId The ID of the film
      * @return rating The Reel Deal rating the user gave
      */
-    public ReelDealRating getMovieReviewFor(String movieId) {
+    public final ReelDealRating getMovieReviewFor(final String movieId) {
         ReelDealRating rating = movieRatings.get(movieId);
         rating.assertReels(rating.getValue());
         return rating;
     }
 
     /**
-     * Getter method for the birth name of the user
+     * Getter method for the birth name of the user.
      * @return profile.getName The user's birth name
      */
-    public String getName() {
+    public final String getName() {
         return this.profile.getName();
     }
-    
+
     /**
-     * Getter method for the account of the user
+     * Getter method for the account of the user.
      * @return account The user's account
      */
-    public Account getAccount() {
+    public final Account getAccount() {
         return account;
     }
-    
+
     /**
-     * Getter method for the profile of the user
+     * Getter method for the profile of the user.
      * @return profile The user's profile
      */
-    public Profile getProfile() {
+    public final Profile getProfile() {
         return profile;
     }
-    
+
     /**
-     * Setter for the name of the user
+     * Setter for the name of the user.
      * @param name The user's name
      */
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.profile.setName(name);
     }
-    
+
     /**
-     * Setter for the account of the user
+     * Setter for the account of the user.
      * @param myAccount The user's account
      */
-    public void setAccount(Account myAccount) {
+    public final void setAccount(final Account myAccount) {
         this.account = myAccount;
     }
-    
+
     /**
-     * Setter for the user's profile
-     * @param profile The user's profile
+     * Setter for the user's profile.
+     * @param newProfile The user's profile
      */
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public final void setProfile(final Profile newProfile) {
+        this.profile = newProfile;
     }
-    
+
     /**
-     * Getter for the user's major
+     * Getter for the user's major.
      * @return The user's major
      */
-    public String getMajor() {
+    public final String getMajor() {
         return profile.getMajor();
     }
-    
+
     /**
-     * Setter for the user's major
+     * Setter for the user's major.
+     * major + akjaisdj A string holding the major plus a set ending
      * @param major The user's major
-     * @return major + akjaisdj A string holding the major plus a set ending
      */
-    public void setMajor(String major) {
+    public final void setMajor(final String major) {
         profile.setMajor(major);
         System.out.println(major + "akjaisdj");
     }
-    
+
     /**
-     * Getter for the username
+     * Getter for the username.
      * @return account.getUsername The user's profile name
      */
-    public String getUsername() {
+    public final String getUsername() {
         return account.getUsername();
     }
-    
+
     /**
-     * Setter for the username
+     * Setter for the username.
      * @param username The user's profile name
      */
-    public void setUsername(String username) {
+    public final void setUsername(final String username) {
         this.account.setUsername(username);
     }
-    
+
     /**
-     * Determines the ban status of the user's account
+     * Determines the ban status of the user's account.
      * @return Whether the account is banned
      */
-    public boolean isBanned() {
+    public final boolean isBanned() {
         return account.isBanned();
     }
-    
+
     /**
-     * Setter method for the ban status of the user's account
+     * Setter method for the ban status of the user's account.
      * @param banned The ban status of the account to change to
      */
-    public void setBanned(boolean banned) {
+    public final void setBanned(final boolean banned) {
         account.setBanned(banned);
     }
-    
+
     /**
-     * Determines the lock status of the user's account
+     * Determines the lock status of the user's account.
      * @return Whether the user is locked out of their account
      */
-    public boolean isLocked() {
+    public final boolean isLocked() {
         return account.isLocked();
     }
-    
+
     /**
-     * Setter method for the account lock status
+     * Setter method for the account lock status.
      * @param locked The lock status of the account to change to
      */
-    public void setLocked(boolean locked) {
+    public final void setLocked(final boolean locked) {
         account.setLocked(locked);
     }
 
     /**
-     * Getter method for the movie rating assigned by the user
+     * Getter method for the movie rating assigned by the user.
      * @return movieRatings The given movie rating attached to a movie ID
      */
-    public HashMap<String, ReelDealRating> getMovieRatings() {
+    public final HashMap<String, ReelDealRating> getMovieRatings() {
         return movieRatings;
     }
 
     /**
-     * Setter method for the movie rating assigned by the user
-     * @param movieRatings The given movie rating attached to a movie ID
+     * Setter method for the movie rating assigned by the user.
+     * @param newMovieRatings The given movie rating attached to a movie ID
      */
-    public void setMovieRatings(HashMap<String, ReelDealRating> movieRatings) {
-        this.movieRatings = movieRatings;
+    public final void setMovieRatings(
+            final HashMap<String, ReelDealRating> newMovieRatings) {
+        this.movieRatings = newMovieRatings;
     }
 
-    
+
     /**
-     * Update an existing Reel Deal rating with the given rating
+     * Update an existing Reel Deal rating with the given rating.
      * @param movieId Identifier used to store the rating
      * @param newRating New rating to use
      */
-    public void updateMovieRating(String movieId, ReelDealRating newRating) {
+    public final void updateMovieRating(final String movieId,
+            final ReelDealRating newRating) {
         if (movieRatings.containsKey(movieId)) {
             movieRatings.replace(movieId, newRating);
         }
