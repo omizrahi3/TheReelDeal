@@ -11,53 +11,111 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- * Coordinates between the UserManager and RottenTomatoesDataManager
+ * Coordinates between the UserManager and RottenTomatoesDataManager.
+ *
  * @author Anthony
  * @version 1.0
  */
 @ManagedBean(name = "controlHub", eager = true)
 @SessionScoped
 public class ControlHub implements Serializable {
-    
-    // Static constant strings for ease of xhtml page navigation
-    public static final String REGISTER_URL     
-            = "register?faces-redirect=true";
-    public static final String EDIT_PROFILE_URL 
-            = "editProfile?faces-redirect=true";
-    public static final String USER_HOME_URL    
-            = "userDashboard?faces-redirect=true";
-    public static final String LOGIN_URL        
-            = "login?faces-redirect=true";
-    public static final String INDEX_URL        
-            = "index?faces-redirect=true";
-    public static final String MOVIE_HUB_URL    
-            = "movieHub?faces-redirect=true";
-    public static final String POST_REVIEW_URL  
-            = "postReview?faces-redirect=true";
-    public static final String ERROR_URL        
-            = "error?faces-redirect=true";
-    public static final String MOVIE_DETAIL_URL 
-            = "movieDetailedView?faces-redirect=true";
-    public static final String ADMIN_HOME_URL   
-            = "adminDashboard?faces-redirect=true";
-    
-    public static final String SAVE_PATH    = "C:\\Users\\Anthony\\Desktop\\Temp\\";
-    
-    // Instance data members
-    private UserManager userManager;
-    private MovieManager movieManager;
-    private RottenTomatoesDataManager dataManager; // TODO should be a more generic DataManager type
-    private static ControlHub instance = null;
-    
+
     /**
-     * A constructor used to defeat instantiation of the controller
+     * XHTML URL for the registration page.
      */
-    protected ControlHub() {
-        // to defeat instantiation
-    }
-    
+    public static final String REGISTER_URL
+            = "register?faces-redirect=true";
+
     /**
-     * Creates an instance of the ControlHub
+     * XHTML URL for the profile editing page.
+     */
+    public static final String EDIT_PROFILE_URL
+            = "editProfile?faces-redirect=true";
+
+    /**
+     * XHTML URL for the user home page.
+     */
+    public static final String USER_HOME_URL
+            = "userDashboard?faces-redirect=true";
+
+    /**
+     * XHTML URL for the login page.
+     */
+    public static final String LOGIN_URL
+            = "login?faces-redirect=true";
+
+    /**
+     * XHTML URL for the index page.
+     */
+    public static final String INDEX_URL
+            = "index?faces-redirect=true";
+
+    /**
+     * XHTML URL for the movie hub page.
+     */
+    public static final String MOVIE_HUB_URL
+            = "movieHub?faces-redirect=true";
+
+    /**
+     * XHTML URL for the post review page.
+     */
+    public static final String POST_REVIEW_URL
+            = "postReview?faces-redirect=true";
+
+    /**
+     * XHTML URL for the error page.
+     */
+    public static final String ERROR_URL
+            = "error?faces-redirect=true";
+
+    /**
+     * XHTML URL for the movie detail page.
+     */
+    public static final String MOVIE_DETAIL_URL
+            = "movieDetailedView?faces-redirect=true";
+
+    /**
+     * XHTML URL for the administrator home page.
+     */
+    public static final String ADMIN_HOME_URL
+            = "adminDashboard?faces-redirect=true";
+
+    /**
+     * Path for loading/saving object persistence files.
+     */
+    public static final String SAVE_PATH
+            = "C:\\Users\\Anthony\\Desktop\\Temp\\";
+
+    /**
+     * Controller for all users.
+     */
+    private UserManager userManager;
+
+    /**
+     * Controller for all movies.
+     */
+    private MovieManager movieManager;
+
+    /**
+     * Controller for all Rotten Tomatoes data processing.
+     */
+    private RottenTomatoesDataManager dataManager;
+
+    /**
+     * Singleton instance of this class.
+     */
+    private static ControlHub instance = null;
+
+    /**
+     * A constructor used to defeat instantiation of the controller.
+     */
+    private ControlHub() {
+
+    }
+
+    /**
+     * Creates an instance of the ControlHub.
+     *
      * @return instance A private instantiation of the ControlHub
      */
     public static ControlHub getInstance() {
@@ -66,44 +124,60 @@ public class ControlHub implements Serializable {
         }
         return instance;
     }
-    
+
     /**
-     * Determines which home page URL to provide depending on admin status
-     * @param isAdmin Whether the user is an admin
+     * Determines which home page URL to provide depending on
+     * administrator status.
+     *
+     * @param isAdmin Whether the user is an administrator
      * @return The appropriate XHTML information for the home page
      */
     public static String dashboardPageURL(
             final boolean isAdmin) {
-        return (isAdmin ? ADMIN_HOME_URL : USER_HOME_URL);
+        String dashboardPageURL;
+        if (isAdmin) {
+            dashboardPageURL = ADMIN_HOME_URL;
+        } else {
+            dashboardPageURL = USER_HOME_URL;
+        }
+        return dashboardPageURL;
     }
-    
+
     /**
-     * Determines which home page URL to provide depending on admin status
+     * Determines which home page URL to provide depending on
+     * administrator status.
+     *
      * @return The appropriate XHTML information for the home page
      */
     public String activeUserDashboardPageURL() {
-        return (userManager.getActiveUser().isAdmin() ? ADMIN_HOME_URL :
-                USER_HOME_URL);
+        String activeUserDash;
+        if (userManager.getActiveUser().isAdmin()) {
+            activeUserDash = ADMIN_HOME_URL;
+        } else {
+            activeUserDash = USER_HOME_URL;
+        }
+        return activeUserDash;
     }
-    
+
     /**
-     * Writes to an output file the most current user list
+     * Writes to an output file the most current user list.
      */
     public void userUpdate() {
         userManager.saveState();
     }
-    
+
     /**
-     * Writes to an output file the most current user list
-     * as well as the movies that users rated
+     * Writes to an output file the most current user list as well as
+     * the movies that users rated.
      */
     public void saveState() {
         dataManager.saveState();
         userManager.saveState();
     }
-    
+
     /**
-     * Getter method for the active user
+     * Getter method for the active user.
+     *
      * @return The active user
      */
     public User getActiveUser() {
@@ -111,7 +185,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the user manager
+     * Getter method for the user manager.
+     *
      * @return userManager The user manager
      */
     public UserManager getUserManager() {
@@ -119,27 +194,26 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Setter method for the user manager
-     * @param userManager The user manager
+     * Setter method for the user manager.
+     *
+     * @param newUserManager The user manager
      */
-    public void setUserManager(
-            final UserManager userManager) {
-        System.out.println("Setting user mgt to " + userManager);
-        this.userManager = userManager;
+    public void setUserManager(final UserManager newUserManager) {
+        this.userManager = newUserManager;
     }
-     
+
     /**
-     * Setter method for the movie manager
-     * @param movieManager The movie manager
+     * Setter method for the movie manager.
+     *
+     * @param newMovieManager The movie manager
      */
-    public void setMovieManager(
-            final MovieManager movieManager) {
-        System.out.println("Setting movie mgt to " + movieManager);
-        this.movieManager = movieManager;
+    public void setMovieManager(final MovieManager newMovieManager) {
+        this.movieManager = newMovieManager;
     }
-    
+
     /**
-     * Getter method for the movie manager
+     * Getter method for the movie manager.
+     *
      * @return movieManager The movie manager
      */
     public MovieManager getMovieManager() {
@@ -150,7 +224,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the data manager
+     * Getter method for the data manager.
+     *
      * @return dataManager The data manager
      */
     public RottenTomatoesDataManager getDataManager() {
@@ -158,16 +233,18 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Setter method for the data manager
-     * @param dataManager The data manager
+     * Setter method for the data manager.
+     *
+     * @param newDataManager The data manager
      */
     public void setDataManager(
-            final RottenTomatoesDataManager dataManager) {
-        this.dataManager = dataManager;
+            final RottenTomatoesDataManager newDataManager) {
+        this.dataManager = newDataManager;
     }
 
     /**
-     * Getter method for the INDEX_URL page string
+     * Getter method for the INDEX_URL page string.
+     *
      * @return INDEX_URL The page string
      */
     public String getIndexUrl() {
@@ -175,7 +252,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the REGISTER_URL page string
+     * Getter method for the REGISTER_URL page string.
+     *
      * @return REGISTER_URL The page string
      */
     public String getRegisterUrl() {
@@ -183,7 +261,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the edit profile page string
+     * Getter method for the edit profile page string.
+     *
      * @return EDIT_PROFILE_URL The page string
      */
     public String getEditProfileUrl() {
@@ -191,7 +270,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the movie hub page string
+     * Getter method for the movie hub page string.
+     *
      * @return MOVIE_HUB_URL The page string
      */
     public String getMovieHubUrl() {
@@ -199,7 +279,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the USER_HOME_URL page string
+     * Getter method for the USER_HOME_URL page string.
+     *
      * @return USER_HOME_URL The page string
      */
     public String getUserHomeUrl() {
@@ -207,7 +288,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the post review page string
+     * Getter method for the post review page string.
+     *
      * @return POST_REVIEW_URL The page string
      */
     public String getPostReviewUrl() {
@@ -215,7 +297,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the movie detailed view page string
+     * Getter method for the movie detailed view page string.
+     *
      * @return MOVIE_DETAIL_URL The page string
      */
     public String getMovieDetailUrl() {
@@ -223,7 +306,8 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the LOGIN_URL page string
+     * Getter method for the LOGIN_URL page string.
+     *
      * @return LOGIN_URL The page string
      */
     public String getLoginUrl() {
@@ -231,15 +315,16 @@ public class ControlHub implements Serializable {
     }
 
     /**
-     * Getter method for the ERROR_URL page string
+     * Getter method for the ERROR_URL page string.
+     *
      * @return ERROR_URL The page string
      */
     public String getErrorUrl() {
         return ERROR_URL;
     }
-    
+
     /**
-     * Writes to an output file the movies that users rated
+     * Writes to an output file the movies that users rated.
      */
     public void movieUpdate() {
         movieManager.saveState();

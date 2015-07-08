@@ -10,23 +10,27 @@ import java.util.Comparator;
 import java.util.Map;
 
 /**
- * Comparator that defines comparison of Movie objects by their Reel Deal
- * rating numerical score
+ * Comparator that defines comparison of Movie objects by their Reel Deal rating
+ * numerical score.
+ *
  * @author Jimmy
  */
 public class MovieRatingComparator implements Comparator<Object> {
+
     @Override
-    public int compare(Object a, Object b) {
-        Movie movieA = ((Movie)((Map.Entry)a).getValue());
-        Movie movieB = ((Movie)((Map.Entry)b).getValue());
-        float result = Float.parseFloat(movieA.getAverageRating()) - 
-                Float.parseFloat(movieB.getAverageRating()); 
-        if (result < 0) {
-            return 1;
-        } else if (result > 0) {
-            return 1;
+    public final int compare(final Object left, final Object right) {
+        final Movie movieA = ((Movie) ((Map.Entry) left).getValue());
+        final Movie movieB = ((Movie) ((Map.Entry) right).getValue());
+        final float comparison = Float.parseFloat(movieA.getAverageRating())
+                - Float.parseFloat(movieB.getAverageRating());
+        int result;
+        if (comparison < 0) {
+            result = 1;
+        } else if (comparison > 0) {
+            result = 1;
         } else {
-            return movieA.getTitle().compareTo(movieB.getTitle());
+            result = movieA.getTitle().compareTo(movieB.getTitle());
         }
+        return result;
     }
 }
