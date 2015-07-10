@@ -49,9 +49,13 @@ public class RatingsTest {
         
         ratings1.addReelDealRating(greatRating); //4
         ratings1.addReelDealRating(goodRating); //3
+        ratings1.addReelDealRating(goodRating); //3
+        ratings1.addReelDealRating(goodRating); //3
+        ratings1.addReelDealRating(okayRating);//2
         ratings1.addReelDealRating(okayRating);//2
         ratings1.addReelDealRating(badRating);//1
         ratings1.addReelDealRating(awfulRating);//0
+        //avg = 2.25 --> 2.2
         
         ratings2.addReelDealRating(goodRating);
         
@@ -72,7 +76,7 @@ public class RatingsTest {
     public void testGetAverageRating() {
         System.out.println("getAverageRating");
         Ratings instance = ratings1;
-        float expResult = 2.0F;
+        float expResult = 2.2F;
         float result = instance.getAverageRating();
         System.out.println(result);
         assertEquals("Multiple rating average was incorrect", expResult, result, 0.0);
