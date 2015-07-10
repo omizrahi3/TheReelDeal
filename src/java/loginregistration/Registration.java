@@ -65,6 +65,7 @@ public class Registration implements Serializable {
      */
     public Registration() {
         majorChooser = new MajorChooserMenu();
+        password = "";
     }
 
     /**
