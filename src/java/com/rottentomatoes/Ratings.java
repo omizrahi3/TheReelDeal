@@ -90,7 +90,8 @@ public class Ratings implements Serializable {
                 sum += r.getValue();
             }
             float avg = sum / reelDealRatings.size();
-            avg -= (avg % 0.1); //rounding down to nearest 0.1
+            avg = (float) Math.floor(avg * 10); 
+            avg = avg / 10; //round down to nearest 10th
             returnedAvg = avg;
 
         } else {
