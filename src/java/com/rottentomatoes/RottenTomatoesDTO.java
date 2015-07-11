@@ -138,7 +138,7 @@ public class RottenTomatoesDTO implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof RottenTomatoesDTO) {
             final RottenTomatoesDTO rhs = ((RottenTomatoesDTO) other);
             equality = new EqualsBuilder().append(total, rhs.total)
                     .append(movies, rhs.movies).append(links, rhs.links)
