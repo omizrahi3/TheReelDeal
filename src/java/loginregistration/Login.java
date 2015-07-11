@@ -36,27 +36,30 @@ public class Login {
      * @return Indication of login success
      */
     public final boolean checkLogin(final Map<String, String> passwords) {
-        boolean loginCheck;
+        boolean loginCheck = false;
         if (passwords == null) {
             loginCheck = false;
         } else {
-            if (password.equals(passwords.get(username))) {
-                loginCheck = true;
-            } else if (username.length() == 0) {
-                 FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "Error", "Please enter username."));
-                loginCheck = false;
-            } else if (password.length() == 0) {
-                 FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                "Error", "Please enter password."));
-                loginCheck = false;
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                "Error", "Incorrect username or password!"));
-                loginCheck = false;
+            if (password != null && username != null) {
+                if (password.equals(passwords.get(username))) {
+                    loginCheck = true;
+                } else if (username.length() == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    "Error", "Please enter username."));
+                    loginCheck = false;
+                } else if (password.length() == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    "Error", "Please enter password."));
+                    loginCheck = false;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                    "Error", "Incorrect"
+                                            + " username or password!"));
+                    loginCheck = false;
+                }
             }
         }
         return loginCheck;
