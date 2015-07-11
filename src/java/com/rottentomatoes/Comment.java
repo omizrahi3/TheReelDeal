@@ -46,7 +46,7 @@ public class Comment implements Serializable {
      * @param textContent Text content of the review
      */
     public final void setContent(final String textContent) {
-        // TODO determine checks for validation
+        // Future Implementation: determine checks for validation
         // max length?
         // explicit language?
         content = textContent;
