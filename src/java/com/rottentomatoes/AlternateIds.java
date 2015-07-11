@@ -56,7 +56,7 @@ public class AlternateIds implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof AlternateIds) {
             final AlternateIds rhs = ((AlternateIds) other);
             equality = new EqualsBuilder().append(imdb, rhs.imdb)
                 .append(imdb, rhs.imdb).isEquals();

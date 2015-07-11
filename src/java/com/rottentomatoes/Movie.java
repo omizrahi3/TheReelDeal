@@ -433,7 +433,7 @@ public class Movie implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof Movie) {
             final Movie rhs = ((Movie) other);
             equality = new EqualsBuilder().append(id, rhs.id)
                     .append(title, rhs.title).append(year, rhs.year)

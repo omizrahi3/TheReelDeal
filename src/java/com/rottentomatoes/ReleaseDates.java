@@ -82,7 +82,7 @@ public class ReleaseDates implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof ReleaseDates) {
             final ReleaseDates rhs = ((ReleaseDates) other);
             equality = new EqualsBuilder().append(theater, rhs.theater)
                     .append(dvd, rhs.dvd).isEquals();

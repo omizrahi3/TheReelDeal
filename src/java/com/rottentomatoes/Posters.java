@@ -132,7 +132,7 @@ public class Posters implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof Posters) {
             final Posters rhs = ((Posters) other);
             equality = new EqualsBuilder().append(thumbnail, rhs.thumbnail)
                     .append(profile, rhs.profile)

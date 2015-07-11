@@ -156,7 +156,7 @@ public class Links implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof Links) {
             final Links rhs = ((Links) other);
             equality = new EqualsBuilder().append(self, rhs.self)
                     .append(alternate, rhs.alternate).append(cast, rhs.cast)

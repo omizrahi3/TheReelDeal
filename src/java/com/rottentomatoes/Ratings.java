@@ -322,7 +322,7 @@ public class Ratings implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof Ratings) {
             final Ratings rhs = ((Ratings) other);
             equality = new EqualsBuilder()
                     .append(criticsRating, rhs.criticsRating)
