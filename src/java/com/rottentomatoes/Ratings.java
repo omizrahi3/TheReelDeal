@@ -120,9 +120,8 @@ public class Ratings implements Serializable {
             }
             float avg = sum / reelDealRatings.size();
             avg = (float) Math.floor(avg * roundingFactor);
-            avg = avg / roundingFactor; //round down to nearest 10th
+            avg = avg * roundingFactor; //round down to nearest 10th
             returnedAvg = avg;
-
         } else {
             returnedAvg = -1;
         }
@@ -163,10 +162,10 @@ public class Ratings implements Serializable {
      * @return average rating of specific major
      */
     public final float getMajorSpecificRating(final String major) {
+        float calcRating;
         if (hasRatings()) {
             float sum = 0f;
-            int numOfRatings;
-            numOfRatings = 0;
+            int numOfRatings = 0;
             for (ReelDealRating r : reelDealRatings) {
                 if (major.equals(r.getMajor())) {
                     sum += r.getValue();
@@ -176,10 +175,12 @@ public class Ratings implements Serializable {
             }
             float avg = sum / numOfRatings;
             avg -= (avg % roundFactor);  //rounding down to nearest 0.1
-            return avg;
+            calcRating = avg;
 
+        } else {
+            calcRating = -1;
         }
-        return -1;
+        return calcRating;
     }
 
     /**
@@ -333,4 +334,6 @@ public class Ratings implements Serializable {
         }
         return equality;
     }
+    
+    
 }

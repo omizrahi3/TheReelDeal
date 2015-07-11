@@ -75,16 +75,18 @@ public class RESTQuery {
      */
     @SuppressWarnings("OnlyOneReturn")
     public final String processQuery() {
+        String data;
         try {
             final HttpURLConnection conn = setupHTTPConnection(queryURL);
             final String rawData = buildRawData(conn);
             conn.disconnect();
-            return rawData;
+            data = rawData;
         } catch (MalformedURLException mue) {
-            return "";
+            data = "";
         } catch (IOException ioe) {
-            return "";
+            data = "";
         }
+        return data;
     }
 
     /**

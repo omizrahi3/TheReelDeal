@@ -82,7 +82,7 @@ public class APILinks implements Serializable {
         boolean equality;
         if (other == this) {
             equality = true;
-        } else if (other instanceof AbridgedCast) {
+        } else if (other instanceof APILinks) {
             final APILinks rhs = ((APILinks) other);
             equality = new EqualsBuilder().append(self, rhs.self)
                     .append(next, rhs.next).isEquals();
