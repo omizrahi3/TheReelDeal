@@ -30,12 +30,12 @@ public class Ratings implements Serializable {
     /**
      * Rounding factor of 10.
      */
-    private final float roundingFactor = 10;
+    private static final float roundingFactor = 10;
 
     /**
      * Rounding factor of .1.
      */
-    private final float roundFactor = 1 / 10;
+    private static final float roundFactor = 1 / 10;
 
     /**
      * Critic rating of the movie.
