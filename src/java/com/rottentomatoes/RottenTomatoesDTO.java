@@ -25,12 +25,27 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @SessionScoped
 public class RottenTomatoesDTO implements Serializable {
 
+    /**
+     * Total amount of results returned from Rotten Tomatoes.
+     */
     @Expose
     private Integer total;
+
+    /**
+     * Collection of movies.
+     */
     @Expose
     private List<Movie> movies = new ArrayList<>();
+
+    /**
+     * Handle of links to other pages.
+     */
     @Expose
-    private Links_ links;
+    private APILinks links;
+
+    /**
+     * Template for the links held.
+     */
     @SerializedName("link_template")
     @Expose
     private String linkTemplate;
@@ -76,7 +91,7 @@ public class RottenTomatoesDTO implements Serializable {
      *
      * @return Handle of links to other pages
      */
-    public final Links_ getLinks() {
+    public final APILinks getLinks() {
         return links;
     }
 
@@ -85,7 +100,7 @@ public class RottenTomatoesDTO implements Serializable {
      *
      * @param newLinks Handle of links to other pages
      */
-    public final void setLinks(final Links_ newLinks) {
+    public final void setLinks(final APILinks newLinks) {
         this.links = newLinks;
     }
 

@@ -20,14 +20,33 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 public class Links implements Serializable {
 
+    /**
+     * Main page of the movie.
+     */
     @Expose
     private String self;
+
+    /**
+     * Alternate page for the movie.
+     */
     @Expose
     private String alternate;
+
+    /**
+     * Cast page for the movie.
+     */
     @Expose
     private String cast;
+
+    /**
+     * Review page for the movie.
+     */
     @Expose
     private String reviews;
+
+    /**
+     * Page with similar movie recommendations.
+     */
     @Expose
     private String similar;
 

@@ -26,35 +26,86 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Movie implements Serializable {
 
+    /**
+     * Unique identifier string of the movie.
+     */
     @Expose
     private String id;
+
+    /**
+     * Title of the movie.
+     */
     @Expose
     private String title;
+
+    /**
+     * Year of the movie's release.
+     */
     @Expose
     private Integer year;
+
+    /**
+     * MPAA rating of the movie.
+     */
     @SerializedName("mpaa_rating")
     @Expose
     private String mpaaRating;
+
+    /**
+     * Runtime of the movie.
+     */
     @Expose
     private String runtime;
+
+    /**
+     * Snippet of the critic consensus for the movie.
+     */
     @SerializedName("critics_consensus")
     @Expose
     private String criticsConsensus;
+
+    /**
+     * Handle of the release dates for the movie.
+     */
     @SerializedName("release_dates")
     @Expose
     private ReleaseDates releaseDates;
+
+    /**
+     * Handle for the ratings of the movie.
+     */
     @Expose
     private Ratings ratings;
+
+    /**
+     * Summary of the movie.
+     */
     @Expose
     private String synopsis;
+
+    /**
+     * Handle for the poster pictures of the movie.
+     */
     @Expose
     private Posters posters;
+
+    /**
+     * Collection of cast members for the movie.
+     */
     @SerializedName("abridged_cast")
     @Expose
     private List<AbridgedCast> abridgedCast = new ArrayList<>();
+
+    /**
+     * Handle of alternate identifiers for the movie.
+     */
     @SerializedName("alternate_ids")
     @Expose
     private AlternateIds alternateIds;
+
+    /**
+     * Handle of links for the movie.
+     */
     @Expose
     private Links links;
 
@@ -89,7 +140,7 @@ public class Movie implements Serializable {
     /**
      * Update an existing Reel Deal rating for a movie.
      * @param author Author of the rating
-     * @param rating Content of the rating 
+     * @param rating Content of the rating
      */
     public final void updateMovieRating(
             final User author, final ReelDealRating rating) {

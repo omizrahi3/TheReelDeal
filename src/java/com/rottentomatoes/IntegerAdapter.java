@@ -12,12 +12,13 @@ import com.google.gson.TypeAdapter;
 import java.io.Serializable;
 
 /**
- * Custom GSON adapter extension to handle receiving an empty string for an int
+ * Custom GSON adapter extension to handle receiving
+ * an empty string for an integer
  * or Integer type data member.
- *
  * @author Anthony
  */
-public class IntegerAdapter extends TypeAdapter<Integer> implements Serializable {
+public class IntegerAdapter extends TypeAdapter<Integer>
+implements Serializable {
 
     /**
      * Default number to return when empty string received for an number.

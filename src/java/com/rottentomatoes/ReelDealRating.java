@@ -25,16 +25,55 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class ReelDealRating implements Serializable {
 
+    /**
+     * The maximum value.
+     */
     public static final int MAX_VALUE = 4;
+
+    /**
+     * The minimum value.
+     */
     public static final int MIN_VALUE = 0;
-    public static final String BLACK_REEL_IMG = "resources/images/BlackReel.png";
+
+    /**
+     * The black reel image.
+     */
+    public static final String BLACK_REEL_IMG =
+            "resources/images/BlackReel.png";
+
+    /**
+     * The gold reel image.
+     */
     public static final String GOLD_REEL_IMG = "resources/images/GoldReel.png";
 
+    /**
+     * Array of strings representing .png files.
+     */
     private String[] reels;
+
+    /**
+     * The description of the display.
+     */
     private String displayDescriptor;
+
+    /**
+     * The author of the rating.
+     */
     private User author;
+
+    /**
+     * The value of the rating.
+     */
     private int value;
+
+    /**
+     * The comment attached with the rating.
+     */
     private Comment comment;
+
+    /**
+     * The mark of a comment that's potentially inappropriate.
+     */
     private boolean flagged;
 
     /**
@@ -282,8 +321,6 @@ public class ReelDealRating implements Serializable {
     public final void setFlagged(final boolean flag) {
         this.flagged = flag;
     }
-
-
 
     /**
      * Get the description label for the given review, which indicates whether a

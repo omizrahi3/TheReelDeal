@@ -17,10 +17,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @author Anthony
  */
 @Generated("org.jsonschema2pojo")
-public class Links_ implements Serializable {
+public class APILinks implements Serializable {
 
+    /**
+     * The current page of movies.
+     */
     @Expose
     private String self;
+
+    /**
+     * The next page of movies.
+     */
     @Expose
     private String next;
 
@@ -76,7 +83,7 @@ public class Links_ implements Serializable {
         if (other == this) {
             equality = true;
         } else if (other instanceof AbridgedCast) {
-            final Links_ rhs = ((Links_) other);
+            final APILinks rhs = ((APILinks) other);
             equality = new EqualsBuilder().append(self, rhs.self)
                     .append(next, rhs.next).isEquals();
         } else {

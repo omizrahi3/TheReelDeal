@@ -27,18 +27,47 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class Ratings implements Serializable {
 
+    /**
+     * Rounding factor of 10.
+     */
+    private final float roundingFactor = 10;
+
+    /**
+     * Rounding factor of .1.
+     */
+    private final float roundFactor = 1 / 10;
+
+    /**
+     * Critic rating of the movie.
+     */
     @SerializedName("critics_rating")
     @Expose
     private String criticsRating;
+
+    /**
+     * Critic score of the movie.
+     */
     @SerializedName("critics_score")
     @Expose
     private String criticsScore;
+
+    /**
+     * Audience rating of the movie.
+     */
     @SerializedName("audience_rating")
     @Expose
     private String audienceRating;
+
+    /**
+     * Audience score of the movie.
+     */
     @SerializedName("audience_score")
     @Expose
     private String audienceScore;
+
+    /**
+     * Collection of Reel Deal ratings for the movie.
+     */
     private List<ReelDealRating> reelDealRatings;
 
     /**
@@ -90,8 +119,8 @@ public class Ratings implements Serializable {
                 sum += r.getValue();
             }
             float avg = sum / reelDealRatings.size();
-            avg = (float) Math.floor(avg * 10); 
-            avg = avg / 10; //round down to nearest 10th
+            avg = (float) Math.floor(avg * roundingFactor);
+            avg = avg / roundingFactor; //round down to nearest 10th
             returnedAvg = avg;
 
         } else {
@@ -146,7 +175,7 @@ public class Ratings implements Serializable {
                 }
             }
             float avg = sum / numOfRatings;
-            avg -= (avg % 0.1);             //rounding down to nearest 0.1
+            avg -= (avg % roundFactor);  //rounding down to nearest 0.1
             return avg;
 
         }

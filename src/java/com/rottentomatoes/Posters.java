@@ -19,12 +19,27 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 public class Posters implements Serializable {
 
+    /**
+     * Thumbnail picture URL for the movie.
+     */
     @Expose
     private String thumbnail;
+
+    /**
+     * Profile picture URL for the movie.
+     */
     @Expose
     private String profile;
+
+    /**
+     * Detailed picture URL for the movie.
+     */
     @Expose
     private String detailed;
+
+    /**
+     * Original picture URL for the movie.
+     */
     @Expose
     private String original;
 

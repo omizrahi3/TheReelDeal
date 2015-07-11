@@ -19,8 +19,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 public class ReleaseDates implements Serializable {
 
+    /**
+     * Theater release date.
+     */
     @Expose
     private String theater;
+
+    /**
+     * DVD release date.
+     */
     @Expose
     private String dvd;
 
