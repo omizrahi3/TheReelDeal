@@ -109,7 +109,7 @@ public final class ControlHub implements Serializable {
     /**
      * A constructor used to defeat instantiation of the controller.
      */
-    private ControlHub() {
+    public ControlHub() {
 
     }
 
