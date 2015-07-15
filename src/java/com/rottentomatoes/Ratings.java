@@ -35,7 +35,7 @@ public class Ratings implements Serializable {
     /**
      * Rounding factor of .1.
      */
-    private final float roundFactor = 1 / 10;
+    private final float roundFactor = 1f / 10;
 
     /**
      * Critic rating of the movie.
@@ -120,7 +120,7 @@ public class Ratings implements Serializable {
             }
             float avg = sum / reelDealRatings.size();
             avg = (float) Math.floor(avg * roundingFactor);
-            avg = avg * roundingFactor; //round down to nearest 10th
+            avg = avg * roundFactor; //round down to nearest 10th
             returnedAvg = avg;
         } else {
             returnedAvg = -1;
