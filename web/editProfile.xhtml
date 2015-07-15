@@ -2,41 +2,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"  
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:f="http://java.sun.com/jsf/core">  
+        xmlns:p="http://primefaces.org/ui">  
     <h:head>
-        <title>Success Page</title>
+        <title>Welcome!</title>
         <style>
-            .accordion{
-                position:absolute;
-                right: 0;
-                width:45%
-            }
-            .team7{
-                background-image:url("resources/images/Logo.jpg");
-                background-size:cover;
-                background-repeat:no-repeat
-            } 
             .ui-selectonemenu-items-wrapper {
                 height: 200px !important
             }
+            body {
+                background-color: rgb(250, 249, 245);
+            }
+            body .banner {
+                text-align: center;
+            }
             .buttons {
                 float: right;
-            }
+            } 
        </style>
     </h:head>
-    <h:body styleClass="team7">
-        <h:form  styleClass="accordion">
+    <h:body>
+        <h:form>
         <h:panelGrid styleClass="buttons" columns="1">
-            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.userHomePage}" />
+            <p:commandButton id="homeButton" update="" value="Home" action="#{userManager.getUserHomePage}" />
             <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
         </h:panelGrid>
+        <!-- maintain a ~4.04 width-to-height ratio for image below -->
+        <div class="banner"><img src="resources/images/Banner.jpg" width="1000px" height="248px" align="middle"/></div>
         <p:panel id="panel" header="Welcome to The Reel Deal!" footer="Team 7: Gotta Git SCRUMptious Tomatoes">
-        <p:accordionPanel activeIndex="1">
-            <p:tab title="Log Out">
-                <p:commandButton id="logoutButton" update="" value="Log Out" action="#{user.logout()}" />
-            </p:tab>
-            <p:tab title="Your Profile">
+        <p:tabView orientation="top" activeIndex="0">
+           <p:tab title="Your Profile">
                 <h:form>
                    <p>
                 Name:
@@ -56,7 +50,22 @@
                     <p:commandButton value="Cancel" action= "#{userManager.userHomePage}" styleClass="ui-priority-primary" />
                 </h:form>
             </p:tab>
-        </p:accordionPanel>
+            <p:tab title="Find a Movie">
+                <p:link outcome="movieHub" value="Search Now"/>
+            </p:tab>
+            <p:tab title="Get a Recommendation">
+                <h:panelGrid columns="2" cellpadding="10" >
+                    <p:growl id="growlOverall" showDetail="true" />
+                    <p:commandButton id="overallRecButton" value="Overall" 
+                        action="#{rottenTomatoesDataManager.movieManager.viewRecommendation()}"
+                        update="growlOverall"/>
+                    <p:growl id="growlMajor" showDetail="true" />
+                    <p:commandButton id="majorRecButton" value="By My Major"
+                        action="#{rottenTomatoesDataManager.movieManager.viewRecommendation(userManager.activeUser.profile.major)}"
+                        update="growlMajor"/>
+                </h:panelGrid>
+            </p:tab>
+        </p:tabView>
         </p:panel>
         </h:form>
     </h:body>

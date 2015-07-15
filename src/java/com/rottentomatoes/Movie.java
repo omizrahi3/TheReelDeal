@@ -113,6 +113,7 @@ public class Movie implements Serializable {
      * Empty constructor that instantiates default values.
      */
     public Movie() {
+        runtime = ""; 
         ratings = new Ratings();
         posters = new Posters();
         synopsis = "No movie found.";
