@@ -1,5 +1,6 @@
 package loginregistration;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,8 @@ public class RegistrationCheckNewUserTest {
     @Before
     public void setUp() {
         registration = new Registration();
+        users = new HashMap<String, User>();
+        aUser = new User();
     }
 
     @Test
