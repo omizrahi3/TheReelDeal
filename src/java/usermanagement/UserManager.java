@@ -3,6 +3,9 @@
  */
 package usermanagement;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import input.output.PasswordIO;
 import input.output.UserIO;
 import loginregistration.BannedAccountException;
@@ -10,6 +13,10 @@ import loginregistration.LockedAccountException;
 import loginregistration.Registration;
 import loginregistration.Login;
 import gatech.cs2340.team7.ControlHub;
+import input.output.IO;
+import input.output.PasswordIOModule;
+import input.output.ProjectModule;
+import input.output.UserIOModule;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +67,17 @@ public class UserManager implements Serializable {
      * Reference to the current active user.
      */
     private User activeUser;
+    @Inject
+    private IO io;
+    
+    Injector userInjector = Guice.createInjector(new UserIOModule());
+    Injector passwordInjector = Guice.createInjector(new PasswordIOModule());
+    
 
     /**
      * Constructs a user manager which handles user status and login.
      * credentials.
+     * @param io
      */
     public UserManager() {
         allUsers = new HashMap<>();
@@ -72,8 +86,10 @@ public class UserManager implements Serializable {
         activeUser = null;
 
         // Read in persisted user/password data
-        allUsers = UserIO.readFile();
-        passwords = PasswordIO.readFile();
+        //allUsers = UserIO.readFile();
+        //passwords = PasswordIO.readFile();
+        allUsers = userInjector.getInstance(IO.class).readFile();
+        passwords = passwordInjector.getInstance(IO.class).readFile();
 
         // Create hard-coded administrator to demonstrate admin privileges
         allUsers.put("boss", new Administrator("Da Boss", "boss"));
@@ -82,6 +98,8 @@ public class UserManager implements Serializable {
         // Update the ControlHub with this instance
         ControlHub.getInstance().setUserManager(this);
     }
+    
+
 
     /**
      * Navigates to the edit profile page.
@@ -214,8 +232,10 @@ public class UserManager implements Serializable {
      */
     public final void saveState() {
         System.out.println("Saving state of users.");
-        UserIO.writeToFile(allUsers);
-        PasswordIO.writeToFile(passwords);
+        //UserIO.writeToFile(allUsers);
+        io.writeToFile(allUsers);
+        //PasswordIO.writeToFile(passwords);
+        io.writeToFile(passwords);
     }
 
     /**

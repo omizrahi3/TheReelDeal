@@ -3,6 +3,7 @@
  */
 package input.output;
 
+import com.google.inject.Inject;
 import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,11 +19,12 @@ import java.util.Map;
  * @author ODell
  * @version 1.0
  */
-public final class PasswordIO implements Serializable {
+public final class PasswordIO implements Serializable, IO {
 
     /**
      *
      */
+    @Inject
     private PasswordIO() {
 
     }
@@ -35,7 +37,8 @@ public final class PasswordIO implements Serializable {
      * creates a usable HashMap.
      * @return passwords A HashMap containing passwords
      */
-    public static HashMap<String, String> readFile() {
+    @Inject
+    public HashMap readFile() {
         HashMap<String, String> passwords = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
@@ -53,11 +56,11 @@ public final class PasswordIO implements Serializable {
      * Writes a file that holds password related data.
      * @param passwords A Map containing passwords
      */
-    public static void writeToFile(final Map<String, String> passwords) {
+    public void writeToFile(final Map data) {
         try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
                             + "passwords.bin"));) {
-            os.writeObject(passwords);
+            os.writeObject(data);
             os.close();
         } catch (IOException e) {
             System.out.println("Could not save file");

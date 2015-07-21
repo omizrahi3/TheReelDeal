@@ -3,6 +3,7 @@
  */
 package input.output;
 
+import com.google.inject.Inject;
 import usermanagement.User;
 import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;
@@ -19,11 +20,12 @@ import java.util.HashMap;
  * @author ODell
  * @version 1.0
  */
-public final class UserIO implements Serializable {
+public final class UserIO implements Serializable, IO {
 
     /**
      *
      */
+    @Inject
     private UserIO() {
 
     }
@@ -37,7 +39,8 @@ public final class UserIO implements Serializable {
      * info and creates a usable HashMap.
      * @return users A HashMap containing users
      */
-    public static HashMap<String, User> readFile() {
+    @Inject
+    public HashMap readFile() {
         HashMap<String, User> users = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
@@ -54,11 +57,12 @@ public final class UserIO implements Serializable {
      * Writes a file that holds user related data.
      * @param users A Map containing user names
      */
-    public static void writeToFile(final Map<String, User> users) {
+   
+    public void writeToFile(final Map data) {
         try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
                             + "users.bin"));) {
-            os.writeObject(users);
+            os.writeObject(data);
             os.close();
         } catch (IOException e) {
             System.out.println("Could not save file");
