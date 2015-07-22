@@ -25,10 +25,6 @@ public final class UserIO implements Serializable, IO {
     /**
      *
      */
-    @Inject
-    private UserIO() {
-
-    }
     /**
      *
      */
@@ -39,7 +35,6 @@ public final class UserIO implements Serializable, IO {
      * info and creates a usable HashMap.
      * @return users A HashMap containing users
      */
-    @Inject
     public HashMap readFile() {
         HashMap<String, User> users = new HashMap<>();
         try {
@@ -57,8 +52,8 @@ public final class UserIO implements Serializable, IO {
      * Writes a file that holds user related data.
      * @param users A Map containing user names
      */
-   
-    public void writeToFile(final Map data) {
+    public void writeToFile(final HashMap data) {
+        System.out.println("TESTING");
         try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
                             + "users.bin"));) {

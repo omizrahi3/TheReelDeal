@@ -67,7 +67,7 @@ public class UserManager implements Serializable {
      */
     private User activeUser;
     @Inject
-    private IO io;
+    private IO userio;
     
     Injector userInjector = Guice.createInjector(new UserIOModule());
     Injector passwordInjector = Guice.createInjector(new PasswordIOModule());
@@ -87,8 +87,8 @@ public class UserManager implements Serializable {
         // Read in persisted user/password data
         //allUsers = UserIO.readFile();
         //passwords = PasswordIO.readFile();
-        allUsers = userInjector.getInstance(IO.class).readFile();
-        passwords = passwordInjector.getInstance(IO.class).readFile();
+        allUsers = userInjector.getInstance(UserIO.class).readFile();
+        passwords = passwordInjector.getInstance(PasswordIO.class).readFile();
 
         // Create hard-coded administrator to demonstrate admin privileges
         allUsers.put("boss", new Administrator("Da Boss", "boss"));
@@ -232,9 +232,10 @@ public class UserManager implements Serializable {
     public final void saveState() {
         System.out.println("Saving state of users.");
         //UserIO.writeToFile(allUsers);
-        io.writeToFile(allUsers);
+        userInjector.getInstance(PasswordIO.class).writeToFile(allUsers);
         //PasswordIO.writeToFile(passwords);
-        io.writeToFile(passwords);
+        passwordInjector.getInstance(PasswordIO.class).writeToFile(passwords);
+        //io.writeToFile(passwords);
     }
 
     /**
