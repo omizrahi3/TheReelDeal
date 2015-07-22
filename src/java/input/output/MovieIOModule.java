@@ -5,19 +5,17 @@
  */
 package input.output;
 
-import java.util.HashMap;
+import com.google.inject.AbstractModule;
 
 /**
  *
  * @author ODell
-
  */
-public interface IO {
-    
-    
-    HashMap readFile();
-    
-    void writeToFile(HashMap data);
-    
+public class MovieIOModule extends AbstractModule {
+
+    @Override
+    protected void configure() {
+        bind(IO.class).to(PasswordIO.class);
+    }
     
 }

@@ -4,9 +4,14 @@
  */
 package gatech.cs2340.team7;
 
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import input.output.MovieIO;
 import com.rottentomatoes.Movie;
 import com.rottentomatoes.ReelDealRating;
+import input.output.IO;
+import input.output.MovieIOModule;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +75,11 @@ public class MovieManager {
     public MovieManager() {
         this(new HashMap<>(), new HashMap<>(), null, null);
     }
+    
+    @Inject
+    private IO io;
+    
+    Injector movieInjector = Guice.createInjector(new MovieIOModule());
 
     /**
      * Constructor with all data members specified.
@@ -89,7 +99,8 @@ public class MovieManager {
         this.searchResultMovies = newSearchResultMovies;
         this.selectedMovie = newSelectedMovie;
         this.activeUserRating = new ReelDealRating();
-        ratedMovies = MovieIO.readFile();
+        ratedMovies = movieInjector.getInstance(IO.class).readFile();
+        //ratedMovies = MovieIO.readFile();
         // ALWAYS have this be the final instruction in the constructor.
         ControlHub.getInstance().setMovieManager(this);
     }
@@ -463,7 +474,8 @@ public class MovieManager {
      */
     public final void saveState() {
         System.out.println("Saving state of users");
-        MovieIO.writeToFile(ratedMovies);
+        movieInjector.getInstance(IO.class).writeToFile(ratedMovies);
+        //MovieIO.writeToFile(ratedMovies);
     }
 
     /**

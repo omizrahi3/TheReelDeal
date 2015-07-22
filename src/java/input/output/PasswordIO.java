@@ -24,10 +24,6 @@ public final class PasswordIO implements Serializable, IO {
     /**
      *
      */
-    @Inject
-    private PasswordIO() {
-
-    }
     /**
      *
      */
@@ -37,7 +33,6 @@ public final class PasswordIO implements Serializable, IO {
      * creates a usable HashMap.
      * @return passwords A HashMap containing passwords
      */
-    @Inject
     public HashMap readFile() {
         HashMap<String, String> passwords = new HashMap<>();
         try {
@@ -47,7 +42,7 @@ public final class PasswordIO implements Serializable, IO {
             passwords = (HashMap<String, String>) is.readObject();
             is.close();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("File did not open");
+            System.out.println("File did not openAAAAAAAAAAAAAa");
         }
         return passwords;
     }
@@ -56,7 +51,7 @@ public final class PasswordIO implements Serializable, IO {
      * Writes a file that holds password related data.
      * @param passwords A Map containing passwords
      */
-    public void writeToFile(final Map data) {
+    public void writeToFile(final HashMap data) {
         try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
                             + "passwords.bin"));) {

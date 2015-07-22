@@ -3,6 +3,7 @@
  */
 package input.output;
 
+import com.google.inject.Inject;
 import com.rottentomatoes.Movie;
 import gatech.cs2340.team7.ControlHub;
 import java.io.FileInputStream;
@@ -19,14 +20,11 @@ import java.util.HashMap;
  * @author ODell
  * @version 1.0
  */
-public final class MovieIO implements Serializable {
+public final class MovieIO implements Serializable, IO {
 
     /**
      *
      */
-    private MovieIO() {
-
-    }
     /**
      *
      */
@@ -35,7 +33,7 @@ public final class MovieIO implements Serializable {
      * Reads in a file holding movie related data and creates a usable HashMap.
      * @return movies A HashMap containing movies and their information
      */
-    public static HashMap<String, Movie> readFile() {
+    public HashMap readFile() {
        HashMap<String, Movie> movies = new HashMap<>();
         try {
             ObjectInputStream is = new ObjectInputStream(
@@ -52,11 +50,11 @@ public final class MovieIO implements Serializable {
      * Writes a file that holds movie related data.
      * @param m A Map connecting movie info to its movie
      */
-    public static void writeToFile(final Map<String, Movie> m) {
+    public void writeToFile(final HashMap data) {
         try (ObjectOutputStream os = new ObjectOutputStream(
                     new FileOutputStream(ControlHub.SAVE_PATH
                             + "movies.bin"));) {
-            os.writeObject(m);
+            os.writeObject(data);
         } catch (IOException e) {
             System.out.println("Could not save file");
         }
