@@ -65,6 +65,11 @@ public class MovieManager {
     private HashMap<String, Movie> ratedMovies;
 
     /**
+     * All Reel Deal ratings added to the application.
+     */
+    private RecommendationView recommendationView;
+
+    /**
      * Empty Constructor.
      */
     public MovieManager() {
@@ -89,9 +94,18 @@ public class MovieManager {
         this.searchResultMovies = newSearchResultMovies;
         this.selectedMovie = newSelectedMovie;
         this.activeUserRating = new ReelDealRating();
+        recommendationView = new RecommendationView(this);
         ratedMovies = MovieIO.readFile();
         // ALWAYS have this be the final instruction in the constructor.
         ControlHub.getInstance().setMovieManager(this);
+    }
+
+     /**
+     * get recommendationView.
+     * @return recommendationView instance
+     */
+    public final RecommendationView getRecommendationView() {
+        return recommendationView;
     }
 
     /**
@@ -365,6 +379,35 @@ public class MovieManager {
         return getRecommendation("");
     }
 
+
+    /**
+     * Return a recommended movie, based on the sorted Reel Deal scores. Filter
+     * by ratings done by input year range (inclusive).
+     *
+     * @param year1 earlier year bound
+     * @param year2 later year bound
+     * @return Recommended movie
+     */
+    public final Movie getRecommendation(final int year1, final int year2) {
+        if (year1 > year2) {
+            return null;
+        } else {
+            Movie recommendedMovie = null;
+            float maxRating = 0.0F;
+
+            for (Movie m : ratedMovies.values()) {
+                int movieYear = m.getYear();
+                float movieRating = Float.parseFloat(m.getAverageRating());
+                boolean isValidMovie = (movieYear >= year1)
+                        && (movieYear <= year2);
+                if (isValidMovie && (movieRating > maxRating)) {
+                    recommendedMovie = m;
+                    maxRating = movieRating;
+                }
+            }
+            return recommendedMovie;
+        }
+    }
     /**
      * Return a recommended movie, based on the sorted Reel Deal scores. Filter
      * by ratings done by members of the same major as the active user
@@ -413,6 +456,33 @@ public class MovieManager {
         if (ratedMovies.values().size() > 0) {
             System.out.println("Processing Recommendation.");
             selectedMovie = getRecommendation();
+            nextPage = ControlHub.MOVIE_DETAIL_URL;
+        } else {
+            // Show error message
+            System.out.println("No movies to rate.");
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Error",
+                        "There are no movies rated, so a recommendation"
+                        + "cannot be given! Take some time to write some "
+                        + "reviews, and then we can try again."));
+        }
+        return nextPage;
+    }
+
+    /**
+     * Show the recommended movie, based on the major of the active user.
+     *
+     * @param year1 early year bound
+     * @param year2 later year bound
+     * @return Page to navigate to after showing the recommendation
+     */
+    public final String viewRecommendation(final int year1, final int year2) {
+        String nextPage = null;
+        // If there are rated movies, then get and show the recommendation.
+        //   Otherwise, stay on the current page and show an error message
+        if (ratedMovies.values().size() > 0) {
+            System.out.println("Processing Recommendation.");
+            selectedMovie = getRecommendation(year1, year2);
             nextPage = ControlHub.MOVIE_DETAIL_URL;
         } else {
             // Show error message

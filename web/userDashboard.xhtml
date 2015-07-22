@@ -55,6 +55,17 @@
                         action="#{rottenTomatoesDataManager.movieManager.viewRecommendation(userManager.activeUser.profile.major)}"
                         update="growlMajor"/>
                 </h:panelGrid>
+                <h:form>
+                    Between:
+                    <p:inputText id="year1" value="#{rottenTomatoesDataManager.movieManager.recommendationView.year1}" 
+                                     label="earlyYearInput">
+                    </p:inputText>
+                    and:
+                    <p:inputText id="year2" value="#{rottenTomatoesDataManager.movieManager.recommendationView.year2}" 
+                                     label="lateYearInput">
+                    </p:inputText>
+                    <p:commandButton id="byYearRecButton" value="By Year" action="#{rottenTomatoesDataManager.movieManager.recommendationView.getRecommendationByYear()}" />
+                </h:form>
             </p:tab>
         </p:tabView>
         </p:panel>
